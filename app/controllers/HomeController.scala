@@ -5,7 +5,7 @@ import play.api.mvc._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.schwimmen.schwimmenModul
 import de.htwg.se.schwimmen.controller.controllerComponent.ControllerInterface
-import de.htwg.se.schwimmen.aUI.TUI
+import de.htwg.se.schwimmen.aUI.{GUI, TUI}
 import de.htwg.se.schwimmen.controller.controllerComponent.NewGame
 
 import javax.inject._
@@ -29,9 +29,15 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
   controller.createNewGame()
+  val field = controller.field
 
-  def index(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(tui.getGameState())
+  def rulesPage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.rules())
+  }
+
+
+  def game(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.game(this))
   }
 
   /**
@@ -41,6 +47,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    */
   def put(input: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     tui.input = input
-    Ok(tui.processInput())
+    tui.processInput()
+    Ok(tui.getGameState())
   }
 }
