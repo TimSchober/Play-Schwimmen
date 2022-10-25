@@ -10,361 +10,367 @@
 <body>
     <div class="board-body">
         <h1 class="header">This is Schwimmen</h1>
-        <h2>
-            @controller.tui.getGameState()
-        </h2>
         <div>
+            @if(!controller.tui.getGameState().contains("its your turn")) {
+            <h2>
+                @controller.tui.getGameState()
+            </h2>
             <form action="/put/2">
-                <label for="playerAmount">Player Amount:</label>
+                <label for="playerAmount">Input:</label>
                 <input type="text" id="playerAmount" name="playerAmount"><br><br>
                 <input type="submit" value="Submit">
             </form>
-            <div class="field-carda">
+            }
+            @if(controller.tui.getGameState().contains("its your turn")) {
+            <h2>These are the Cards on the Field:</h2>
+            <div class="field-cards">
                 <h1>Cards of Fields</h1>
                 @for(row <- 0 to 2) {
-                    @if(controller.field.cardsOnField(row)._2 == "spade") {
-                        @if(controller.field.cardsOnField(row)._1 == "7") {
-                            <span class="spade">
+                @if(controller.controller.field.cardsOnField(row)._2 == "spade") {
+                @if(controller.controller.field.cardsOnField(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_spades.png" alt="7_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_spades.png" alt="8_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_spades.png" alt="9_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_spades.png" alt="10_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_spades.png" alt="jack_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_spades.png" alt="queen_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_spades.png" alt="king_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_spades.png" alt="ace_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
-                    @if(controller.field.cardsOnField(row)._2 == "heart") {
-                        @if(controller.field.cardsOnField(row)._1 == "7") {
-                            <span class="spade">
+                }
+                }
+                @if(controller.controller.field.cardsOnField(row)._2 == "heart") {
+                @if(controller.controller.field.cardsOnField(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_hearts.png" alt="7_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_hearts.png" alt="8_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_hearts.png" alt="9_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_hearts.png" alt="10_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_hearts.png" alt="jack_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_hearts.png" alt="queen_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_hearts.png" alt="king_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_hearts.png" alt="ace_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
-                    @if(controller.field.cardsOnField(row)._2 == "diamond") {
-                        @if(controller.field.cardsOnField(row)._1 == "7") {
-                            <span class="spade">
+                }
+                }
+                @if(controller.controller.field.cardsOnField(row)._2 == "diamond") {
+                @if(controller.controller.field.cardsOnField(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_diamonds.png" alt="7_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_diamonds.png" alt="8_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_diamonds.png" alt="9_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_diamonds.png" alt="10_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                            }
-                        @if(controller.field.cardsOnField(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_diamonds.png" alt="jack_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                            }
-                        @if(controller.field.cardsOnField(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_diamonds.png" alt="queen_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_diamonds.png" alt="king_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_diamonds.png" alt="ace_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
-                    @if(controller.field.cardsOnField(row)._2 == "club") {
-                        @if(controller.field.cardsOnField(row)._1 == "7") {
-                            <span class="spade">
+                }
+                }
+                @if(controller.controller.field.cardsOnField(row)._2 == "club") {
+                @if(controller.controller.field.cardsOnField(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_clubs.png" alt="7_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_clubs.png" alt="8_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_clubs.png" alt="9_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_clubs.png" alt="10_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_clubs.png" alt="jack_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_clubs.png" alt="queen_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_clubs.png" alt="king_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.field.cardsOnField(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.field.cardsOnField(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_clubs.png" alt="ace_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
+                }
+                }
                 }
             </div>
-            <div class="Hand-cards">
-                @for(row <- 0 to 1) {
-                    @if(controller.controller.players.head.cardsOnHand(row)._2 == "spade") {
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
-                            <span class="spade">
+            <h2>These are the Cards on your Hand:</h2>
+            <div class="hand-cards">
+                @for(row <- 0 to 2) {
+                @if(controller.controller.players.head.cardsOnHand(row)._2 == "spade") {
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_spades.png" alt="7_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_spades.png" alt="8_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_spades.png" alt="9_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_spades.png" alt="10_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_spades.png" alt="jack_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_spades.png" alt="queen_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_spades.png" alt="king_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_spades.png" alt="ace_of_spades" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
-                    @if(controller.controller.players.head.cardsOnHand(row)._2 == "heart") {
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
-                            <span class="spade">
+                }
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._2 == "heart") {
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_hearts.png" alt="7_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_hearts.png" alt="8_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_hearts.png" alt="9_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_hearts.png" alt="10_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_hearts.png" alt="jack_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_hearts.png" alt="queen_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_hearts.png" alt="king_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_hearts.png" alt="ace_of_heart" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
-                    @if(controller.controller.players.head.cardsOnHand(row)._2 == "diamond") {
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
-                            <span class="spade">
+                }
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._2 == "diamond") {
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_diamonds.png" alt="7_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_diamonds.png" alt="8_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_diamonds.png" alt="9_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_diamonds.png" alt="10_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_diamonds.png" alt="jack_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_diamonds.png" alt="queen_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_diamonds.png" alt="king_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_diamonds.png" alt="ace_of_diamond" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
-                    @if(controller.controller.players.head.cardsOnHand(row)._2 == "club") {
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
-                            <span class="spade">
+                }
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._2 == "club") {
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "7") {
+                <span class="spade">
                                 <img src="assets/images/7_of_clubs.png" alt="7_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "8") {
+                <span class="spade">
                                 <img src="assets/images/8_of_clubs.png" alt="8_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "9") {
+                <span class="spade">
                                 <img src="assets/images/9_of_clubs.png" alt="9_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "10") {
+                <span class="spade">
                                 <img src="assets/images/10_of_clubs.png" alt="10_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "jack") {
+                <span class="spade">
                                 <img src="assets/images/jack_of_clubs.png" alt="jack_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "queen") {
+                <span class="spade">
                                 <img src="assets/images/queen_of_clubs.png" alt="queen_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "king") {
+                <span class="spade">
                                 <img src="assets/images/king_of_clubs.png" alt="king_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                        @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
-                            <span class="spade">
+                }
+                @if(controller.controller.players.head.cardsOnHand(row)._1 == "ace") {
+                <span class="spade">
                                 <img src="assets/images/ace_of_clubs.png" alt="ace_of_club" class="small-5 medium-4 large-3" />
                             </span>
-                        }
-                    }
+                }
+                }
                 }
             </div>
-
+            <h2>@controller.tui.getGameState().split("left").last</h2>
+            }
         </div>
     </div>
 </body>

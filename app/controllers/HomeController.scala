@@ -5,11 +5,9 @@ import play.api.mvc._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.schwimmen.schwimmenModul
 import de.htwg.se.schwimmen.controller.controllerComponent.ControllerInterface
-import de.htwg.se.schwimmen.aUI.{GUI, TUI}
-import de.htwg.se.schwimmen.controller.controllerComponent.NewGame
+import de.htwg.se.schwimmen.aUI.TUI
 
 import javax.inject._
-import scala.util.{Failure, Success, Try}
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -29,7 +27,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
   controller.createNewGame()
-  val field = controller.field
 
   def rulesPage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.rules())
