@@ -5,26 +5,59 @@
 
 <head>
     <title>Schwimmen</title>
+    <link rel="shortcut icon" type="image/png" href="assets/images/favicon1.png">
+
+    <style>
+        body {
+            padding:15px 0;
+            background: url("https://images5.alphacoders.com/372/372327.jpg");
+            background-size: cover;
+
+        }
+        .board-body {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10%;
+            height: 50%;
+        }
+        h2 {
+            font-family:Arial;
+            color:#F3F3F2;
+            font-size:32px;
+            margin:0 0 18px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+
+        }
+        .field-cards{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+        }
+        .hand-cards {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+        }
+    </style>
+
 </head>
 
 <body>
     <div class="board-body">
-        <h1 class="header">This is Schwimmen</h1>
         <div>
             @if(!controller.tui.getGameState().contains("its your turn")) {
                 <h2>
                     @controller.tui.getGameState()
                 </h2>
-                <form action="/put/2">
-                    <label for="playerAmount">Input:</label>
-                    <input type="text" id="playerAmount" name="playerAmount"><br><br>
-                    <input type="submit" value="Submit">
-                </form>
             }
             @if(controller.tui.getGameState().contains("its your turn")) {
                 <h2>These are the Cards on the Field:</h2>
                 <div class="field-cards">
-                    <h1>Cards of Fields</h1>
                     @for(row <- 0 to 2) {
                         @if(controller.controller.field.cardsOnField(row)._2 == "spade") {
                             @if(controller.controller.field.cardsOnField(row)._1 == "7") {

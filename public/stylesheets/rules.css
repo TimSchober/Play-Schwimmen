@@ -20,7 +20,7 @@
  .wrapper:after{content:" ";display:block;clear:both;}
  .wrapper article{min-height:310px;width:60%;float:left;}
 
- #content{padding:15px 0; background: url("https://images5.alphacoders.com/372/372327.jpg");}
+ #content{padding:15px 0; background: url("https://images5.alphacoders.com/372/372327.jpg");background-repeat: no-repeat}
  *{color: #E6E6E6}
 
  #top{background:#0A4C5E fixed;padding:0;position:relative; height: 220px}
