@@ -1,0 +1,28 @@
+/*
+    stylesheet for the homepage "rules page*
+*/
+ html,body,div,span,h1,h2,h3,h4,h5,h6,p,em,font,img{margin:0;}
+
+ article{}article h1,article h2,article h3
+ article h1 a,article h2 a,article h3 a,article h1 a:hover,article h2 a:hover,article h3 a:hover
+ article h1{font-size:36px;margin:0 0 18px;border-bottom:4px solid #eee;}
+ article h2{font-size:25px;margin-bottom:9px;border-bottom:2px solid #eee;}
+ article h3{font-size:18px;margin-bottom:9px;}
+ article p{line-height:1.2em;margin:1em 0;}
+ article li>p:first-child{margin-top:0;}
+ article li>p:last-child{margin-bottom:0;}
+ article em,article i{font-style:italic;line-height:inherit;}
+ article ul li{margin-left:5px;}
+
+ a{color:#80c846;}a:hover{color:#6dae38;}
+ body{color:#555;font:18px "Helvetica Nueue",sans-serif;}
+ .wrapper{width:80%;margin:0 auto;padding:60px 0;}
+ .wrapper:after{content:" ";display:block;clear:both;}
+ .wrapper article{min-height:310px;width:60%;float:left;}
+
+ #content{padding:15px 0; background: url("https://images5.alphacoders.com/372/372327.jpg");}
+ *{color: #E6E6E6}
+
+ #top{background:#0A4C5E fixed;padding:0;position:relative; height: 220px}
+ #top h1{float:left;padding-top:15px;color:#fff;font-size:38px;line-height:48px;margin-left:10px;}
+ img.resize{width:120px;height74.120px;float:left;}
