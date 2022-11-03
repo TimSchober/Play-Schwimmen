@@ -9,39 +9,58 @@
 
     <style>
         body {
-            padding:15px 0;
-            background: url("https://images5.alphacoders.com/372/372327.jpg");
-            background-size: cover;
+            padding:0px 0;
+            margin: 0;
+            background: url("https://images5.alphacoders.com/372/372327.jpg") no-repeat;
+            background-size: 2600px 1800px;
 
         }
         .board-body {
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 10%;
-            height: 50%;
+            background: url("https://www.stoff4you.de/out/pictures/master/product/1/43001480-gruen-.jpg");
+            background-repeat: no-repeat;
+            background-size: 800px;
+            background-position: center center;
+            height: calc(100vh - 0px);
+        }
+        .game-state {
+            padding: 20px
         }
         h2 {
             font-family:Arial;
             color:#F3F3F2;
             font-size:32px;
-            margin:0 0 18px;
             display: block;
             margin-left: auto;
             margin-right: auto;
             width: 50%;
 
         }
+        h1 {
+            font-family: cursive;
+            color:#F3F3F2;
+            margin-left: auto;
+            margin-right: auto;
+            width: 5%;
+        }
+        .another-player {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 23.4%;
+        }
         .field-cards{
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 40%;
+            width: 23.4%;
+            margin-top: 80px;
         }
         .hand-cards {
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 40%;
+            width: 23.4%;
+            margin-top: 80px;
         }
     </style>
 
@@ -49,14 +68,24 @@
 
 <body>
     <div class="board-body">
-        <div>
+        <div class="game-state">
             @if(!controller.tui.getGameState().contains("its your turn")) {
                 <h2>
                     @controller.tui.getGameState()
                 </h2>
             }
             @if(controller.tui.getGameState().contains("its your turn")) {
+                <h1>Player</h1>
+                <div class="another-player">
+                    @for(row <- 0 to 2) {
+                        <span class="spade">
+                            <img src="assets/images/dragon1.png" alt="card background" class="small-5 medium-4 large-3" />
+                        </span>
+                    }
+                </div>
+                <!--
                 <h2>These are the Cards on the Field:</h2>
+                -->
                 <div class="field-cards">
                     @for(row <- 0 to 2) {
                         @if(controller.controller.field.cardsOnField(row)._2 == "spade") {
@@ -229,7 +258,9 @@
                         }
                     }
             </div>
+                <!--
                 <h2>These are the Cards on your Hand:</h2>
+                -->
                 <div class="hand-cards">
                     @for(row <- 0 to 2) {
                         @if(controller.controller.players.head.cardsOnHand(row)._2 == "spade") {
@@ -402,7 +433,7 @@
                         }
                     }
             </div>
-                <h2>@controller.tui.getGameState().split("left").last</h2>
+                <h1>@controller.tui.getGameState().split("left").last.split(",").head</h1>
             }
         </div>
     </div>
