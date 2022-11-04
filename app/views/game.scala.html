@@ -25,6 +25,17 @@
         .game-state {
             padding: 20px
         }
+        h3 {
+            font-family:Arial;
+            color:#F3F3F2;
+            font-size:32px;
+            margin-top: 60px;
+            margin-right: auto;
+            margin-bottom: 0px;
+            width: 35%;
+            margin-left: 32%;
+            display: -webkit-box;
+        }
         h2 {
             font-family:Arial;
             color:#F3F3F2;
@@ -32,6 +43,7 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 0px;
             width: 50%;
 
         }
@@ -62,6 +74,16 @@
             width: 23.4%;
             margin-top: 80px;
         }
+        #player-amount {
+            display: inline;
+
+        }
+        .amount-input {
+            font-size: 22px;
+            color: #cedeed;
+            font-weight: 1000;
+            background-color: #43484c;
+        }
     </style>
 
 </head>
@@ -69,7 +91,30 @@
 <body>
     <div class="board-body">
         <div class="game-state">
-            @if(!controller.tui.getGameState().contains("its your turn")) {
+            @if(controller.tui.getGameState().contains("Possible player amount is 2-9.")) {
+            <h2>
+                @controller.tui.getGameState()
+
+                <form action="/put" id="player-amount">
+                    <input type="text" class="amount-input" name="numberOfPlayer" minlength="1" maxlength="1" size="1" required>
+                    <input type="submit" class="amount-input" value="Ok">
+                </form>
+
+            </h2>
+            }
+            @if(controller.tui.getGameState().contains("type your name:")) {
+            <h3>
+                @controller.tui.getGameState()
+                <form action="/put" id="nameOfPlayer">
+                    <input type="text" class="amount-input" name="playername"
+                           minlength="1" maxlength="10" size="9px" required>
+                    <input type="submit" class="amount-input" value="Ok">
+                </form>
+            </h3>
+            }
+            @if(!controller.tui.getGameState().contains("its your turn") &
+                !controller.tui.getGameState().contains("Possible player amount is 2-9.") &
+                !controller.tui.getGameState().contains("type your name:")) {
                 <h2>
                     @controller.tui.getGameState()
                 </h2>
