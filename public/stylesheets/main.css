@@ -87,9 +87,14 @@ body {
   float: left;
 }
 
+#rulebody {
+  /*to get the background-image: https://images5.alphacoders.com/372/372327.jpg*/
+  background: url("../images/rulepagebackground.png") no-repeat;
+  background-size: cover;
+}
+
 #content {
-  padding: 15px 0;
-  background: url("https://images5.alphacoders.com/372/372327.jpg") no-repeat;
+ padding: 15px 0;
 }
 * {
   color: #e6e6e6;
@@ -117,7 +122,7 @@ img.resize {
 
 .body {
   padding: 0 0;
-  background: url("../images/hintergrund.jpg") no-repeat;
+  background: url("../images/gamepagebackground.png") no-repeat;
   background-size: cover;
 }
 
