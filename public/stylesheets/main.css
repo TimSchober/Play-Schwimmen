@@ -1,0 +1,186 @@
+/*
+    stylesheet for the homepage "rules page*
+*/
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+em,
+font,
+img {
+  margin: 0;
+}
+
+article {
+}
+article h1,
+article h2,
+article h3 article h1 a,
+article h2 a,
+article h3 a,
+article h1 a:hover,
+article h2 a:hover,
+article h3 a:hover article h1 {
+  font-size: 36px;
+  margin: 0 0 18px;
+  border-bottom: 4px solid #eee;
+}
+article h2 {
+  font-size: 25px;
+  margin-bottom: 9px;
+  border-bottom: 2px solid #eee;
+}
+article h3 {
+  font-size: 18px;
+  margin-bottom: 9px;
+}
+
+article p {
+  line-height: 1.2em;
+  margin: 1em 0;
+}
+article li > p:first-child {
+  margin-top: 0;
+}
+article li > p:last-child {
+  margin-bottom: 0;
+}
+article em,
+article i {
+  font-style: italic;
+  line-height: inherit;
+}
+article ul li {
+  margin-left: 5px;
+}
+
+a {
+  color: #80c846;
+}
+a:hover {
+  color: #6dae38;
+}
+body {
+  color: #555;
+  font: 18px "Helvetica Nueue", sans-serif;
+}
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+.wrapper:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+.wrapper article {
+  min-height: 310px;
+  width: 60%;
+  float: left;
+}
+
+#content {
+  padding: 15px 0;
+  background: url("https://images5.alphacoders.com/372/372327.jpg") no-repeat;
+}
+* {
+  color: #e6e6e6;
+}
+
+#top {
+  background: #0a4c5e fixed;
+  padding: 0;
+  position: relative;
+  height: 220px;
+}
+#top h1 {
+  float: left;
+  padding-top: 15px;
+  color: #fff;
+  font-size: 38px;
+  line-height: 48px;
+  margin-left: 10px;
+}
+img.resize {
+  width: 120px;
+  height: 120px;
+  float: left;
+}
+
+.body {
+  padding: 0 0;
+  background: url("../images/hintergrund.jpg") no-repeat;
+  background-size: cover;
+}
+
+.board-body {
+  background-size: 800px;
+  background: url("https://www.stoff4you.de/out/pictures/master/product/1/43001480-gruen-.jpg")
+    no-repeat center center;
+  height: calc(100vh - 0px);
+}
+.game-state {
+  padding: 20px;
+}
+.h3 {
+  font-family: Arial, serif;
+  color: #f3f3f2;
+  font-size: 32px;
+  width: 35%;
+  margin: 60px auto 0 32%;
+  display: -webkit-box;
+}
+.h2 {
+  font-family: Arial, serif;
+  color: #f3f3f2;
+  font-size: 32px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  width: 50%;
+}
+.h1 {
+  font-family: cursive;
+  color: #f3f3f2;
+  margin-left: auto;
+  margin-right: auto;
+  width: 5%;
+}
+.another-player {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 23.4%;
+}
+.field-cards {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 23.4%;
+  margin-top: 80px;
+}
+.hand-cards {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 23.4%;
+  margin-top: 80px;
+}
+#player-amount {
+  display: inline;
+}
+.amount-input {
+  font-size: 22px;
+  color: #cedeed;
+  font-weight: 1000;
+  background-color: #43484c;
+}
