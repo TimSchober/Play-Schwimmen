@@ -60,8 +60,32 @@
                     @controller.tui.getGameState()
                 </h2>
             }
+
             @if(controller.tui.getGameState().contains("its your turn")) {
                 <h1 class="h1">Player</h1>
+            <!-- Added Navigationbar Menu in Bootstrap -->
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Schwimmen</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">New Game</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- Added Button in Bootstrap -->
+            <div class="position-relative h-100">
+                <div class="position-absolute top-right">
+                    <hxb1 style="color:blue; text-align:start;"></hxb1>
+                    <div class="container h-100">
+                        <div class="position-relative h-100">
+                            <div class="position-absolute top-right">
+                                <button type="button" class="btn btn-primary">Funktion</button>
+                            </div>
+                        </div>
+                    </div>
                 <div class="another-player">
                     @for(row <- 0 to 2) {
                         <span class="spade">
@@ -69,6 +93,7 @@
                         </span>
                     }
                 </div>
+
                 <!--
                 <h2>These are the Cards on the Field:</h2>
                 -->
@@ -247,6 +272,7 @@
                 <!--
                 <h2>These are the Cards on your Hand:</h2>
                 -->
+
                 <div class="hand-cards">
                     @for(row <- 0 to 2) {
                         @if(controller.controller.players.head.cardsOnHand(row)._2 == "spade") {
@@ -419,55 +445,7 @@
                         }
                     }
             </div>
-            <!-- Added Navigationbar Menu in Bootstrap -->
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Schwimmen</a>
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">New Game</a></li>
-                    </ul>
-                </div>
-            </nav>
-            <!-- Added Button in Bootstrap -->
-            <div class="position-relative h-100">
-                <div class="position-absolute top-left">
-                <hxb1 style="color:blue; text-align:start;"></hxb1>
-                <div class="container h-100">
-                    <div class="position-relative h-100">
-                        <div class="position-absolute top-left">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                        <div class="position-absolute top-center">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                        <div class="position-absolute top-right">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
 
-                        <div class="position-absolute mid-left">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                        <div class="position-absolute mid-center">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                        <div class="position-absolute mid-right">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-
-                        <div class="position-absolute bottom-left">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                        <div class="position-absolute bottom-center">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                        <div class="position-absolute bottom-right">
-                            <button type="button" class="btn btn-primary">Funktion</button>
-                        </div>
-                    </div>
-                </div>
                 </div>
                 </div>
                 <h1 class="h1">@controller.tui.getGameState().split("left").last.split(",").head</h1>
