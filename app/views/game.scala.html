@@ -25,11 +25,21 @@
             @if(controller.tui.getGameState().contains("Possible player amount is 2-9.")) {
             <h2 class="h2">
                 @controller.tui.getGameState()
-
+                <!-- Added Bootstrap Form -->
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Player Number</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter player amount">
+                        <small id="emailHelp" class="form-text text-muted">2-9</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <!--
                 <form action="/put" id="player-amount">
                     <input type="text" class="amount-input" name="numberOfPlayer" minlength="1" maxlength="1" size="1" required>
                     <input type="submit" class="amount-input" value="Ok">
                 </form>
+                -->
 
             </h2>
             }
