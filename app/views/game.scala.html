@@ -62,7 +62,6 @@
             }
 
             @if(controller.tui.getGameState().contains("its your turn")) {
-                <h1 class="h1">Player</h1>
             <!-- Added Navigationbar Menu in Bootstrap -->
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
@@ -77,15 +76,17 @@
             </nav>
             <!-- Added Button in Bootstrap -->
             <div class="position-relative h-100">
-                <div class="position-absolute top-right">
+                <div class="position-absolute top-left">
                     <hxb1 style="color:blue; text-align:start;"></hxb1>
                     <div class="container h-100">
                         <div class="position-relative h-100">
-                            <div class="position-absolute top-right">
+                            <div class="position-absolute top-left">
                                 <button type="button" class="btn btn-primary">Funktion</button>
                             </div>
                         </div>
                     </div>
+                <h1 class="h1">Player</h1>
+
                 <div class="another-player">
                     @for(row <- 0 to 2) {
                         <span class="spade">
