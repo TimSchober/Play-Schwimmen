@@ -89,7 +89,8 @@ body {
 
 #content {
   padding: 15px 0;
-  background: url("https://images5.alphacoders.com/372/372327.jpg") no-repeat;
+  background: url("../images/hintergrund.jpg") no-repeat;
+  background-size: cover;
 }
 * {
   color: #e6e6e6;
@@ -123,7 +124,7 @@ img.resize {
 
 .board-body {
   background-size: 800px;
-  background: url("https://www.stoff4you.de/out/pictures/master/product/1/43001480-gruen-.jpg")
+  background: url("../images/stoff-gruen.jpg")
     no-repeat center center;
   height: calc(100vh - 0px);
 }
