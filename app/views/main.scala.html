@@ -9,18 +9,22 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        @* Here's where we render the page title `String`. *@
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="assets/images/favicon1.png">
+
+            <!-- Load bootstrap from cdn -->
+            <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+            <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+            <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+            <!-- End loading bootstrap -->
     </head>
-    <body>
-    <section id="top">
-        <div class="wrapper">
-            <img class="resize" src="assets/images/top-bild.png" alt="logo" />
-            <h1>Play Schwimmen</h1>
-        </div>
-    </section>
-    @content
+    <body class="body">
+        @content
     </body>
 </html>

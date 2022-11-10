@@ -87,29 +87,10 @@ body {
   float: left;
 }
 
-#content {
-  padding: 15px 0;
-  background: url("../images/hintergrund.jpg") no-repeat;
-  background-size: cover;
-}
 * {
   color: #e6e6e6;
 }
 
-#top {
-  background: #0a4c5e fixed;
-  padding: 0;
-  position: relative;
-  height: 220px;
-}
-#top h1 {
-  float: left;
-  padding-top: 15px;
-  color: #fff;
-  font-size: 38px;
-  line-height: 48px;
-  margin-left: 10px;
-}
 img.resize {
   width: 120px;
   height: 120px;

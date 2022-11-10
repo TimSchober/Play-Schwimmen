@@ -1,25 +1,12 @@
-
 @(controller: HomeController)
+
+@main("Welcome to Play Schwimmen") {
+@defining(play.core.PlayVersion.current) { version =>
+
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>Schwimmen</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-    <link rel="shortcut icon" type="image/png" href="assets/images/favicon1.png">
-</head>
-
-<!-- Loads bootstrap from cdn -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> <!-- End loading bootstrap -->
-
-<body class="body">
+<section>
     <div class="board-body">
         <div class="game-state">
             @if(controller.tui.getGameState().contains("Possible player amount is 2-9.")) {
@@ -28,9 +15,8 @@
                 <!-- Added Bootstrap Form -->
                 <form>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Player Number</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter player amount">
-                        <small id="emailHelp" class="form-text text-muted">2-9</small>
+                        <label>Player Number</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter player amount (for up to 2-9 Players)">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -79,29 +65,29 @@
              referemce os ControllerInterface.class
              -->
                     <!-- Bootstrap Button Classes -->
-                    <div class="one">
-                        <button type="button" class="btn btn-primary">
-                            undoStep</button>
-                        <button type="button" class="btn btn-primary">
-                            undo</button>
-                        <button type="button" class="btn btn-primary">
-                            redo</button>
-                        <button type="button" class="btn btn-primary">
-                            saveTo</button>
-                        <button type="button" class="btn btn-primary">
-                            loadFrom</button>
-                        <button type="button" class="btn btn-primary">
-                            nextRound</button>
-                        <button type="button" class="btn btn-success">
-                            yesSelected</button>
-                        <button type="button" class="btn btn-danger">
-                            swapCards</button>
-                        <button type="button" class="btn btn-warning">
-                            swapAllCards</button>
-                        <button type="button" class="btn btn-info">
-                            setKnocked</button>
-                    </div>
-                <h1 class="h1">Player</h1>
+            <div class="one">
+                <button type="button" class="btn btn-primary">
+                    undoStep</button>
+                <button type="button" class="btn btn-primary">
+                    undo</button>
+                <button type="button" class="btn btn-primary">
+                    redo</button>
+                <button type="button" class="btn btn-primary">
+                    saveTo</button>
+                <button type="button" class="btn btn-primary">
+                    loadFrom</button>
+                <button type="button" class="btn btn-primary">
+                    nextRound</button>
+                <button type="button" class="btn btn-success">
+                    yesSelected</button>
+                <button type="button" class="btn btn-danger">
+                    swapCards</button>
+                <button type="button" class="btn btn-warning">
+                    swapAllCards</button>
+                <button type="button" class="btn btn-info">
+                    setKnocked</button>
+            </div>
+            <h1 class="h1">Player</h1>
 
                 <div class="another-player">
                     @for(row <- 0 to 2) {
@@ -289,7 +275,6 @@
                 <!--
                 <h2>These are the Cards on your Hand:</h2>
                 -->
-
                 <div class="hand-cards">
                     @for(row <- 0 to 2) {
                         @if(controller.controller.players.head.cardsOnHand(row)._2 == "spade") {
@@ -532,17 +517,11 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <!-- -->
-
-
-                </div>
-                </div>
-
-
-
-                <h1 class="h1">@controller.tui.getGameState().split("left").last.split(",").head</h1>
-            }
         </div>
     </div>
-</body>
+    <h1 class="h1">@controller.tui.getGameState().split("left").last.split(",").head</h1>
+    }
+</section>
 </html>
+}
+}
