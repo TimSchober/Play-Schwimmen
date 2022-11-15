@@ -2,6 +2,11 @@
 
 @main("Welcome to Play Schwimmen") {
 @defining(play.core.PlayVersion.current) { version =>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/scripts/rules.js"></script>
+    <script src="/scripts/shader.fx.js"></script>
+</head>
 <body class="rule-body">
     <nav class="navbar fixed-top colour" style="background-color: #516477;">
         <div class="container-fluid">
@@ -17,7 +22,7 @@
             </div>
             <div class="col-10 col-sm-10 col-md-8 col-lg-8">
                 <article>
-                    <h3 class="alert alert-dark" role="alert">Tim Schober & Ayaz Hasan</h3>
+                    <h3 class="alert alert-dark" role="alert">Tim Schober, Ayaz Hasan, Daniel Castelo</h3>
                     <p>Here you can play the game "Schwimmen"</p>
 
                     <h4 class="alert alert-secondary" role="alert">Rules</h4>
@@ -62,8 +67,14 @@
                     <p>If a player has no more lives left he will be removed from the game and the rest of the players can continue
                         playing til only one player is left.
                     </p>
-                    <a class="btn btn-outline-light end-of-page" href="game">
+
+                    <!-- Begin Button -->
+
+                    <a class="btn btn-outline-light end-of-page" href="game" input id = "btnSubmit">
                         <h5>to Play</h5>
+                        <!--<br> <br> <br>--
+                        <input id = "btnSubmit" type="submit" value=""/>
+                        !--<br> <br> <br> -->
                     </a>
                 </article>
 
@@ -81,6 +92,7 @@
             </div>
         </div>
     </section>
+
 </body>
 
 
