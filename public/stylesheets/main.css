@@ -1,14 +1,45 @@
- body {
-    height: 100vh;
- }
- .colour {
-  background-color: #516477;
-  height: 10em;
- }
+/*.body {*/
+/*  padding: 0 0;*/
+/*  background: url("../images/hintergrund.jpg") no-repeat;*/
+/*  background-size: cover;*/
+/*}*/
 
- .con {
-   margin-top: 15em;
- }
- .end-of-page {
-   margin-bottom: 20em;
- }
+.game-state {
+  padding: 20px;
+}
+.field-cards {
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 23.4%;
+}
+.hand-cards {
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.play-card {
+    border: 1px black;
+    border-radius: 10px;
+}
+
+.play-card:hover {
+    border: 2px aqua;
+    cursor: pointer;
+}
+
+body {
+height: 100vh;
+}
+.colour {
+background-color: #516477;
+height: 10em;
+}
+
+.con {
+margin-top: 15em;
+}
+.end-of-page {
+margin-bottom: 20em;
+}
