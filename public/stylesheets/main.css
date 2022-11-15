@@ -1,8 +1,18 @@
-/*.body {*/
-/*  padding: 0 0;*/
-/*  background: url("../images/hintergrund.jpg") no-repeat;*/
-/*  background-size: cover;*/
-/*}*/
+.rule-body {
+  padding: 0 0;
+  background: url("../images/hintergrund.jpg") no-repeat;
+  background-size: cover;
+    color: #ccd5d9;
+}
+
+.game-body {
+    padding: 0 0;
+    background: url("../images/hintergrund.jpg") no-repeat;
+    background-size: cover;
+    color: #ccd5d9;
+    overflow: hidden;
+    height: 92vh;
+}
 
 .game-state {
   padding: 20px;
