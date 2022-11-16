@@ -2,7 +2,7 @@
   padding: 0 0;
   background: url("../images/hintergrund.jpg") no-repeat;
   background-size: cover;
-    color: #ccd5d9;
+  color: #ccd5d9;
 }
 
 .game-body {
@@ -65,4 +65,54 @@ h3, h4 {
 .listitem {
     color: #dbe2ea!important;
     background-color: #515560!important;
+}
+
+.navbuttonstyle {
+    background-color: #545b62!important;
+    border-color: #f8f9fa;
+}
+.buttonstyle {
+    margin-top: 2rem;
+    background-color: #545b62!important;
+    border-color: #f8f9fa;
+}
+.navtable {
+    color: #17150f;
+}
+.namestartupper {
+    text-transform: capitalize;
+}
+.classcol {
+    width: 100%;
+    display: inherit;
+}
+.classcardcenter {
+    margin: 0 auto;
+    display: inherit;
+}
+.playernamecenter {
+    margin: 0 auto;
+    text-transform: capitalize;
+}
+
+.classgamestate {
+    width: 100%;
+    display: inline-table;
+}
+
+.label1gamestat1 {
+    margin: 0 auto;
+    display: inherit;
+    margin-top: 2em;
+}
+.label2gamestat1 {
+    margin: 0 auto;
+    display: inherit;
+    margin-top: 4em
+}
+.iputs {
+    margin: 0 auto;
+    display: inherit;
+    margin-top: 2em;
+    width: 50%!important;
 }
