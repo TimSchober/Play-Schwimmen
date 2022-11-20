@@ -116,3 +116,16 @@ h3, h4 {
     margin-top: 2em;
     width: 50%!important;
 }
+
+.play-card, .play-card-field, .play-card-hand {
+    width: 7em;
+    height: auto;
+}
+
+.cardbtn, .cardbtnfield, .cardbtnhand {
+    outline: 0!important;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    cursor: default;
+}

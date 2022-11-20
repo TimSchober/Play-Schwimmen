@@ -42,9 +42,18 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * @param input input as String
    * @return
    */
-  def put(input: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    tui.input = input
+  def setPlayerAmount(count: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    //controller.setPlayerAmount(count.toInt)
+    Redirect("/playerCount")
+    tui.input = count
     tui.processInput()
-    Ok(tui.getGameState())
+    Ok(views.html.game(this))
+  }
+
+  def setPlayerName(name: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Redirect("/playerName")
+    tui.input = name
+    tui.processInput()
+    Ok(views.html.game(this))
   }
 }
