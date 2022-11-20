@@ -1,4 +1,8 @@
 
+
+var fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
+var handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
+
 var cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
 var cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
 var cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
@@ -65,6 +69,29 @@ cardbtnfield1.addEventListener("mouseout", function() {
 
 });
 
+cardbtnfield1.addEventListener("click", function() {
+    if(!fieldCardKlicked1) {
+        fieldimag1.style.outline = "auto";
+        fieldimag1.style.color = "#ed08e6";
+        fieldimag1.style.borderStyle = "solid";
+        fieldCardKlicked1 = true;
+
+        fieldimag2.style.outline = "0";
+        fieldimag2.style.color = "transparent";
+
+        fieldimag3.style.outline = "0";
+        fieldimag3.style.color = "transparent";
+
+        fieldCardKlicked2, fieldCardKlicked3 = false;
+
+    }
+    else {
+        fieldimag1.style.outline = "0";
+        fieldimag1.style.color = "transparent";
+        fieldCardKlicked1 = false;
+    }
+});
+
 cardbtnfield2.addEventListener("mouseover", function() {
     fieldimag2.style.width = "9em";
     fieldimag2.style.height = "auto";
@@ -75,6 +102,27 @@ cardbtnfield2.addEventListener("mouseout", function() {
     fieldimag2.style.width = "7em";
     fieldimag2.style.height = "auto";
 
+});
+cardbtnfield2.addEventListener("click", function() {
+    if(!fieldCardKlicked2) {
+            fieldimag2.style.outline = "auto";
+            fieldimag2.style.color = "#ed08e6";
+            fieldimag2.style.borderStyle = "solid";
+            fieldCardKlicked2 = true;
+
+            fieldimag1.style.outline = "0";
+            fieldimag1.style.color = "transparent";
+
+            fieldimag3.style.outline = "0";
+            fieldimag3.style.color = "transparent";
+
+            fieldCardKlicked1, fieldCardKlicked3 = false;
+        }
+        else {
+            fieldimag2.style.outline = "0";
+            fieldimag2.style.color = "transparent";
+            fieldCardKlicked2 = false;
+        }
 });
 
 cardbtnfield3.addEventListener("mouseover", function() {
@@ -87,6 +135,27 @@ cardbtnfield3.addEventListener("mouseout", function() {
     fieldimag3.style.width = "7em";
     fieldimag3.style.height = "auto";
 
+});
+cardbtnfield3.addEventListener("click", function() {
+    if(!fieldCardKlicked3) {
+        fieldimag3.style.outline = "auto";
+        fieldimag3.style.color = "#ed08e6";
+        fieldimag3.style.borderStyle = "solid";
+        fieldCardKlicked3 = true;
+
+        fieldimag1.style.outline = "0";
+        fieldimag1.style.color = "transparent";
+
+        fieldimag2.style.outline = "0";
+        fieldimag2.style.color = "transparent";
+
+        fieldCardKlicked1, fieldCardKlicked2 = false;
+    }
+    else {
+        fieldimag3.style.outline = "0";
+        fieldimag3.style.color = "transparent";
+        fieldCardKlicked3 = false;
+    }
 });
 
 /*--------------------Handcard-------------------------*/
@@ -111,6 +180,28 @@ cardbtnhand1.addEventListener("mouseout", function() {
 
 });
 
+cardbtnhand1.addEventListener("click", function() {
+    if(!handCardKlicked1) {
+        handimag1.style.outline = "auto";
+        handimag1.style.color = "#ed08e6";
+        handimag1.style.borderStyle = "solid";
+        handCardKlicked1 = true;
+
+        handimag2.style.outline = "0";
+        handimag2.style.color = "transparent";
+
+        handimag3.style.outline = "0";
+        handimag3.style.color = "transparent";
+
+        handCardKlicked2, handCardKlicked3 = false;
+    }
+    else {
+        handimag1.style.outline = "0";
+        handimag1.style.color = "transparent";
+        handCardKlicked1 = false;
+    }
+});
+
 cardbtnhand2.addEventListener("mouseover", function() {
     handimag2.style.width = "9em";
     handimag2.style.height = "auto";
@@ -121,6 +212,27 @@ cardbtnhand2.addEventListener("mouseout", function() {
     handimag2.style.width = "7em";
     handimag2.style.height = "auto";
 
+});
+cardbtnhand2.addEventListener("click", function() {
+    if(!handCardKlicked2) {
+        handimag2.style.outline = "auto";
+        handimag2.style.color = "#ed08e6";
+        handimag2.style.borderStyle = "solid";
+        handCardKlicked2 = true;
+
+        handimag1.style.outline = "0";
+        handimag1.style.color = "transparent";
+
+        handimag3.style.outline = "0";
+        handimag3.style.color = "transparent";
+
+        handCardKlicked1, handCardKlicked3 = false;
+    }
+    else {
+        handimag2.style.outline = "0";
+        handimag2.style.color = "transparent";
+        handCardKlicked2 = false;
+    }
 });
 
 cardbtnhand3.addEventListener("mouseover", function() {
@@ -133,4 +245,26 @@ cardbtnhand3.addEventListener("mouseout", function() {
     handimag3.style.width = "7em";
     handimag3.style.height = "auto";
 
+});
+
+cardbtnhand3.addEventListener("click", function() {
+    if(!handCardKlicked3) {
+        handimag3.style.outline = "auto";
+        handimag3.style.color = "#ed08e6";
+        handimag3.style.borderStyle = "solid";
+        handCardKlicked3 = true;
+
+        handimag1.style.outline = "0";
+        handimag1.style.color = "transparent";
+
+        handimag2.style.outline = "0";
+        handimag2.style.color = "transparent";
+
+        handCardKlicked1, handCardKlicked2 = false;
+    }
+    else {
+        handimag3.style.outline = "0";
+        handimag3.style.color = "transparent";
+        handCardKlicked3 = false;
+    }
 });

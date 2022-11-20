@@ -23,8 +23,10 @@
                             Game
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <a class="dropdown-item" href="#">Save</a>
-                            <a class="dropdown-item" href="#">Load</a>
+                            <a class="dropdown-item" onclick="savexml('saveXml')" href="#">Save Xml</a>
+                            <a class="dropdown-item" onclick="savejson('saveJson')" href="#">Save Json</a>
+                            <a class="dropdown-item" onclick="loadxml('loadXml')" href="#">Load Xml</a>
+                            <a class="dropdown-item" onclick="loadjson('loadJson')" href="#">Load Json</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -32,8 +34,8 @@
                             Edit
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                            <a class="dropdown-item" href="#">Undo</a>
-                            <a class="dropdown-item" href="#">Redo</a>
+                            <a class="dropdown-item" onclick="redo('r')" href="#">Undo</a>
+                            <a class="dropdown-item" onclick="undo('z')" href="#">Redo</a>
                         </div>
                     </li>
                     <li>
@@ -386,8 +388,8 @@
                 </div>
                 <div class="row">
                     <div class="col-2 col-sm-4"></div>
-                    <button type="takeall" class="btn btn-primary col-4 col-sm-2 buttonstyle">Take All</button>
-                    <button type="knock" class="btn btn-primary col-4 col-sm-2 buttonstyle">Knock</button>
+                    <button type="button" onclick="tackallcards('all')" id="tackall" class="btn btn-primary col-4 col-sm-2 buttonstyle">Take All</button>
+                    <button type="button" onclick="knock('k')" id="knock" class="btn btn-primary col-4 col-sm-2 buttonstyle">Knock</button>
                     <div class="col-2 col-sm-4"></div>
                 </div>
                 }
