@@ -11,6 +11,9 @@ var imag1 = document.getElementsByClassName("play-card")[0]; // image 1
 var imag2 = document.getElementsByClassName("play-card")[1]; // image 1
 var imag3 = document.getElementsByClassName("play-card")[2]; // image 1
 
+var cardfieldindex = -1;
+var cardhandindex = -1;
+
 // erste Button
 cardbtn1.addEventListener("mouseover", function() {
     imag1.style.width = "9em";
@@ -70,6 +73,7 @@ cardbtnfield1.addEventListener("mouseout", function() {
 });
 
 cardbtnfield1.addEventListener("click", function() {
+    cardfieldindex = 1;
     if(!fieldCardKlicked1) {
         fieldimag1.style.outline = "auto";
         fieldimag1.style.color = "#ed08e6";
@@ -104,6 +108,7 @@ cardbtnfield2.addEventListener("mouseout", function() {
 
 });
 cardbtnfield2.addEventListener("click", function() {
+    cardfieldindex = 2;
     if(!fieldCardKlicked2) {
             fieldimag2.style.outline = "auto";
             fieldimag2.style.color = "#ed08e6";
@@ -137,6 +142,7 @@ cardbtnfield3.addEventListener("mouseout", function() {
 
 });
 cardbtnfield3.addEventListener("click", function() {
+    cardfieldindex = 3;
     if(!fieldCardKlicked3) {
         fieldimag3.style.outline = "auto";
         fieldimag3.style.color = "#ed08e6";
@@ -181,6 +187,7 @@ cardbtnhand1.addEventListener("mouseout", function() {
 });
 
 cardbtnhand1.addEventListener("click", function() {
+    cardhandindex = 1;
     if(!handCardKlicked1) {
         handimag1.style.outline = "auto";
         handimag1.style.color = "#ed08e6";
@@ -214,6 +221,7 @@ cardbtnhand2.addEventListener("mouseout", function() {
 
 });
 cardbtnhand2.addEventListener("click", function() {
+    cardhandindex = 2;
     if(!handCardKlicked2) {
         handimag2.style.outline = "auto";
         handimag2.style.color = "#ed08e6";
@@ -248,6 +256,7 @@ cardbtnhand3.addEventListener("mouseout", function() {
 });
 
 cardbtnhand3.addEventListener("click", function() {
+    cardhandindex = 3;
     if(!handCardKlicked3) {
         handimag3.style.outline = "auto";
         handimag3.style.color = "#ed08e6";
@@ -268,3 +277,18 @@ cardbtnhand3.addEventListener("click", function() {
         handCardKlicked3 = false;
     }
 });
+
+function changeoncard() {
+    const params = new URLSearchParams({
+        ev: 'y',
+        handcard: cardhandindex,
+        fieldcard: cardfieldindex
+
+    });
+    fetch(`http://localhost:9000/change?${params}`, {
+        method: "POST",
+        body: ""
+    }).then(res => {
+        window.location.replace(res.url);
+    });
+}

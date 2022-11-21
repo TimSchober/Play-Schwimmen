@@ -63,4 +63,17 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     tui.processInput()
     Ok(views.html.game(this))
   }
+
+  def changeOnCard(ev: String, handcard: Int, fieldcard: Int): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Redirect("/change")
+    if (ev == "y" && handcard  != -1 && fieldcard != -1) {
+      tui.input = ev
+      tui.processInput()
+      tui.input = handcard.toString
+      tui.processInput()
+      tui.input = fieldcard.toString
+      tui.processInput()
+    }
+    Ok(views.html.game(this))
+  }
 }

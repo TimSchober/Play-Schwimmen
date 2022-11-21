@@ -72,6 +72,7 @@ h3, h4 {
     border-color: #f8f9fa;
 }
 .buttonstyle {
+    width: 8em;
     margin-top: 2rem;
     background-color: #545b62!important;
     border-color: #f8f9fa;
