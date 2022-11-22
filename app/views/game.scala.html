@@ -114,7 +114,8 @@
                 }
                 @if(!controller.tui.getGameState().contains("its your turn") &
                     !controller.tui.getGameState().contains("Possible player amount is 2-9.") &
-                    !controller.tui.getGameState().contains("type your name:")) {
+                    !controller.tui.getGameState().contains("type your name:") &
+                    !controller.tui.getGameState().contains("start next round with(nr)")) {
                     <h2 class="h2">
                         @controller.tui.getGameState()
                     </h2>
@@ -397,6 +398,23 @@
                     </div>
                     <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
                 </div>
+                }
+                @if(controller.tui.getGameState().contains("start next round with(nr)")) {
+                    @for(index <- 0 until controller.controller.playerAmount) {
+                        <div class="row">
+                            <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
+                            <h1 class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 playernamecenter">
+                                @controller.controller.players(index).name
+                                has: @controller.controller.players(index).life lives and: @controller.controller.players(index).cardCount points
+                            </h1>
+                            <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-4 col-sm-5"></div>
+                        <button type="button" onclick="nextRound('nr')" id="nextRound" class="btn btn-primary buttonstyle col-4 col-sm-2">Start next Round</button>
+                        <div class="col-4 col-sm-5"></div>
+                    </div>
                 }
             </div>
         </div>

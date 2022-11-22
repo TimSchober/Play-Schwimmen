@@ -18,16 +18,6 @@
   padding: 20px;
 }
 
-.play-card {
-    border: 1px black;
-    border-radius: 10px;
-}
-
-.play-card:hover {
-    border: 2px aqua;
-    cursor: pointer;
-}
-
 .colour {
     background-color: #1d2c3b;
     height: 12em;
@@ -121,6 +111,21 @@ h3, h4 {
 .play-card, .play-card-field, .play-card-hand {
     width: 7em;
     height: auto;
+    border: 1px black;
+    border-radius: 5px;
+}
+
+.play-card {
+    border: 1px black;
+    border-radius: 5px;
+}
+
+.play-card-field:hover {
+    cursor: pointer;
+}
+
+.play-card-hand:hover {
+    cursor: pointer;
 }
 
 .cardbtn, .cardbtnfield, .cardbtnhand {

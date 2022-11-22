@@ -76,3 +76,13 @@ function loadjson(j) {
 
         });
 }
+
+function nextRound(j) {
+    fetch(`http://localhost:9000/nextRound?ev=${j}`, {
+        method: "POST",
+        body: ""
+    }).then(res => {
+        window.location.replace(res.url);
+
+    });
+}

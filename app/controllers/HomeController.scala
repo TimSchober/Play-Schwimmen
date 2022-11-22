@@ -76,4 +76,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     }
     Ok(views.html.game(this))
   }
+
+  def nextRound(ev: String): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Redirect("/nextRound")
+    tui.input = ev
+    tui.processInput()
+    Ok(views.html.game(this))
+  }
+
 }
