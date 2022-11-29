@@ -23,10 +23,10 @@
                             Game
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <a class="dropdown-item" onclick="savexml('saveXml')" href="#">Save Xml</a>
-                            <a class="dropdown-item" onclick="savejson('saveJson')" href="#">Save Json</a>
-                            <a class="dropdown-item" onclick="loadxml('loadXml')" href="#">Load Xml</a>
-                            <a class="dropdown-item" onclick="loadjson('loadJson')" href="#">Load Json</a>
+                            <a class="dropdown-item btn-save" id="save-xml" onclick="savexml('saveXml')" href="#">Save Xml</a>
+                            <a class="dropdown-item btn-save" id="save-json" onclick="savejson('saveJson')" href="#">Save Json</a>
+                            <a class="dropdown-item btn-load" id="load-xml" onclick="loadxml('loadXml')" href="#">Load Xml</a>
+                            <a class="dropdown-item btn-load" id="load-json" onclick="loadjson('loadJson')" href="#">Load Json</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -34,8 +34,8 @@
                             Edit
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                            <a class="dropdown-item" onclick="redo('r')" href="#">Undo</a>
-                            <a class="dropdown-item" onclick="undo('z')" href="#">Redo</a>
+                            <a class="dropdown-item btn-undo" id="undo-click" onclick="undo('r')" href="#">Undo</a>
+                            <a class="dropdown-item btn-redo" id="redo-click" onclick="redo('z')" href="#">Redo</a>
                         </div>
                     </li>
                     <li>
@@ -391,9 +391,9 @@
                     <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
                     <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
                         <div class="classcardcenter">
-                            <button type="button" onclick="changeoncard()" id="changeoncard" class="btn btn-primary buttonstyle">Change Card</button>
-                            <button type="button" onclick="tackallcards('all')" id="tackall" class="btn btn-primary buttonstyle">Take All</button>
-                            <button type="button" onclick="knock('k')" id="knock" class="btn btn-primary buttonstyle">Knock</button>
+                            <button type="button" onclick="changeoncard()" id="changeoncard" class="btn btn-primary buttonstyle btn-change-one">Change Card</button>
+                            <button type="button" onclick="tackallcards('all')" id="tackall" class="btn btn-primary buttonstyle btn-change-all">Take All</button>
+                            <button type="button" onclick="knock('k')" id="knock" class="btn btn-primary buttonstyle btn-knock">Knock</button>
                         </div>
                     </div>
                     <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>

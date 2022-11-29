@@ -7,13 +7,13 @@
 GET     /                           controllers.HomeController.rulesPage()
 GET     /game                       controllers.HomeController.game()
 
+#JSON Command /command
++nocsrf
+POST    /command                    controllers.HomeController.gameRequest()
+GET     /status                     controllers.HomeController.status()
+
 GET    /playerCount                 controllers.HomeController.setPlayerAmount(count: String)
 GET    /playerName                  controllers.HomeController.setPlayerName(name: String)
-GET    /tackAll                     controllers.HomeController.tackAllcards(ev: String)
 
-
-
-GET    /change                      controllers.HomeController.changeOnCard(ev: String, handcard: Int, fieldcard: Int)
-GET    /nextRound                   controllers.HomeController.nextRound(ev: String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
