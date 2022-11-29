@@ -46,19 +46,25 @@ function loadGame(l) {
     processCommand("loadJson", "")
 }
 
-function setAmount() {
+function setPlayerAmount() {
     const amount = $('#players').get(0).value;
     processCommand("amount", amount)
 }
 
-function setName() {
+function setPlayerName() {
     const name = $('#playername').get(0).value;
-    processCommand("amount", name)
+    processCommand("name", name)
 }
 
 
 // On Click Events
 function refreshOnClickEvents() {
+    $('#btn-amount').click(function () {
+        setPlayerAmount()
+    });
+    $('#btn-name').click(function () {
+        setPlayerAmount()
+    });
     $('#tackall').click(function () {
         changeAllCards()
     });
@@ -76,6 +82,25 @@ function refreshOnClickEvents() {
     });
     $('#load-json').click(function () {
         loadGame()
+    });
+}
+
+function post(method, url, data) {
+    return $.ajax({
+        method: method,
+        url: url,
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType: "application/json",
+
+        success: function (response) {
+            data = response;
+        },
+        error: function (response) {
+            console.log("Error")
+            console.error(response);
+            console.log(data)
+        }
     });
 }
 

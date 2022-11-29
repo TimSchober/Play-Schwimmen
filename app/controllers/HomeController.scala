@@ -137,6 +137,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
         implicit request => {
           val req = request.body.asJson
           gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
+          println(req.get("data").toString())
           Ok(Json.obj(
             "gamefield" -> Gamefield(),
             "game_status" -> tui.getGameState()
