@@ -6,7 +6,8 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.schwimmen.schwimmenModul
 import de.htwg.se.schwimmen.controller.controllerComponent.ControllerInterface
 import de.htwg.se.schwimmen.aUI.TUI
-import play.api.libs.json.{JsValue, JsObject, Json, Writes}
+import org.scalactic.TypeCheckedTripleEquals.convertToCheckingEqualizer
+import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
 import javax.inject._
 /**
@@ -110,39 +111,85 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   case class Gamefield()
   implicit val gamefieldWrites: Writes[Gamefield] = new Writes[Gamefield] {
     def writes(gamefield: Gamefield): JsValue = Json.toJson(
-      for {
-        player <- 0 until controller.playerAmount
-      } yield {
-        Json.obj(
-          "player_cards_1" -> controller.players(player).cardsOnHand.head,
-          "player_cards_2" -> controller.players(player).cardsOnHand(1),
-          "player_cards_3" -> controller.players(player).cardsOnHand.last,
-          "field_card_1" -> controller.field.cardsOnField.head,
-          "field_card_2" -> controller.field.cardsOnField(1),
-          "field_card_3" -> controller.field.cardsOnField.last,
-        )
-      }
+      Json.obj(
+        "player_cards" -> controller.players(0).cardsOnHand,
+        "field_cards" -> controller.field.cardsOnField,
+      )
+    )
+  }
+
+  case class PlayerAmount()
+  implicit val playeramountwrites: Writes[PlayerAmount] = new Writes[PlayerAmount] {
+    def writes(playerAmount: PlayerAmount): JsValue = Json.toJson(
+      Json.obj(
+        "player_Amount" -> controller.playerAmount
+      )
+    )
+  }
+
+  case class PlayerName()
+  implicit val playernamewrites: Writes[PlayerName] = new Writes[PlayerName] {
+    def writes(playerName: PlayerName): JsValue = Json.toJson(
+      Json.obj(
+        "player_name" -> controller.players(1).name
+      )
     )
   }
 
       def status = Action {
-        Ok(Json.obj(
-          "gamefield" -> Gamefield(),
-          "game_status" -> tui.getGameState()
+        if (tui.getGameState().equals("Player 1, type your name:")) {
+          Ok(Json.obj(
+            "player_amount" -> PlayerAmount(),
+            "getGameState" -> tui.getGameState(),
+            "player_name" -> PlayerName()
           )
-        )
+          )
+        } else if (tui.getGameState().contains("its your turn")) {
+          Ok(Json.obj(
+            "player_amount" -> PlayerAmount(),
+            "getGameState" -> tui.getGameState(),
+            "player_name" -> PlayerName(),
+            "gamecards" -> Gamefield()
+          )
+          )
+        } else {
+          Ok(Json.obj(
+            "player_amount" -> PlayerAmount(),
+            "getGameState" -> tui.getGameState()
+            )
+          )
+        }
       }
 
       def gameRequest = Action {
         implicit request => {
           val req = request.body.asJson
           gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
-          println(req.get("data").toString())
-          Ok(Json.obj(
-            "gamefield" -> Gamefield(),
-            "game_status" -> tui.getGameState()
+          if (tui.getGameState().equals("Player 1, type your name:")) {
+            Ok(Json.obj(
+              "player_amount" -> PlayerAmount(),
+              "getGameState" -> tui.getGameState(),
+              "player_name" -> PlayerName()
+              )
             )
-          )
+
+          } else if (tui.getGameState().contains("its your turn")) {
+            println(tui.getGameState())
+            Ok(Json.obj(
+              "player_amount" -> PlayerAmount(),
+              "getGameState" -> tui.getGameState(),
+              "player_name" -> PlayerName(),
+              "gamecards" -> Gamefield()
+            )
+            )
+          }
+          else {
+            Ok(Json.obj(
+              "player_amount" -> PlayerAmount(),
+              "getGameState" -> tui.getGameState(),
+            )
+            )
+          }
         }
       }
 

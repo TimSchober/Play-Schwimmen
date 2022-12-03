@@ -3,7 +3,7 @@
 @main("Welcome to Play Schwimmen") {
 @defining(play.core.PlayVersion.current) { version =>
 
-    <body class="game-body">
+    <body class="game-body" id="gameBody">
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <span class="navbar-brand mb-0 h1">
                 <img src="assets/images/top-bild.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -75,28 +75,30 @@
             </div>
         </div>
 
-        <div class="board-body">
-            <div class="game-state">
+        <div class="board-body" id="help">
+            <div class="game-state" id="boardBody">
                 @if(controller.tui.getGameState().contains("Possible player amount is 2-9.")) {
-                    <h2 class="h2">
+                    <h2 class="h2" id="player-amoutn-label">
                             <div class="row">
                                 <div class="col-1 col-sm-2"></div>
                                 <div class="form-group col-10 col-sm-8 classgamestate">
-                                    <label class="label1gamestat1">@controller.tui.getGameState().split("Possible player amount is 2-9.")</label>
-                                    <label class="label2gamestat1">Player Number</label>
+                                    <label class="label1gamestat1" id="first-label">@controller.tui.getGameState().split("Possible player amount is 2-9.")</label>
+                                    <label class="label2gamestat1" id="second-label">Player Number</label>
                                     <input type="number" id="players" autofocus="autofocus" class="form-control iputs" min="2" max="9" aria-describedby="emailHelp" placeholder="Enter player amount (for up to 2-9 Players)">
                                 </div>
                                 <div class="col-1 col-sm-2"></div>
                             </div>
                             <div class="row">
-                                <div class="col-4 col-sm-5"></div>
+                                <div class="col-4 col-sm-4"></div>
+                                <div class="col-4 col-sm-4" id="amount-btn">
                                     <button type="button" class="btn btn-primary col-4 col-sm-2" id="btn-amount" style="margin-top: 2rem">Ok</button>
-                                <div class="col-4 col-sm-5"></div>
+                                </div>
+                                <div class="col-4 col-sm-4"></div>
                             </div>
                     </h2>
                 }
                 @if(controller.tui.getGameState().contains("type your name:")) {
-                    <h2 class="h2">
+                    <h2 class="h2" id="player-name-label">
                         <div class="row">
                             <div class="col-1 col-sm-2"></div>
                             <div class="form-group col-10 col-sm-8 classgamestate">
@@ -106,9 +108,11 @@
                             <div class="col-1 col-sm-2"></div>
                         </div>
                         <div class="row">
-                            <div class="col-4 col-sm-5"></div>
-                            <button type="button" id="btn-name" class="btn btn-primary col-4 col-sm-2" style="margin-top: 2rem">Ok</button>
-                            <div class="col-4 col-sm-5"></div>
+                            <div class="col-4 col-sm-4"></div>
+                            <div class="" id="name-button">
+                                <button type="button" id="btn-name" class="btn btn-primary col-4 col-sm-2" style="margin-top: 2rem">Ok</button>
+                            </div>
+                            <div class="col-4 col-sm-4"></div>
                         </div>
                     </h2>
                 }
@@ -128,7 +132,7 @@
                         </div>
                         <div class="col-5"></div>
                     </div>
-                    <div class="row" style="margin-bottom: 1rem">
+                    <div class="row" style="margin-bottom: 1rem" id="anotherCards">
                         <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
                         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
                             <div class="classcardcenter">
