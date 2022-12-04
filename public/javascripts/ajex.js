@@ -21,6 +21,20 @@ function getData() {
 }
 
 function changeAllCards() {
+    let anotherCards1Div = document.getElementById("a-cards");
+    let fieldCards1Div = document.getElementById("f-cards");
+    let handCards1Div = document.getElementById("h-cards");
+    let gameButtonsDiv = document.getElementById("gameButtons");
+    let nameLabelDiv = document.getElementById("name-label");
+    let anotherPlayerNameDiv = document.getElementById("another-name-label");
+
+    anotherCards1Div.remove();
+    fieldCards1Div.remove();
+    handCards1Div.remove();
+    gameButtonsDiv.remove();
+    nameLabelDiv.remove();
+    anotherPlayerNameDiv.remove();
+
     processCommand("all", "")
 }
 
@@ -122,13 +136,13 @@ let firstLabel = $('#first-label').get(0);
 let secondLabel = $('#second-label').get(0);
 let playerAmountInput = $('#players').get(0);
 let amountButton = $('#amount-btn').get(0);
-let gameBody = $('#gameBody').get(0);
+let navBar = $('#navbarSupportedContent').get(0);
 
 let nameIput = "<input type=\"text\" autofocus=\"autofocus\" class=\"form-control iputs\" id=\"playername\" aria-describedby=\"emailHelp\" placeholder=\"Enter Name\">";
 
 let userAddBtn = "<div class=\"col-4 col-sm-4\" id=\"name-button\"><button type=\"button\" id=\"btn-name\" class=\"btn btn-primary col-4 col-sm-4\" style=\"margin-top: 2rem\">Ok</button></div>";
 
-let anotherCards = "<div class=\"row\" style=\"margin-bottom: 1rem\">\n" +
+let anotherCards = "<div class=\"row\" id=\"a-cards\" style=\"margin-bottom: 1rem\">\n" +
           "                                  <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
           "                                  <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
           "                                      <div class=\"classcardcenter\">\n" +
@@ -143,17 +157,7 @@ let anotherCards = "<div class=\"row\" style=\"margin-bottom: 1rem\">\n" +
           "                              </div>"
 
 
-var fieldCards1 = "<div class=\"row\" style=\"margin-bottom: 1rem\">\n" +
-                  "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
-                  "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
-                  "                                   <div class=\"classcardcenter\">\n"
-
-var handCards1 = "<div class=\"row\" style=\"margin-bottom: 1rem\">\n" +
-                  "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
-                  "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
-                  "                                   <div class=\"classcardcenter\">\n"
-
-var gameButtons = "<div class=\"row\">\n" +
+var gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
                   "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
                   "                     <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
                   "                         <div class=\"classcardcenter\">\n" +
@@ -169,15 +173,7 @@ function updateInfoPanel() {
 
     let game_stat = data.getGameState;
 
-    if (game_stat === "\nPlayer 1, type your name:"
-        || game_stat === "\nPlayer 2, type your name:"
-        || game_stat === "\nPlayer 3, type your name:"
-        || game_stat === "\nPlayer 4, type your name:"
-        || game_stat === "\nPlayer 5, type your name:"
-        || game_stat === "\nPlayer 6, type your name:"
-        || game_stat === "\nPlayer 7, type your name:"
-        || game_stat === "\nPlayer 8, type your name:"
-        || game_stat === "\nPlayer 9, type your name:") {
+    if (game_stat.includes("type your name")) {
 
         firstLabel.innerHTML = `<h2 class="h2">${data.getGameState}</h2>`;
         secondLabel.innerHTML = "";
@@ -185,13 +181,28 @@ function updateInfoPanel() {
         amountButton.innerHTML = userAddBtn;
 
     } else if (game_stat.includes("its your turn")) {
-        fieldCards1.innerHTML = "";
-        handCards1.innerHTML = "";
+
+        let gameBody = $('#gameBody').get(0);
+
+        var fieldCards1 = "<div class=\"row\" id=\"f-cards\" style=\"margin-bottom: 1rem\">\n" +
+                          "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                          "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
+                          "                                   <div class=\"classcardcenter\">\n"
+
+        var handCards1 = "<div class=\"row\" id=\"h-cards\" style=\"margin-bottom: 1rem\">\n" +
+                          "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                          "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
+                          "                                   <div class=\"classcardcenter\">\n"
+
+        let playerNameLabel =    `<div class="row" id="name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter">${data.player_name.player_name}</h1></div><div class="col-5"></div></div>`;
+        let anotherPlayerName =  `<div class="row" id="another-name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter">Another Player</h1></div><div class="col-5"></div></div>`;
+
+
         $(document).ready(function() {
             $("#playername").remove();
             $("#name-button").remove();
+            $("#help").remove();
         });
-
         let fieldCards = data.gamecards.field_cards;
         let handCards = data.gamecards.player_cards;
 
@@ -462,10 +473,14 @@ function updateInfoPanel() {
          handCards1 += "       </div>\n" +
                               "                       </div>"
          firstLabel.innerHTML = "";
+
+         gameBody.innerHTML = gameBody.innerHTML + anotherPlayerName;
          gameBody.innerHTML = gameBody.innerHTML + anotherCards;
          gameBody.innerHTML = gameBody.innerHTML + fieldCards1;
          gameBody.innerHTML = gameBody.innerHTML + handCards1;
+         gameBody.innerHTML = gameBody.innerHTML + playerNameLabel;
          gameBody.innerHTML = gameBody.innerHTML + gameButtons;
+
     }
 }
 

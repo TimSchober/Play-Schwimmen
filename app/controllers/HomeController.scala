@@ -50,7 +50,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
       def changeAllCards() = {
         controller.swapAllCards()
-        controller.nextPlayer()
       }
 
       def knock() = {
@@ -131,7 +130,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   implicit val playernamewrites: Writes[PlayerName] = new Writes[PlayerName] {
     def writes(playerName: PlayerName): JsValue = Json.toJson(
       Json.obj(
-        "player_name" -> controller.players(1).name
+        "player_name" -> controller.players(0).name
       )
     )
   }
