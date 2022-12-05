@@ -10,6 +10,23 @@ $(document).ready(function () {
     }
 )
 
+function resetGame() {
+
+    let anotherCards1Div = document.getElementById("a-cards");
+    let fieldCards1Div = document.getElementById("f-cards");
+    let handCards1Div = document.getElementById("h-cards");
+    let gameButtonsDiv = document.getElementById("gameButtons");
+    let nameLabelDiv = document.getElementById("name-label");
+    let anotherPlayerNameDiv = document.getElementById("another-name-label");
+
+    anotherCards1Div.remove();
+    fieldCards1Div.remove();
+    handCards1Div.remove();
+    gameButtonsDiv.remove();
+    nameLabelDiv.remove();
+    anotherPlayerNameDiv.remove();
+}
+
 //Game dara from controller
 let data = {};
 
@@ -27,44 +44,18 @@ function getData() {
 }
 
 function changeAllCards() {
-    let anotherCards1Div = document.getElementById("a-cards");
-    let fieldCards1Div = document.getElementById("f-cards");
-    let handCards1Div = document.getElementById("h-cards");
-    let gameButtonsDiv = document.getElementById("gameButtons");
-    let nameLabelDiv = document.getElementById("name-label");
-    let anotherPlayerNameDiv = document.getElementById("another-name-label");
-
-    anotherCards1Div.remove();
-    fieldCards1Div.remove();
-    handCards1Div.remove();
-    gameButtonsDiv.remove();
-    nameLabelDiv.remove();
-    anotherPlayerNameDiv.remove();
-
+    resetGame()
     processCommand("all", "")
 }
+
 function changeOneCard() {
+
     let handCardIndex = cardhandindex;
     let fieldCardIndex = cardfieldindex;
-
     if (handCardIndex == -1 || fieldCardIndex == -1) return;
-
     let cardsToChange = handCardIndex.toString() + "G" +  fieldCardIndex.toString();
 
-    let anotherCards1Div = document.getElementById("a-cards");
-    let fieldCards1Div = document.getElementById("f-cards");
-    let handCards1Div = document.getElementById("h-cards");
-    let gameButtonsDiv = document.getElementById("gameButtons");
-    let nameLabelDiv = document.getElementById("name-label");
-    let anotherPlayerNameDiv = document.getElementById("another-name-label");
-
-    anotherCards1Div.remove();
-    fieldCards1Div.remove();
-    handCards1Div.remove();
-    gameButtonsDiv.remove();
-    nameLabelDiv.remove();
-    anotherPlayerNameDiv.remove();
-
+    resetGame()
     processCommand("y", cardsToChange)
 
     cardhandindex = -1;
@@ -72,20 +63,7 @@ function changeOneCard() {
 }
 
 function knock() {
-    let anotherCards1Div = document.getElementById("a-cards");
-    let fieldCards1Div = document.getElementById("f-cards");
-    let handCards1Div = document.getElementById("h-cards");
-    let gameButtonsDiv = document.getElementById("gameButtons");
-    let nameLabelDiv = document.getElementById("name-label");
-    let anotherPlayerNameDiv = document.getElementById("another-name-label");
-
-    anotherCards1Div.remove();
-    fieldCards1Div.remove();
-    handCards1Div.remove();
-    gameButtonsDiv.remove();
-    nameLabelDiv.remove();
-    anotherPlayerNameDiv.remove();
-
+    resetGame()
     processCommand("k", "")
 }
 
