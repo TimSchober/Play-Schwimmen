@@ -50,6 +50,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
       def changeAllCards() = {
         controller.swapAllCards()
+        controller.nextPlayer()
       }
 
       def knock() = {

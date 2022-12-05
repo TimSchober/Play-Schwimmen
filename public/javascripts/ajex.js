@@ -99,6 +99,285 @@ function refreshOnClickEvents() {
     $('#load-json').click(function () {
         loadGame()
     });
+
+    var fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
+    var handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
+
+    var cardfieldindex = -1;
+    var cardhandindex = -1;
+
+    var cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
+    var cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
+    var cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
+
+    var imag1 = document.getElementsByClassName("play-card")[0]; // image 1
+    var imag2 = document.getElementsByClassName("play-card")[1]; // image 1
+    var imag3 = document.getElementsByClassName("play-card")[2]; // image 1
+
+    // erste Button
+    cardbtn1.addEventListener("mouseover", function() {
+        imag1.style.width = "9em";
+        imag1.style.height = "auto";
+
+    });
+    cardbtn1.addEventListener("mouseout", function() {
+        imag1.style.width = "7em";
+        imag1.style.height = "auto";
+
+    });
+
+    // Zweite Button
+    cardbtn2.addEventListener("mouseover", function() {
+        imag2.style.width = "9em";
+        imag2.style.height = "auto";
+
+    });
+    cardbtn2.addEventListener("mouseout", function() {
+        imag2.style.width = "7em";
+        imag2.style.height = "auto";
+
+    });
+
+    // Dritte Button
+    cardbtn3.addEventListener("mouseover", function() {
+        imag3.style.width = "9em";
+        imag3.style.height = "auto";
+
+    });
+    cardbtn3.addEventListener("mouseout", function() {
+        imag3.style.width = "7em";
+        imag3.style.height = "auto";
+
+    });
+
+    /*-----------------Fieldcards---------------------*/
+
+    var cardbtnfield1 = document.getElementsByClassName("cardbtnfield")[0]; // fieldbutton 1
+    var cardbtnfield2 = document.getElementsByClassName("cardbtnfield")[1]; // fieldbutton 2
+    var cardbtnfield3 = document.getElementsByClassName("cardbtnfield")[2]; // fieldbutton 3
+
+    var fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
+    var fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
+    var fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
+
+    cardbtnfield1.addEventListener("mouseover", function() {
+        fieldimag1.style.width = "9em";
+        fieldimag1.style.height = "auto";
+
+    });
+
+    cardbtnfield1.addEventListener("mouseout", function() {
+        fieldimag1.style.width = "7em";
+        fieldimag1.style.height = "auto";
+
+    });
+
+    cardbtnfield1.addEventListener("click", function() {
+        cardfieldindex = 1;
+        if(!fieldCardKlicked1) {
+            fieldimag1.style.outline = "auto";
+            fieldimag1.style.color = "#ed08e6";
+            fieldimag1.style.borderStyle = "solid";
+            fieldCardKlicked1 = true;
+
+            fieldimag2.style.outline = "0";
+            fieldimag2.style.color = "transparent";
+
+            fieldimag3.style.outline = "0";
+            fieldimag3.style.color = "transparent";
+
+            fieldCardKlicked2, fieldCardKlicked3 = false;
+
+        }
+        else {
+            fieldimag1.style.outline = "0";
+            fieldimag1.style.color = "transparent";
+            fieldCardKlicked1 = false;
+        }
+    });
+
+    cardbtnfield2.addEventListener("mouseover", function() {
+        fieldimag2.style.width = "9em";
+        fieldimag2.style.height = "auto";
+
+    });
+
+    cardbtnfield2.addEventListener("mouseout", function() {
+        fieldimag2.style.width = "7em";
+        fieldimag2.style.height = "auto";
+
+    });
+    cardbtnfield2.addEventListener("click", function() {
+        cardfieldindex = 2;
+        if(!fieldCardKlicked2) {
+                fieldimag2.style.outline = "auto";
+                fieldimag2.style.color = "#ed08e6";
+                fieldimag2.style.borderStyle = "solid";
+                fieldCardKlicked2 = true;
+
+                fieldimag1.style.outline = "0";
+                fieldimag1.style.color = "transparent";
+
+                fieldimag3.style.outline = "0";
+                fieldimag3.style.color = "transparent";
+
+                fieldCardKlicked1, fieldCardKlicked3 = false;
+            }
+            else {
+                fieldimag2.style.outline = "0";
+                fieldimag2.style.color = "transparent";
+                fieldCardKlicked2 = false;
+            }
+    });
+
+    cardbtnfield3.addEventListener("mouseover", function() {
+        fieldimag3.style.width = "9em";
+        fieldimag3.style.height = "auto";
+
+    });
+
+    cardbtnfield3.addEventListener("mouseout", function() {
+        fieldimag3.style.width = "7em";
+        fieldimag3.style.height = "auto";
+
+    });
+    cardbtnfield3.addEventListener("click", function() {
+        cardfieldindex = 3;
+        if(!fieldCardKlicked3) {
+            fieldimag3.style.outline = "auto";
+            fieldimag3.style.color = "#ed08e6";
+            fieldimag3.style.borderStyle = "solid";
+            fieldCardKlicked3 = true;
+
+            fieldimag1.style.outline = "0";
+            fieldimag1.style.color = "transparent";
+
+            fieldimag2.style.outline = "0";
+            fieldimag2.style.color = "transparent";
+
+            fieldCardKlicked1, fieldCardKlicked2 = false;
+        }
+        else {
+            fieldimag3.style.outline = "0";
+            fieldimag3.style.color = "transparent";
+            fieldCardKlicked3 = false;
+        }
+    });
+
+    /*--------------------Handcard-------------------------*/
+
+    var cardbtnhand1 = document.getElementsByClassName("cardbtnhand")[0]; // handbutton 1
+    var cardbtnhand2 = document.getElementsByClassName("cardbtnhand")[1]; // handbutton 2
+    var cardbtnhand3 = document.getElementsByClassName("cardbtnhand")[2]; // handbutton 3
+
+    var handimag1 = document.getElementsByClassName("play-card-hand")[0]; // handimage 1
+    var handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
+    var handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
+
+    cardbtnhand1.addEventListener("mouseover", function() {
+        handimag1.style.width = "9em";
+        handimag1.style.height = "auto";
+
+    });
+
+    cardbtnhand1.addEventListener("mouseout", function() {
+        handimag1.style.width = "7em";
+        handimag1.style.height = "auto";
+
+    });
+
+    cardbtnhand1.addEventListener("click", function() {
+        cardhandindex = 1;
+        if(!handCardKlicked1) {
+            handimag1.style.outline = "auto";
+            handimag1.style.color = "#ed08e6";
+            handimag1.style.borderStyle = "solid";
+            handCardKlicked1 = true;
+
+            handimag2.style.outline = "0";
+            handimag2.style.color = "transparent";
+
+            handimag3.style.outline = "0";
+            handimag3.style.color = "transparent";
+
+            handCardKlicked2, handCardKlicked3 = false;
+        }
+        else {
+            handimag1.style.outline = "0";
+            handimag1.style.color = "transparent";
+            handCardKlicked1 = false;
+        }
+    });
+
+    cardbtnhand2.addEventListener("mouseover", function() {
+        handimag2.style.width = "9em";
+        handimag2.style.height = "auto";
+
+    });
+
+    cardbtnhand2.addEventListener("mouseout", function() {
+        handimag2.style.width = "7em";
+        handimag2.style.height = "auto";
+
+    });
+    cardbtnhand2.addEventListener("click", function() {
+        cardhandindex = 2;
+        if(!handCardKlicked2) {
+            handimag2.style.outline = "auto";
+            handimag2.style.color = "#ed08e6";
+            handimag2.style.borderStyle = "solid";
+            handCardKlicked2 = true;
+
+            handimag1.style.outline = "0";
+            handimag1.style.color = "transparent";
+
+            handimag3.style.outline = "0";
+            handimag3.style.color = "transparent";
+
+            handCardKlicked1, handCardKlicked3 = false;
+        }
+        else {
+            handimag2.style.outline = "0";
+            handimag2.style.color = "transparent";
+            handCardKlicked2 = false;
+        }
+    });
+
+    cardbtnhand3.addEventListener("mouseover", function() {
+        handimag3.style.width = "9em";
+        handimag3.style.height = "auto";
+
+    });
+
+    cardbtnhand3.addEventListener("mouseout", function() {
+        handimag3.style.width = "7em";
+        handimag3.style.height = "auto";
+
+    });
+
+    cardbtnhand3.addEventListener("click", function() {
+        cardhandindex = 3;
+        if(!handCardKlicked3) {
+            handimag3.style.outline = "auto";
+            handimag3.style.color = "#ed08e6";
+            handimag3.style.borderStyle = "solid";
+            handCardKlicked3 = true;
+
+            handimag1.style.outline = "0";
+            handimag1.style.color = "transparent";
+
+            handimag2.style.outline = "0";
+            handimag2.style.color = "transparent";
+
+            handCardKlicked1, handCardKlicked2 = false;
+        }
+        else {
+            handimag3.style.outline = "0";
+            handimag3.style.color = "transparent";
+            handCardKlicked3 = false;
+        }
+    });
+
 }
 
 function post(method, url, data) {
@@ -140,7 +419,7 @@ let navBar = $('#navbarSupportedContent').get(0);
 
 let nameIput = "<input type=\"text\" autofocus=\"autofocus\" class=\"form-control iputs\" id=\"playername\" aria-describedby=\"emailHelp\" placeholder=\"Enter Name\">";
 
-let userAddBtn = "<div class=\"col-4 col-sm-4\" id=\"name-button\"><button type=\"button\" id=\"btn-name\" class=\"btn btn-primary col-4 col-sm-4\" style=\"margin-top: 2rem\">Ok</button></div>";
+let userAddBtn = "<div class=\"col-4 col-sm-4\" id=\"name-button\"><button type=\"button\" id=\"btn-name\" class=\"btn btn-primary col-4 col-sm-4\" style=\"margin-top: 2rem; margin-left: 15em;\">Ok</button></div>";
 
 let anotherCards = "<div class=\"row\" id=\"a-cards\" style=\"margin-bottom: 1rem\">\n" +
           "                                  <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
@@ -148,7 +427,11 @@ let anotherCards = "<div class=\"row\" id=\"a-cards\" style=\"margin-bottom: 1re
           "                                      <div class=\"classcardcenter\">\n" +
           "                                             <button class=\"cardbtn\" type=\"button\" id=\"cardbutton\">\n" +
           "                                                 <img class=\"play-card\" id=\"dragoncard\" src=\"assets/images/dragon1.png\" alt=\"card background\" />\n" +
+          "                                             </button>\n" +
+          "                                             <button class=\"cardbtn\" type=\"button\" id=\"cardbutton\">\n" +
           "                                                 <img class=\"play-card\" id=\"dragoncard\" src=\"assets/images/dragon1.png\" alt=\"card background\" />\n" +
+          "                                             </button>\n" +
+          "                                             <button class=\"cardbtn\" type=\"button\" id=\"cardbutton\">\n" +
           "                                                 <img class=\"play-card\" id=\"dragoncard\" src=\"assets/images/dragon1.png\" alt=\"card background\" />\n" +
           "                                             </button>\n" +
           "                                      </div>\n" +
@@ -195,7 +478,7 @@ function updateInfoPanel() {
                           "                                   <div class=\"classcardcenter\">\n"
 
         let playerNameLabel =    `<div class="row" id="name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter">${data.player_name.player_name}</h1></div><div class="col-5"></div></div>`;
-        let anotherPlayerName =  `<div class="row" id="another-name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter">Another Player</h1></div><div class="col-5"></div></div>`;
+        let anotherPlayerName =  `<div class="row" id="another-name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter" style="margin-bottom: 0.5em;">Another Player</h1></div><div class="col-5"></div></div>`;
 
 
         $(document).ready(function() {
@@ -340,30 +623,30 @@ function updateInfoPanel() {
          for (i = 0; i < fieldCards.length; i++) {
 
               if (handCards[i][1] == "spade") {
-                  handCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
+                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
                   if (handCards[i][0] == "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_spades.png\" alt=\"7_of_spades\" class=\"play-card-field\" />\n";
+                       handCards1 += "<img src=\"assets/images/7_of_spades.png\" alt=\"7_of_spades\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_spades.png\" alt=\"8_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/8_of_spades.png\" alt=\"8_of_spades\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_spades.png\" alt=\"9_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/9_of_spades.png\" alt=\"9_of_spades\" class=\"play-card-hand\" />\n";
                   }
                    else if(handCards[i][0] == "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_spades.png\" alt=\"10_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/10_of_spades.png\" alt=\"10_of_spades\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_spades.png\" alt=\"jack_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/jack_of_spades.png\" alt=\"jack_of_spades\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_spades.png\" alt=\"queen_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/queen_of_spades.png\" alt=\"queen_of_spades\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_spades.png\" alt=\"king_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/king_of_spades.png\" alt=\"king_of_spades\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_spades.png\" alt=\"ace_of_spades\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/ace_of_spades.png\" alt=\"ace_of_spades\" class=\"play-card-hand\" />\n";
                    }
                    else {
                       handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
@@ -371,30 +654,30 @@ function updateInfoPanel() {
                    handCards1 += "</button>\n";
               }
               else if (handCards[i][1] == "heart") {
-                  handCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
+                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
                   if (handCards[i][0] == "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_hearts.png\" alt=\"7_of_hearts\" class=\"play-card-field\" />\n";
+                       handCards1 += "<img src=\"assets/images/7_of_hearts.png\" alt=\"7_of_hearts\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_hearts.png\" alt=\"8_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/8_of_hearts.png\" alt=\"8_of_hearts\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_hearts.png\" alt=\"9_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/9_of_hearts.png\" alt=\"9_of_hearts\" class=\"play-card-hand\" />\n";
                   }
                    else if(handCards[i][0] == "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_hearts.png\" alt=\"10_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/10_of_hearts.png\" alt=\"10_of_hearts\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_hearts.png\" alt=\"jack_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/jack_of_hearts.png\" alt=\"jack_of_hearts\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_hearts.png\" alt=\"queen_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/queen_of_hearts.png\" alt=\"queen_of_hearts\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_hearts.png\" alt=\"king_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/king_of_hearts.png\" alt=\"king_of_hearts\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_hearts.png\" alt=\"ace_of_hearts\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/ace_of_hearts.png\" alt=\"ace_of_hearts\" class=\"play-card-hand\" />\n";
                    }
                    else {
                         handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
@@ -403,30 +686,30 @@ function updateInfoPanel() {
               }
 
               else if (handCards[i][1] == "diamond") {
-                  handCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
+                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
                   if (handCards[i][0] == "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_diamonds.png\" alt=\"7_of_diamonds\" class=\"play-card-field\" />\n";
+                       handCards1 += "<img src=\"assets/images/7_of_diamonds.png\" alt=\"7_of_diamonds\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_diamonds.png\" alt=\"8_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/8_of_diamonds.png\" alt=\"8_of_diamonds\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_diamonds.png\" alt=\"9_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/9_of_diamonds.png\" alt=\"9_of_diamonds\" class=\"play-card-hand\" />\n";
                   }
                    else if(handCards[i][0] == "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_diamonds.png\" alt=\"10_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/10_of_diamonds.png\" alt=\"10_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_diamonds.png\" alt=\"jack_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/jack_of_diamonds.png\" alt=\"jack_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_diamonds.png\" alt=\"queen_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/queen_of_diamonds.png\" alt=\"queen_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_diamonds.png\" alt=\"king_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/king_of_diamonds.png\" alt=\"king_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_diamonds.png\" alt=\"ace_of_diamonds\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/ace_of_diamonds.png\" alt=\"ace_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
                    else {
                         handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
@@ -434,30 +717,30 @@ function updateInfoPanel() {
                    handCards1 += "</button>\n";
               }
               else if (handCards[i][1] == "club") {
-                  handCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
+                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
                   if (fieldCards[i][0] == "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-field\" />\n";
+                       handCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-hand\" />\n";
                   }
                   else if(fieldCards[i][0] == "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] == "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_clubs.png\" alt=\"9_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/9_of_clubs.png\" alt=\"9_of_clubs\" class=\"play-card-hand\" />\n";
                   }
                    else if(handCards[i][0] == "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_clubs.png\" alt=\"10_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/10_of_clubs.png\" alt=\"10_of_clubs\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_clubs.png\" alt=\"jack_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/jack_of_clubs.png\" alt=\"jack_of_clubs\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_clubs.png\" alt=\"queen_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/queen_of_clubs.png\" alt=\"queen_of_clubs\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_clubs.png\" alt=\"king_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/king_of_clubs.png\" alt=\"king_of_clubs\" class=\"play-card-hand\" />\n";
                    }
                    else if(handCards[i][0] == "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_clubs.png\" alt=\"ace_of_clubs\" class=\"play-card-field\" />\n";
+                        handCards1 += "<img src=\"assets/images/ace_of_clubs.png\" alt=\"ace_of_clubs\" class=\"play-card-hand\" />\n";
                    }
                    else {
                         handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
@@ -481,6 +764,7 @@ function updateInfoPanel() {
          gameBody.innerHTML = gameBody.innerHTML + playerNameLabel;
          gameBody.innerHTML = gameBody.innerHTML + gameButtons;
 
+         console.log(gameBody);
+
     }
 }
-
