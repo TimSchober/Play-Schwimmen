@@ -56,12 +56,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     controller.nextPlayer()
   }
 
-  def changeOneCard(handCard: Int, fieldCard: Int): Unit = {
-    if (handCard != -1 && fieldCard != -1) {
-      controller.swapCards(handCard, fieldCard)
-      controller.nextPlayer()
-    }
-  }
+      def changeOneCard(cards: String) = {
+        var handCard = cards.split("G").head.toInt
+        var fieldCard = cards.split("G").last.toInt
+        if (handCard != -1 && fieldCard != -1) {
+          println(handCard)
+          print(fieldCard)
+          controller.swapCards(handCard, fieldCard)
+          controller.nextPlayer()
+        }
+      }
 
   def setNextRound(): Unit = {
     controller.nextRound()
@@ -83,28 +87,30 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     controller.loadFrom("loadJson")
   }
 
-  def gameProcessComand(comand: String,  data: String): String = {
-    if (comand.equals("\"all\"")) {
-      changeAllCards()
-    } else if (comand.equals("\"amount\"")) {
-      setPlayerAmount(data.replace("\"", ""))
-    } else if (comand.equals("\"addplayer\"")) {
-      setPlayerName(data.replace("\"", ""))
-    } else if (comand.equals("\"k\"")) {
-      knock()
-    } else if (comand.equals("\"nr\"")) {
-      setNextRound()
-    } else if (comand.equals("\"undo\"")) {
-      undo()
-    } else if (comand.equals("\"redo\"")) {
-      redo()
-    } else if (comand.equals("\"save\"")) {
-      saveGame()
-    } else if (comand.equals("\"load\"")) {
-      loadGame()
-    }
-    "Ok"
-  }
+      def gameProcessComand(comand: String,  data: String): String = {
+        if (comand.equals("\"all\"")) {
+          changeAllCards()
+        } else if (comand.equals("\"y\"")) {
+          changeOneCard(data.replace("\"", ""))
+        } else if (comand.equals("\"amount\"")) {
+          setPlayerAmount(data.replace("\"", ""))
+        } else if (comand.equals("\"addplayer\"")) {
+          setPlayerName(data.replace("\"", ""))
+        } else if (comand.equals("\"k\"")) {
+          knock()
+        } else if (comand.equals("\"nr\"")) {
+          setNextRound()
+        } else if (comand.equals("\"undo\"")) {
+          undo()
+        } else if (comand.equals("\"redo\"")) {
+          redo()
+        } else if (comand.equals("\"save\"")) {
+          saveGame()
+        } else if (comand.equals("\"load\"")) {
+          loadGame()
+        }
+        "Ok"
+      }
 
   case class Gamefield()
   implicit val gamefieldWrites: Writes[Gamefield] = new Writes[Gamefield] {
@@ -134,62 +140,62 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     )
   }
 
-  def status = Action {
-    if (tui.getGameState().equals("Player 1, type your name:")) {
-      Ok(Json.obj(
-        "player_amount" -> PlayerAmount(),
-        "getGameState" -> tui.getGameState(),
-        "player_name" -> PlayerName()
-      )
-      )
-    } else if (tui.getGameState().contains("its your turn")) {
-      Ok(Json.obj(
-        "player_amount" -> PlayerAmount(),
-        "getGameState" -> tui.getGameState(),
-        "player_name" -> PlayerName(),
-        "gamecards" -> Gamefield()
-      )
-      )
-    } else {
-      Ok(Json.obj(
-        "player_amount" -> PlayerAmount(),
-        "getGameState" -> tui.getGameState()
-        )
-      )
-    }
-  }
-
-  def gameRequest = Action {
-    implicit request => {
-      val req = request.body.asJson
-      gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
-      if (tui.getGameState().equals("Player 1, type your name:")) {
-        Ok(Json.obj(
-          "player_amount" -> PlayerAmount(),
-          "getGameState" -> tui.getGameState(),
-          "player_name" -> PlayerName()
+      def status = Action {
+        if (tui.getGameState().equals("Player 1, type your name:")) {
+          Ok(Json.obj(
+            "player_amount" -> PlayerAmount(),
+            "getGameState" -> tui.getGameState(),
+            "player_name" -> PlayerName()
           )
-        )
+          )
+        } else if (tui.getGameState().contains("its your turn")) {
+          Ok(Json.obj(
+            "player_amount" -> PlayerAmount(),
+            "getGameState" -> tui.getGameState(),
+            "player_name" -> PlayerName(),
+            "gamecards" -> Gamefield()
+          )
+          )
+        } else {
+          Ok(Json.obj(
+            "player_amount" -> PlayerAmount(),
+            "getGameState" -> tui.getGameState()
+            )
+          )
+        }
+      }
 
-      } else if (tui.getGameState().contains("its your turn")) {
-        println(tui.getGameState())
-        Ok(Json.obj(
-          "player_amount" -> PlayerAmount(),
-          "getGameState" -> tui.getGameState(),
-          "player_name" -> PlayerName(),
-          "gamecards" -> Gamefield()
-        )
-        )
+      def gameRequest = Action {
+        implicit request => {
+          val req = request.body.asJson
+          gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
+          if (tui.getGameState().equals("Player 1, type your name:")) {
+            Ok(Json.obj(
+              "player_amount" -> PlayerAmount(),
+              "getGameState" -> tui.getGameState(),
+              "player_name" -> PlayerName()
+              )
+            )
+
+          } else if (tui.getGameState().contains("its your turn")) {
+            println(tui.getGameState())
+            Ok(Json.obj(
+              "player_amount" -> PlayerAmount(),
+              "getGameState" -> tui.getGameState(),
+              "player_name" -> PlayerName(),
+              "gamecards" -> Gamefield()
+            )
+            )
+          }
+          else {
+            Ok(Json.obj(
+              "player_amount" -> PlayerAmount(),
+              "getGameState" -> tui.getGameState(),
+            )
+            )
+          }
+        }
       }
-      else {
-        Ok(Json.obj(
-          "player_amount" -> PlayerAmount(),
-          "getGameState" -> tui.getGameState(),
-        )
-        )
-      }
-    }
-  }
 
   def allRoutes: String = {
   """

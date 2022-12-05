@@ -1,3 +1,7 @@
+
+var cardfieldindex = -1;
+var cardhandindex = -1;
+
 $(document).ready(function () {
         getData().then(() => {
             updateInfoPanel();
@@ -39,12 +43,53 @@ function changeAllCards() {
 
     processCommand("all", "")
 }
+function changeOneCard() {
+    let handCardIndex = cardhandindex;
+    let fieldCardIndex = cardfieldindex;
+    let cardsToChange = handCardIndex.toString() + "G" +  fieldCardIndex.toString();
+
+    let anotherCards1Div = document.getElementById("a-cards");
+    let fieldCards1Div = document.getElementById("f-cards");
+    let handCards1Div = document.getElementById("h-cards");
+    let gameButtonsDiv = document.getElementById("gameButtons");
+    let nameLabelDiv = document.getElementById("name-label");
+    let anotherPlayerNameDiv = document.getElementById("another-name-label");
+
+    anotherCards1Div.remove();
+    fieldCards1Div.remove();
+    handCards1Div.remove();
+    gameButtonsDiv.remove();
+    nameLabelDiv.remove();
+    anotherPlayerNameDiv.remove();
+
+    processCommand("y", cardsToChange)
+
+}
 
 function knock() {
+    let anotherCards1Div = document.getElementById("a-cards");
+    let fieldCards1Div = document.getElementById("f-cards");
+    let handCards1Div = document.getElementById("h-cards");
+    let gameButtonsDiv = document.getElementById("gameButtons");
+    let nameLabelDiv = document.getElementById("name-label");
+    let anotherPlayerNameDiv = document.getElementById("another-name-label");
+
+    anotherCards1Div.remove();
+    fieldCards1Div.remove();
+    handCards1Div.remove();
+    gameButtonsDiv.remove();
+    nameLabelDiv.remove();
+    anotherPlayerNameDiv.remove();
+
     processCommand("k", "")
 }
 
 function setNextRound() {
+    let nextRoundLabel = document.getElementById("nextRoundLabel");
+    let nextRoundButtonDiv = document.getElementById("nextRoundButtonDiv");
+
+    nextRoundLabel.remove();
+    nextRoundButtonDiv.remove();
     processCommand("nr", "")
 }
 
@@ -86,6 +131,9 @@ function refreshOnClickEvents() {
     $('#tackall').click(function () {
         changeAllCards()
     });
+    $('#changeoncard').click(function () {
+        changeOneCard()
+    });
     $('#knock').click(function () {
         knock()
     });
@@ -101,16 +149,16 @@ function refreshOnClickEvents() {
     $('#load-json').click(function () {
         loadGame()
     });
+    $('#nextRound').click(function () {
+        setNextRound()
+    });
 
     let fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
     let handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
 
-    let cardfieldindex = -1;
-    let cardhandindex = -1;
-
-    let cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
-    let cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
-    let cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
+    var cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
+    var cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
+    var cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
 
     let imag1 = document.getElementsByClassName("play-card")[0]; // image 1
     let imag2 = document.getElementsByClassName("play-card")[1]; // image 1
@@ -175,7 +223,7 @@ function refreshOnClickEvents() {
     });
 
     cardbtnfield1.addEventListener("click", function() {
-        cardfieldindex = 1;
+        cardfieldindex = 0;
         if(!fieldCardKlicked1) {
             fieldimag1.style.outline = "auto";
             fieldimag1.style.color = "#ed08e6";
@@ -211,7 +259,7 @@ function refreshOnClickEvents() {
 
     });
     cardbtnfield2.addEventListener("click", function() {
-        cardfieldindex = 2;
+        cardfieldindex = 1;
         if(!fieldCardKlicked2) {
                 fieldimag2.style.outline = "auto";
                 fieldimag2.style.color = "#ed08e6";
@@ -246,7 +294,7 @@ function refreshOnClickEvents() {
 
     });
     cardbtnfield3.addEventListener("click", function() {
-        cardfieldindex = 3;
+        cardfieldindex = 2;
         if(!fieldCardKlicked3) {
             fieldimag3.style.outline = "auto";
             fieldimag3.style.color = "#ed08e6";
@@ -292,7 +340,7 @@ function refreshOnClickEvents() {
     });
 
     cardbtnhand1.addEventListener("click", function() {
-        cardhandindex = 1;
+        cardhandindex = 0;
         if(!handCardKlicked1) {
             handimag1.style.outline = "auto";
             handimag1.style.color = "#ed08e6";
@@ -327,7 +375,7 @@ function refreshOnClickEvents() {
 
     });
     cardbtnhand2.addEventListener("click", function() {
-        cardhandindex = 2;
+        cardhandindex = 1;
         if(!handCardKlicked2) {
             handimag2.style.outline = "auto";
             handimag2.style.color = "#ed08e6";
@@ -363,7 +411,7 @@ function refreshOnClickEvents() {
     });
 
     cardbtnhand3.addEventListener("click", function() {
-        cardhandindex = 3;
+        cardhandindex = 2;
         if(!handCardKlicked3) {
             handimag3.style.outline = "auto";
             handimag3.style.color = "#ed08e6";
@@ -463,6 +511,10 @@ let gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
 function updateInfoPanel() {
 
     let game_stat = data.getGameState;
+
+    console.log(game_stat);
+    console.log(data);
+
 
     if (game_stat.includes("type your name")) {
 
@@ -772,6 +824,17 @@ function updateInfoPanel() {
          gameBody.innerHTML = gameBody.innerHTML + playerNameLabel;
          gameBody.innerHTML = gameBody.innerHTML + gameButtons;
 
-         console.log(gameBody);
+
+    }
+    else if (game_stat.includes("start next round with(nr)")) {
+        let nextRound = `<h2 class="h2" id="nextRoundLabel">${data.getGameState}</h2>`;
+        let nextRoundButton = "<div class=\"row\" id=\"nextRoundButtonDiv\">\n" +
+                              "    <div class=\"col-4 col-sm-5\"></div>\n" +
+                              "    <button type=\"button\" id=\"nextRound\" class=\"btn btn-primary buttonstyle col-4 col-sm-2\">Start next Round</button>\n" +
+                              "    <div class=\"col-4 col-sm-5\"></div>\n" +
+                              " </div>"
+        gameBody.innerHTML = gameBody.innerHTML + nextRound;
+        gameBody.innerHTML = gameBody.innerHTML + nextRoundButton;
+
     }
 }
