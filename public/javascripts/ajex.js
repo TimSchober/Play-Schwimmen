@@ -15,6 +15,8 @@ function getData() {
         url: "/status",
         dataType: "json",
         success: function (response) {
+            console.log("Success")
+            console.log(data)
             data = response;
         }
     });
@@ -100,19 +102,19 @@ function refreshOnClickEvents() {
         loadGame()
     });
 
-    var fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
-    var handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
+    let fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
+    let handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
 
-    var cardfieldindex = -1;
-    var cardhandindex = -1;
+    let cardfieldindex = -1;
+    let cardhandindex = -1;
 
-    var cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
-    var cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
-    var cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
+    let cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
+    let cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
+    let cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
 
-    var imag1 = document.getElementsByClassName("play-card")[0]; // image 1
-    var imag2 = document.getElementsByClassName("play-card")[1]; // image 1
-    var imag3 = document.getElementsByClassName("play-card")[2]; // image 1
+    let imag1 = document.getElementsByClassName("play-card")[0]; // image 1
+    let imag2 = document.getElementsByClassName("play-card")[1]; // image 1
+    let imag3 = document.getElementsByClassName("play-card")[2]; // image 1
 
     // erste Button
     cardbtn1.addEventListener("mouseover", function() {
@@ -152,13 +154,13 @@ function refreshOnClickEvents() {
 
     /*-----------------Fieldcards---------------------*/
 
-    var cardbtnfield1 = document.getElementsByClassName("cardbtnfield")[0]; // fieldbutton 1
-    var cardbtnfield2 = document.getElementsByClassName("cardbtnfield")[1]; // fieldbutton 2
-    var cardbtnfield3 = document.getElementsByClassName("cardbtnfield")[2]; // fieldbutton 3
+    let cardbtnfield1 = document.getElementsByClassName("cardbtnfield")[0]; // fieldbutton 1
+    let cardbtnfield2 = document.getElementsByClassName("cardbtnfield")[1]; // fieldbutton 2
+    let cardbtnfield3 = document.getElementsByClassName("cardbtnfield")[2]; // fieldbutton 3
 
-    var fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
-    var fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
-    var fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
+    let fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
+    let fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
+    let fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
 
     cardbtnfield1.addEventListener("mouseover", function() {
         fieldimag1.style.width = "9em";
@@ -186,7 +188,8 @@ function refreshOnClickEvents() {
             fieldimag3.style.outline = "0";
             fieldimag3.style.color = "transparent";
 
-            fieldCardKlicked2, fieldCardKlicked3 = false;
+            fieldCardKlicked2 = false;
+            fieldCardKlicked3 = false;
 
         }
         else {
@@ -221,7 +224,8 @@ function refreshOnClickEvents() {
                 fieldimag3.style.outline = "0";
                 fieldimag3.style.color = "transparent";
 
-                fieldCardKlicked1, fieldCardKlicked3 = false;
+                fieldCardKlicked1 = false;
+                fieldCardKlicked3 = false;
             }
             else {
                 fieldimag2.style.outline = "0";
@@ -255,7 +259,8 @@ function refreshOnClickEvents() {
             fieldimag2.style.outline = "0";
             fieldimag2.style.color = "transparent";
 
-            fieldCardKlicked1, fieldCardKlicked2 = false;
+            fieldCardKlicked1 = false;
+            fieldCardKlicked2 = false;
         }
         else {
             fieldimag3.style.outline = "0";
@@ -266,13 +271,13 @@ function refreshOnClickEvents() {
 
     /*--------------------Handcard-------------------------*/
 
-    var cardbtnhand1 = document.getElementsByClassName("cardbtnhand")[0]; // handbutton 1
-    var cardbtnhand2 = document.getElementsByClassName("cardbtnhand")[1]; // handbutton 2
-    var cardbtnhand3 = document.getElementsByClassName("cardbtnhand")[2]; // handbutton 3
+    let cardbtnhand1 = document.getElementsByClassName("cardbtnhand")[0]; // handbutton 1
+    let cardbtnhand2 = document.getElementsByClassName("cardbtnhand")[1]; // handbutton 2
+    let cardbtnhand3 = document.getElementsByClassName("cardbtnhand")[2]; // handbutton 3
 
-    var handimag1 = document.getElementsByClassName("play-card-hand")[0]; // handimage 1
-    var handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
-    var handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
+    let handimag1 = document.getElementsByClassName("play-card-hand")[0]; // handimage 1
+    let handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
+    let handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
 
     cardbtnhand1.addEventListener("mouseover", function() {
         handimag1.style.width = "9em";
@@ -300,7 +305,8 @@ function refreshOnClickEvents() {
             handimag3.style.outline = "0";
             handimag3.style.color = "transparent";
 
-            handCardKlicked2, handCardKlicked3 = false;
+            handCardKlicked2 = false;
+            handCardKlicked3 = false;
         }
         else {
             handimag1.style.outline = "0";
@@ -334,7 +340,8 @@ function refreshOnClickEvents() {
             handimag3.style.outline = "0";
             handimag3.style.color = "transparent";
 
-            handCardKlicked1, handCardKlicked3 = false;
+            handCardKlicked1 = false;
+            handCardKlicked3 = false;
         }
         else {
             handimag2.style.outline = "0";
@@ -369,7 +376,8 @@ function refreshOnClickEvents() {
             handimag2.style.outline = "0";
             handimag2.style.color = "transparent";
 
-            handCardKlicked1, handCardKlicked2 = false;
+            handCardKlicked1 = false;
+            handCardKlicked2 = false;
         }
         else {
             handimag3.style.outline = "0";
@@ -440,7 +448,7 @@ let anotherCards = "<div class=\"row\" id=\"a-cards\" style=\"margin-bottom: 1re
           "                              </div>"
 
 
-var gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
+let gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
                   "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
                   "                     <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
                   "                         <div class=\"classcardcenter\">\n" +
@@ -489,32 +497,32 @@ function updateInfoPanel() {
         let fieldCards = data.gamecards.field_cards;
         let handCards = data.gamecards.player_cards;
 
-         for (i = 0; i < fieldCards.length; i++) {
+         for (let i = 0; i < fieldCards.length; i++) {
 
-             if (fieldCards[i][1] == "spade") {
+             if (fieldCards[i][1] === "spade") {
                  fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] == "7") {
+                 if (fieldCards[i][0] === "7") {
                       fieldCards1 += "<img src=\"assets/images/7_of_spades.png\" alt=\"7_of_spades\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "8") {
+                 else if(fieldCards[i][0] === "8") {
                        fieldCards1 += "<img src=\"assets/images/8_of_spades.png\" alt=\"8_of_spades\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "9") {
+                 else if(fieldCards[i][0] === "9") {
                        fieldCards1 += "<img src=\"assets/images/9_of_spades.png\" alt=\"9_of_spades\" class=\"play-card-field\" />\n";
                  }
-                  else if(fieldCards[i][0] == "10") {
+                  else if(fieldCards[i][0] === "10") {
                        fieldCards1 += "<img src=\"assets/images/10_of_spades.png\" alt=\"10_of_spades\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "jack") {
+                  else if(fieldCards[i][0] === "jack") {
                        fieldCards1 += "<img src=\"assets/images/jack_of_spades.png\" alt=\"jack_of_spades\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "queen") {
+                  else if(fieldCards[i][0] === "queen") {
                        fieldCards1 += "<img src=\"assets/images/queen_of_spades.png\" alt=\"queen_of_spades\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "king") {
+                  else if(fieldCards[i][0] === "king") {
                        fieldCards1 += "<img src=\"assets/images/king_of_spades.png\" alt=\"king_of_spades\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "ace") {
+                  else if(fieldCards[i][0] === "ace") {
                        fieldCards1 += "<img src=\"assets/images/ace_of_spades.png\" alt=\"ace_of_spades\" class=\"play-card-field\" />\n";
                   }
                   else {
@@ -522,30 +530,30 @@ function updateInfoPanel() {
                   }
                   fieldCards1 += "</button>\n";
              }
-             else if (fieldCards[i][1] == "heart") {
+             else if (fieldCards[i][1] === "heart") {
                  fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (data.gamecards.field_cards[i][0] == "7") {
+                 if (fieldCards[i][0] === "7") {
                       fieldCards1 += "<img src=\"assets/images/7_of_hearts.png\" alt=\"7_of_hearts\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "8") {
+                 else if(fieldCards[i][0] === "8") {
                        fieldCards1 += "<img src=\"assets/images/8_of_hearts.png\" alt=\"8_of_hearts\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "9") {
+                 else if(fieldCards[i][0] === "9") {
                        fieldCards1 += "<img src=\"assets/images/9_of_hearts.png\" alt=\"9_of_hearts\" class=\"play-card-field\" />\n";
                  }
-                  else if(fieldCards[i][0] == "10") {
+                  else if(fieldCards[i][0] === "10") {
                        fieldCards1 += "<img src=\"assets/images/10_of_hearts.png\" alt=\"10_of_hearts\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "jack") {
+                  else if(fieldCards[i][0] === "jack") {
                        fieldCards1 += "<img src=\"assets/images/jack_of_hearts.png\" alt=\"jack_of_hearts\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "queen") {
+                  else if(fieldCards[i][0] === "queen") {
                        fieldCards1 += "<img src=\"assets/images/queen_of_hearts.png\" alt=\"queen_of_hearts\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "king") {
+                  else if(fieldCards[i][0] === "king") {
                        fieldCards1 += "<img src=\"assets/images/king_of_hearts.png\" alt=\"king_of_hearts\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "ace") {
+                  else if(fieldCards[i][0] === "ace") {
                        fieldCards1 += "<img src=\"assets/images/ace_of_hearts.png\" alt=\"ace_of_hearts\" class=\"play-card-field\" />\n";
                   }
                   else {
@@ -554,30 +562,30 @@ function updateInfoPanel() {
                   fieldCards1 += "</button>\n";
              }
 
-             else if (fieldCards[i][1] == "diamond") {
+             else if (fieldCards[i][1] === "diamond") {
                  fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] == "7") {
+                 if (fieldCards[i][0] === "7") {
                       fieldCards1 += "<img src=\"assets/images/7_of_diamonds.png\" alt=\"7_of_diamonds\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "8") {
+                 else if(fieldCards[i][0] === "8") {
                        fieldCards1 += "<img src=\"assets/images/8_of_diamonds.png\" alt=\"8_of_diamonds\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "9") {
+                 else if(fieldCards[i][0] === "9") {
                        fieldCards1 += "<img src=\"assets/images/9_of_diamonds.png\" alt=\"9_of_diamonds\" class=\"play-card-field\" />\n";
                  }
-                  else if(fieldCards[i][0] == "10") {
+                  else if(fieldCards[i][0] === "10") {
                        fieldCards1 += "<img src=\"assets/images/10_of_diamonds.png\" alt=\"10_of_diamonds\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "jack") {
+                  else if(fieldCards[i][0] === "jack") {
                        fieldCards1 += "<img src=\"assets/images/jack_of_diamonds.png\" alt=\"jack_of_diamonds\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "queen") {
+                  else if(fieldCards[i][0] === "queen") {
                        fieldCards1 += "<img src=\"assets/images/queen_of_diamonds.png\" alt=\"queen_of_diamonds\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "king") {
+                  else if(fieldCards[i][0] === "king") {
                        fieldCards1 += "<img src=\"assets/images/king_of_diamonds.png\" alt=\"king_of_diamonds\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "ace") {
+                  else if(fieldCards[i][0] === "ace") {
                        fieldCards1 += "<img src=\"assets/images/ace_of_diamonds.png\" alt=\"ace_of_diamonds\" class=\"play-card-field\" />\n";
                   }
                   else {
@@ -585,30 +593,30 @@ function updateInfoPanel() {
                   }
                   fieldCards1 += "</button>\n";
              }
-             else if (fieldCards[i][1] == "club") {
+             else if (fieldCards[i][1] === "club") {
                  fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] == "7") {
+                 if (fieldCards[i][0] === "7") {
                       fieldCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "8") {
+                 else if(fieldCards[i][0] === "8") {
                        fieldCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-field\" />\n";
                  }
-                 else if(fieldCards[i][0] == "9") {
+                 else if(fieldCards[i][0] === "9") {
                        fieldCards1 += "<img src=\"assets/images/9_of_clubs.png\" alt=\"9_of_clubs\" class=\"play-card-field\" />\n";
                  }
-                  else if(fieldCards[i][0] == "10") {
+                  else if(fieldCards[i][0] === "10") {
                        fieldCards1 += "<img src=\"assets/images/10_of_clubs.png\" alt=\"10_of_clubs\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "jack") {
+                  else if(fieldCards[i][0] === "jack") {
                        fieldCards1 += "<img src=\"assets/images/jack_of_clubs.png\" alt=\"jack_of_clubs\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "queen") {
+                  else if(fieldCards[i][0] === "queen") {
                        fieldCards1 += "<img src=\"assets/images/queen_of_clubs.png\" alt=\"queen_of_clubs\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "king") {
+                  else if(fieldCards[i][0] === "king") {
                        fieldCards1 += "<img src=\"assets/images/king_of_clubs.png\" alt=\"king_of_clubs\" class=\"play-card-field\" />\n";
                   }
-                  else if(fieldCards[i][0] == "ace") {
+                  else if(fieldCards[i][0] === "ace") {
                        fieldCards1 += "<img src=\"assets/images/ace_of_clubs.png\" alt=\"ace_of_clubs\" class=\"play-card-field\" />\n";
                   }
                   else {
@@ -617,35 +625,35 @@ function updateInfoPanel() {
                   fieldCards1 += "</button>\n";
              }
              else {
-                 console.log("FieldCardErorr");
+                 console.log("FieldCardError");
              }
          }
-         for (i = 0; i < fieldCards.length; i++) {
+         for (let i = 0; i < fieldCards.length; i++) {
 
-              if (handCards[i][1] == "spade") {
+              if (handCards[i][1] === "spade") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] == "7") {
+                  if (handCards[i][0] === "7") {
                        handCards1 += "<img src=\"assets/images/7_of_spades.png\" alt=\"7_of_spades\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "8") {
+                  else if(handCards[i][0] === "8") {
                         handCards1 += "<img src=\"assets/images/8_of_spades.png\" alt=\"8_of_spades\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "9") {
+                  else if(handCards[i][0] === "9") {
                         handCards1 += "<img src=\"assets/images/9_of_spades.png\" alt=\"9_of_spades\" class=\"play-card-hand\" />\n";
                   }
-                   else if(handCards[i][0] == "10") {
+                   else if(handCards[i][0] === "10") {
                         handCards1 += "<img src=\"assets/images/10_of_spades.png\" alt=\"10_of_spades\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "jack") {
+                   else if(handCards[i][0] === "jack") {
                         handCards1 += "<img src=\"assets/images/jack_of_spades.png\" alt=\"jack_of_spades\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "queen") {
+                   else if(handCards[i][0] === "queen") {
                         handCards1 += "<img src=\"assets/images/queen_of_spades.png\" alt=\"queen_of_spades\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "king") {
+                   else if(handCards[i][0] === "king") {
                         handCards1 += "<img src=\"assets/images/king_of_spades.png\" alt=\"king_of_spades\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "ace") {
+                   else if(handCards[i][0] === "ace") {
                         handCards1 += "<img src=\"assets/images/ace_of_spades.png\" alt=\"ace_of_spades\" class=\"play-card-hand\" />\n";
                    }
                    else {
@@ -653,30 +661,30 @@ function updateInfoPanel() {
                    }
                    handCards1 += "</button>\n";
               }
-              else if (handCards[i][1] == "heart") {
+              else if (handCards[i][1] === "heart") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] == "7") {
+                  if (handCards[i][0] === "7") {
                        handCards1 += "<img src=\"assets/images/7_of_hearts.png\" alt=\"7_of_hearts\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "8") {
+                  else if(handCards[i][0] === "8") {
                         handCards1 += "<img src=\"assets/images/8_of_hearts.png\" alt=\"8_of_hearts\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "9") {
+                  else if(handCards[i][0] === "9") {
                         handCards1 += "<img src=\"assets/images/9_of_hearts.png\" alt=\"9_of_hearts\" class=\"play-card-hand\" />\n";
                   }
-                   else if(handCards[i][0] == "10") {
+                   else if(handCards[i][0] === "10") {
                         handCards1 += "<img src=\"assets/images/10_of_hearts.png\" alt=\"10_of_hearts\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "jack") {
+                   else if(handCards[i][0] === "jack") {
                         handCards1 += "<img src=\"assets/images/jack_of_hearts.png\" alt=\"jack_of_hearts\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "queen") {
+                   else if(handCards[i][0] === "queen") {
                         handCards1 += "<img src=\"assets/images/queen_of_hearts.png\" alt=\"queen_of_hearts\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "king") {
+                   else if(handCards[i][0] === "king") {
                         handCards1 += "<img src=\"assets/images/king_of_hearts.png\" alt=\"king_of_hearts\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "ace") {
+                   else if(handCards[i][0] === "ace") {
                         handCards1 += "<img src=\"assets/images/ace_of_hearts.png\" alt=\"ace_of_hearts\" class=\"play-card-hand\" />\n";
                    }
                    else {
@@ -685,30 +693,30 @@ function updateInfoPanel() {
                    handCards1 += "</button>\n";
               }
 
-              else if (handCards[i][1] == "diamond") {
+              else if (handCards[i][1] === "diamond") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] == "7") {
+                  if (handCards[i][0] === "7") {
                        handCards1 += "<img src=\"assets/images/7_of_diamonds.png\" alt=\"7_of_diamonds\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "8") {
+                  else if(handCards[i][0] === "8") {
                         handCards1 += "<img src=\"assets/images/8_of_diamonds.png\" alt=\"8_of_diamonds\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "9") {
+                  else if(handCards[i][0] === "9") {
                         handCards1 += "<img src=\"assets/images/9_of_diamonds.png\" alt=\"9_of_diamonds\" class=\"play-card-hand\" />\n";
                   }
-                   else if(handCards[i][0] == "10") {
+                   else if(handCards[i][0] === "10") {
                         handCards1 += "<img src=\"assets/images/10_of_diamonds.png\" alt=\"10_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "jack") {
+                   else if(handCards[i][0] === "jack") {
                         handCards1 += "<img src=\"assets/images/jack_of_diamonds.png\" alt=\"jack_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "queen") {
+                   else if(handCards[i][0] === "queen") {
                         handCards1 += "<img src=\"assets/images/queen_of_diamonds.png\" alt=\"queen_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "king") {
+                   else if(handCards[i][0] === "king") {
                         handCards1 += "<img src=\"assets/images/king_of_diamonds.png\" alt=\"king_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "ace") {
+                   else if(handCards[i][0] === "ace") {
                         handCards1 += "<img src=\"assets/images/ace_of_diamonds.png\" alt=\"ace_of_diamonds\" class=\"play-card-hand\" />\n";
                    }
                    else {
@@ -716,30 +724,30 @@ function updateInfoPanel() {
                    }
                    handCards1 += "</button>\n";
               }
-              else if (handCards[i][1] == "club") {
+              else if (handCards[i][1] === "club") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (fieldCards[i][0] == "7") {
+                  if (fieldCards[i][0] === "7") {
                        handCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-hand\" />\n";
                   }
-                  else if(fieldCards[i][0] == "8") {
+                  else if(fieldCards[i][0] === "8") {
                         handCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-hand\" />\n";
                   }
-                  else if(handCards[i][0] == "9") {
+                  else if(handCards[i][0] === "9") {
                         handCards1 += "<img src=\"assets/images/9_of_clubs.png\" alt=\"9_of_clubs\" class=\"play-card-hand\" />\n";
                   }
-                   else if(handCards[i][0] == "10") {
+                   else if(handCards[i][0] === "10") {
                         handCards1 += "<img src=\"assets/images/10_of_clubs.png\" alt=\"10_of_clubs\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "jack") {
+                   else if(handCards[i][0] === "jack") {
                         handCards1 += "<img src=\"assets/images/jack_of_clubs.png\" alt=\"jack_of_clubs\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "queen") {
+                   else if(handCards[i][0] === "queen") {
                         handCards1 += "<img src=\"assets/images/queen_of_clubs.png\" alt=\"queen_of_clubs\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "king") {
+                   else if(handCards[i][0] === "king") {
                         handCards1 += "<img src=\"assets/images/king_of_clubs.png\" alt=\"king_of_clubs\" class=\"play-card-hand\" />\n";
                    }
-                   else if(handCards[i][0] == "ace") {
+                   else if(handCards[i][0] === "ace") {
                         handCards1 += "<img src=\"assets/images/ace_of_clubs.png\" alt=\"ace_of_clubs\" class=\"play-card-hand\" />\n";
                    }
                    else {
@@ -748,7 +756,7 @@ function updateInfoPanel() {
                    handCards1 += "</button>\n";
               }
               else {
-                  console.log("HandCardErorr");
+                  console.log("HandCardError");
               }
           }
          fieldCards1 += "       </div>\n" +
@@ -765,6 +773,5 @@ function updateInfoPanel() {
          gameBody.innerHTML = gameBody.innerHTML + gameButtons;
 
          console.log(gameBody);
-
     }
 }

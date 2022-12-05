@@ -6,7 +6,6 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.schwimmen.schwimmenModul
 import de.htwg.se.schwimmen.controller.controllerComponent.ControllerInterface
 import de.htwg.se.schwimmen.aUI.TUI
-import org.scalactic.TypeCheckedTripleEquals.convertToCheckingEqualizer
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 
 import javax.inject._
@@ -39,80 +38,79 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.game(this))
   }
 
-  def setPlayerAmount(count: String) = {
+  def setPlayerAmount(count: String): Unit = {
     controller.setPlayerAmount(count.toInt)
   }
 
-    def setPlayerName(name: String) = {
-      controller.addPlayer(name)
+  def setPlayerName(name: String): Unit = {
+    controller.addPlayer(name)
+  }
+
+  def changeAllCards(): Unit = {
+    controller.swapAllCards()
+    controller.nextPlayer()
+  }
+
+  def knock(): Unit = {
+    controller.setKnocked()
+    controller.nextPlayer()
+  }
+
+  def changeOneCard(handCard: Int, fieldCard: Int): Unit = {
+    if (handCard != -1 && fieldCard != -1) {
+      controller.swapCards(handCard, fieldCard)
+      controller.nextPlayer()
     }
+  }
 
+  def setNextRound(): Unit = {
+    controller.nextRound()
+  }
 
-      def changeAllCards() = {
-        controller.swapAllCards()
-        controller.nextPlayer()
-      }
+  def undo(): Unit = {
+    controller.undo()
+  }
 
-      def knock() = {
-        controller.setKnocked()
-        controller.nextPlayer()
-      }
+  def redo(): Unit = {
+    controller.redo()
+  }
 
-      def changeOneCard(handCard: Int, fieldCard: Int) = {
-        if (handCard != -1 && fieldCard != -1) {
-          controller.swapCards(handCard, fieldCard)
-          controller.nextPlayer()
-        }
-      }
+  def saveGame(): Unit = {
+    controller.saveTo("saveJson")
+  }
 
-      def setNextRound() = {
-        controller.nextRound()
-      }
+  def loadGame(): Unit = {
+    controller.loadFrom("loadJson")
+  }
 
-      def undo() = {
-        controller.undo()
-      }
-
-      def redo() = {
-        controller.redo()
-      }
-
-      def saveGame() = {
-        controller.saveTo("saveJson")
-      }
-
-      def loadGame() = {
-        controller.loadFrom("loadJson")
-      }
-
-      def gameProcessComand(comand: String,  data: String): String = {
-        if (comand.equals("\"all\"")) {
-          changeAllCards()
-        } else if (comand.equals("\"amount\"")) {
-          setPlayerAmount(data.replace("\"", ""))
-        } else if (comand.equals("\"addplayer\"")) {
-          setPlayerName(data.replace("\"", ""))
-        } else if (comand.equals("\"k\"")) {
-          knock()
-        } else if (comand.equals("\"nr\"")) {
-          setNextRound()
-        } else if (comand.equals("\"undo\"")) {
-          undo()
-        } else if (comand.equals("\"redo\"")) {
-          redo()
-        } else if (comand.equals("\"save\"")) {
-          saveGame()
-        } else if (comand.equals("\"load\"")) {
-          loadGame()
-        }
-        "Ok"
-      }
+  def gameProcessComand(comand: String,  data: String): String = {
+    if (comand.equals("\"all\"")) {
+      changeAllCards()
+    } else if (comand.equals("\"amount\"")) {
+      setPlayerAmount(data.replace("\"", ""))
+    } else if (comand.equals("\"addplayer\"")) {
+      setPlayerName(data.replace("\"", ""))
+    } else if (comand.equals("\"k\"")) {
+      knock()
+    } else if (comand.equals("\"nr\"")) {
+      setNextRound()
+    } else if (comand.equals("\"undo\"")) {
+      undo()
+    } else if (comand.equals("\"redo\"")) {
+      redo()
+    } else if (comand.equals("\"save\"")) {
+      saveGame()
+    } else if (comand.equals("\"load\"")) {
+      loadGame()
+    }
+    "Ok"
+  }
 
   case class Gamefield()
   implicit val gamefieldWrites: Writes[Gamefield] = new Writes[Gamefield] {
     def writes(gamefield: Gamefield): JsValue = Json.toJson(
       Json.obj(
-        "player_cards" -> controller.players(0).cardsOnHand,
+        "player_cards" -> controller.players.head.cardsOnHand,
         "field_cards" -> controller.field.cardsOnField,
       )
     )
@@ -131,73 +129,73 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   implicit val playernamewrites: Writes[PlayerName] = new Writes[PlayerName] {
     def writes(playerName: PlayerName): JsValue = Json.toJson(
       Json.obj(
-        "player_name" -> controller.players(0).name
+        "player_name" -> controller.players.head.name
       )
     )
   }
 
-      def status = Action {
-        if (tui.getGameState().equals("Player 1, type your name:")) {
-          Ok(Json.obj(
-            "player_amount" -> PlayerAmount(),
-            "getGameState" -> tui.getGameState(),
-            "player_name" -> PlayerName()
-          )
-          )
-        } else if (tui.getGameState().contains("its your turn")) {
-          Ok(Json.obj(
-            "player_amount" -> PlayerAmount(),
-            "getGameState" -> tui.getGameState(),
-            "player_name" -> PlayerName(),
-            "gamecards" -> Gamefield()
-          )
-          )
-        } else {
-          Ok(Json.obj(
-            "player_amount" -> PlayerAmount(),
-            "getGameState" -> tui.getGameState()
-            )
-          )
-        }
-      }
+  def status = Action {
+    if (tui.getGameState().equals("Player 1, type your name:")) {
+      Ok(Json.obj(
+        "player_amount" -> PlayerAmount(),
+        "getGameState" -> tui.getGameState(),
+        "player_name" -> PlayerName()
+      )
+      )
+    } else if (tui.getGameState().contains("its your turn")) {
+      Ok(Json.obj(
+        "player_amount" -> PlayerAmount(),
+        "getGameState" -> tui.getGameState(),
+        "player_name" -> PlayerName(),
+        "gamecards" -> Gamefield()
+      )
+      )
+    } else {
+      Ok(Json.obj(
+        "player_amount" -> PlayerAmount(),
+        "getGameState" -> tui.getGameState()
+        )
+      )
+    }
+  }
 
-      def gameRequest = Action {
-        implicit request => {
-          val req = request.body.asJson
-          gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
-          if (tui.getGameState().equals("Player 1, type your name:")) {
-            Ok(Json.obj(
-              "player_amount" -> PlayerAmount(),
-              "getGameState" -> tui.getGameState(),
-              "player_name" -> PlayerName()
-              )
-            )
+  def gameRequest = Action {
+    implicit request => {
+      val req = request.body.asJson
+      gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
+      if (tui.getGameState().equals("Player 1, type your name:")) {
+        Ok(Json.obj(
+          "player_amount" -> PlayerAmount(),
+          "getGameState" -> tui.getGameState(),
+          "player_name" -> PlayerName()
+          )
+        )
 
-          } else if (tui.getGameState().contains("its your turn")) {
-            println(tui.getGameState())
-            Ok(Json.obj(
-              "player_amount" -> PlayerAmount(),
-              "getGameState" -> tui.getGameState(),
-              "player_name" -> PlayerName(),
-              "gamecards" -> Gamefield()
-            )
-            )
-          }
-          else {
-            Ok(Json.obj(
-              "player_amount" -> PlayerAmount(),
-              "getGameState" -> tui.getGameState(),
-            )
-            )
-          }
-        }
+      } else if (tui.getGameState().contains("its your turn")) {
+        println(tui.getGameState())
+        Ok(Json.obj(
+          "player_amount" -> PlayerAmount(),
+          "getGameState" -> tui.getGameState(),
+          "player_name" -> PlayerName(),
+          "gamecards" -> Gamefield()
+        )
+        )
       }
+      else {
+        Ok(Json.obj(
+          "player_amount" -> PlayerAmount(),
+          "getGameState" -> tui.getGameState(),
+        )
+        )
+      }
+    }
+  }
 
-      def allRoutes: String = {
-        """
-       GET  /
-       GET  /command
-    """
-      }
+  def allRoutes: String = {
+  """
+   GET  /
+   GET  /command
+  """
+  }
 
 }
