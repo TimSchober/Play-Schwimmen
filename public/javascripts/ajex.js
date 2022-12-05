@@ -514,6 +514,7 @@ function updateInfoPanel() {
 
     console.log(game_stat);
     console.log(data);
+    console.log(gameBody);
 
 
     if (game_stat.includes("type your name")) {
@@ -680,7 +681,7 @@ function updateInfoPanel() {
                  console.log("FieldCardError");
              }
          }
-         for (let i = 0; i < fieldCards.length; i++) {
+         for (let i = 0; i < handCards.length; i++) {
 
               if (handCards[i][1] === "spade") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
@@ -778,10 +779,10 @@ function updateInfoPanel() {
               }
               else if (handCards[i][1] === "club") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (fieldCards[i][0] === "7") {
+                  if (handCards[i][0] === "7") {
                        handCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-hand\" />\n";
                   }
-                  else if(fieldCards[i][0] === "8") {
+                  else if(handCards[i][0] === "8") {
                         handCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-hand\" />\n";
                   }
                   else if(handCards[i][0] === "9") {
