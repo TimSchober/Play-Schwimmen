@@ -46,6 +46,9 @@ function changeAllCards() {
 function changeOneCard() {
     let handCardIndex = cardhandindex;
     let fieldCardIndex = cardfieldindex;
+
+    if (handCardIndex == -1 || fieldCardIndex == -1) return;
+
     let cardsToChange = handCardIndex.toString() + "G" +  fieldCardIndex.toString();
 
     let anotherCards1Div = document.getElementById("a-cards");
@@ -64,6 +67,8 @@ function changeOneCard() {
 
     processCommand("y", cardsToChange)
 
+    cardhandindex = -1;
+    cardfieldindex = -1;
 }
 
 function knock() {
