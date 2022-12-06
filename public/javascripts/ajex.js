@@ -147,7 +147,7 @@ function refreshOnClickEvents() {
     let imag2 = document.getElementsByClassName("play-card")[1]; // image 1
     let imag3 = document.getElementsByClassName("play-card")[2]; // image 1
 
-    // erste Button
+    // Erster Button
     cardbtn1.addEventListener("mouseover", function() {
         imag1.style.width = "9em";
         imag1.style.height = "auto";
@@ -159,7 +159,7 @@ function refreshOnClickEvents() {
 
     });
 
-    // Zweite Button
+    // Zweiter Button
     cardbtn2.addEventListener("mouseover", function() {
         imag2.style.width = "9em";
         imag2.style.height = "auto";
@@ -171,7 +171,7 @@ function refreshOnClickEvents() {
 
     });
 
-    // Dritte Button
+    // Dritter Button
     cardbtn3.addEventListener("mouseover", function() {
         imag3.style.width = "9em";
         imag3.style.height = "auto";
@@ -511,12 +511,12 @@ function updateInfoPanel() {
 
         let gameBody = $('#gameBody').get(0);
 
-        var fieldCards1 = "<div class=\"row\" id=\"f-cards\" style=\"margin-bottom: 1rem\">\n" +
+        let fieldCards1 = "<div class=\"row\" id=\"f-cards\" style=\"margin-bottom: 1rem\">\n" +
                           "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
                           "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
                           "                                   <div class=\"classcardcenter\">\n"
 
-        var handCards1 = "<div class=\"row\" id=\"h-cards\" style=\"margin-bottom: 1rem\">\n" +
+        let handCards1 = "<div class=\"row\" id=\"h-cards\" style=\"margin-bottom: 1rem\">\n" +
                           "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
                           "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
                           "                                   <div class=\"classcardcenter\">\n"
@@ -822,3 +822,18 @@ function updateInfoPanel() {
 
     }
 }
+
+let socket = new WebSocket("ws://localhost:9000/socket");
+    socket.onopen = function(){
+
+    }
+    socket.onmessage = function(message){
+
+    }
+    socket.onerror = function(){
+
+    }
+    socket.onclose = function(){
+
+    }
+
