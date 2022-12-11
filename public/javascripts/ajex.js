@@ -422,13 +422,16 @@ function refreshOnClickEvents() {
 
 let firstLabel = $('#first-label').get(0);
 let secondLabel = $('#second-label').get(0);
-let playerAmountInput = $('#players').get(0);
+let playerAmountInput = $('#pl_am_name_textfield').get(0);
 let amountButton = $('#amount-btn').get(0);
 let navBar = $('#navbarSupportedContent').get(0);
 
-let nameIput = "<input type=\"text\" autofocus=\"autofocus\" class=\"form-control iputs\" id=\"playername\" aria-describedby=\"emailHelp\" placeholder=\"Enter Name\">";
+let nameInput = "<input type=\"text\" autofocus=\"autofocus\" class=\"form-control iputs\" id=\"playername\" aria-describedby=\"emailHelp\" placeholder=\"Enter Name\">";
+let amountInput = "<input type=\"number\" id=\"players\" autofocus=\"autofocus\" class=\"form-control iputs\" min=\"2\" max=\"9\" aria-describedby=\"emailHelp\" placeholder=\"Enter player amount (for up to 2-9 Players)\"/>"
 
 let userAddBtn = "<div class=\"col-4 col-sm-4\" id=\"name-button\"><button type=\"button\" id=\"btn-name\" class=\"btn btn-primary col-4 col-sm-4\" style=\"margin-top: 2rem; margin-left: 15em;\">Ok</button></div>";
+let userAmountBtn = "<div class=\"col-4 col-sm-4\" id=\"name-button\"><button type=\"button\" id=\"btn-amount\" class=\"btn btn-primary col-4 col-sm-4\" style=\"margin-top: 2rem; margin-left: 15em;\">Ok</button></div>";
+
 
 let anotherCards = "<div class=\"row\" id=\"a-cards\" style=\"margin-bottom: 1rem\">\n" +
           "                                  <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
@@ -463,20 +466,27 @@ let gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
 
 function updateInfoPanel(data) {
 
-    let game_stat = data.getGameState;
+    let game_states = data.game_state.game_state;
 
     console.log(data);
     console.log(gameBody);
     console.log("I'm here ... ")
 
-    if (game_stat.includes("type your name")) {
+    if (game_states.includes("no_player_amount")) {
 
-        firstLabel.innerHTML = `<h2 class="h2">${game_stat}</h2>`;
+        firstLabel.innerHTML = '<h2 class="h2">Welcome to Schwimmen! How many players want to play?</h2>';
+        secondLabel.innerHTML = '<label class="label2gamestat1" id="second-label">Possible player amount is 2-9</label>';
+        playerAmountInput.innerHTML = amountInput;
+        amountButton.innerHTML = userAmountBtn;
+
+    } else if (game_states.includes("not_enough_players")) {
+
+        firstLabel.innerHTML = `<h2 class="h2">Type your Name:</h2>`;
         secondLabel.innerHTML = "";
-        playerAmountInput.outerHTML = nameIput;
+        playerAmountInput.innerHTML = nameInput;
         amountButton.innerHTML = userAddBtn;
 
-    } else if (game_stat.includes("its your turn")) {
+    } else if (game_states.includes("game_running")) {
 
         let gameBody = $('#gameBody').get(0);
 
@@ -502,282 +512,33 @@ function updateInfoPanel(data) {
         let fieldCards = data.game_cards.field_cards;
         let handCards = data.game_cards.player_cards;
 
-         for (let i = 0; i < fieldCards.length; i++) {
-             if (fieldCards[i][1] === "spade") {
-                 fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] === "7") {
-                      fieldCards1 += "<img src=\"assets/images/7_of_spades.png\" alt=\"7_of_spades\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "8") {
-                       fieldCards1 += "<img src=\"assets/images/8_of_spades.png\" alt=\"8_of_spades\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "9") {
-                       fieldCards1 += "<img src=\"assets/images/9_of_spades.png\" alt=\"9_of_spades\" class=\"play-card-field\" />\n";
-                 }
-                  else if(fieldCards[i][0] === "10") {
-                       fieldCards1 += "<img src=\"assets/images/10_of_spades.png\" alt=\"10_of_spades\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "jack") {
-                       fieldCards1 += "<img src=\"assets/images/jack_of_spades.png\" alt=\"jack_of_spades\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "queen") {
-                       fieldCards1 += "<img src=\"assets/images/queen_of_spades.png\" alt=\"queen_of_spades\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "king") {
-                       fieldCards1 += "<img src=\"assets/images/king_of_spades.png\" alt=\"king_of_spades\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "ace") {
-                       fieldCards1 += "<img src=\"assets/images/ace_of_spades.png\" alt=\"ace_of_spades\" class=\"play-card-field\" />\n";
-                  }
-                  else {
-                     fieldCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                  }
-                  fieldCards1 += "</button>\n";
-             }
-             else if (fieldCards[i][1] === "heart") {
-                 fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] === "7") {
-                      fieldCards1 += "<img src=\"assets/images/7_of_hearts.png\" alt=\"7_of_hearts\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "8") {
-                       fieldCards1 += "<img src=\"assets/images/8_of_hearts.png\" alt=\"8_of_hearts\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "9") {
-                       fieldCards1 += "<img src=\"assets/images/9_of_hearts.png\" alt=\"9_of_hearts\" class=\"play-card-field\" />\n";
-                 }
-                  else if(fieldCards[i][0] === "10") {
-                       fieldCards1 += "<img src=\"assets/images/10_of_hearts.png\" alt=\"10_of_hearts\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "jack") {
-                       fieldCards1 += "<img src=\"assets/images/jack_of_hearts.png\" alt=\"jack_of_hearts\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "queen") {
-                       fieldCards1 += "<img src=\"assets/images/queen_of_hearts.png\" alt=\"queen_of_hearts\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "king") {
-                       fieldCards1 += "<img src=\"assets/images/king_of_hearts.png\" alt=\"king_of_hearts\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "ace") {
-                       fieldCards1 += "<img src=\"assets/images/ace_of_hearts.png\" alt=\"ace_of_hearts\" class=\"play-card-field\" />\n";
-                  }
-                  else {
-                       fieldCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                  }
-                  fieldCards1 += "</button>\n";
-             }
+        for (let i = 0; i < fieldCards.length; i++) {
+            fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
+            fieldCards1 += "<img src=\"assets/images/" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s.png\" alt=\"" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s\" class=\"play-card-field\" />\n";
+            fieldCards1 += "</button>\n";
+        }
 
-             else if (fieldCards[i][1] === "diamond") {
-                 fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] === "7") {
-                      fieldCards1 += "<img src=\"assets/images/7_of_diamonds.png\" alt=\"7_of_diamonds\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "8") {
-                       fieldCards1 += "<img src=\"assets/images/8_of_diamonds.png\" alt=\"8_of_diamonds\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "9") {
-                       fieldCards1 += "<img src=\"assets/images/9_of_diamonds.png\" alt=\"9_of_diamonds\" class=\"play-card-field\" />\n";
-                 }
-                  else if(fieldCards[i][0] === "10") {
-                       fieldCards1 += "<img src=\"assets/images/10_of_diamonds.png\" alt=\"10_of_diamonds\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "jack") {
-                       fieldCards1 += "<img src=\"assets/images/jack_of_diamonds.png\" alt=\"jack_of_diamonds\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "queen") {
-                       fieldCards1 += "<img src=\"assets/images/queen_of_diamonds.png\" alt=\"queen_of_diamonds\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "king") {
-                       fieldCards1 += "<img src=\"assets/images/king_of_diamonds.png\" alt=\"king_of_diamonds\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "ace") {
-                       fieldCards1 += "<img src=\"assets/images/ace_of_diamonds.png\" alt=\"ace_of_diamonds\" class=\"play-card-field\" />\n";
-                  }
-                  else {
-                       fieldCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                  }
-                  fieldCards1 += "</button>\n";
-             }
-             else if (fieldCards[i][1] === "club") {
-                 fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-                 if (fieldCards[i][0] === "7") {
-                      fieldCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "8") {
-                       fieldCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-field\" />\n";
-                 }
-                 else if(fieldCards[i][0] === "9") {
-                       fieldCards1 += "<img src=\"assets/images/9_of_clubs.png\" alt=\"9_of_clubs\" class=\"play-card-field\" />\n";
-                 }
-                  else if(fieldCards[i][0] === "10") {
-                       fieldCards1 += "<img src=\"assets/images/10_of_clubs.png\" alt=\"10_of_clubs\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "jack") {
-                       fieldCards1 += "<img src=\"assets/images/jack_of_clubs.png\" alt=\"jack_of_clubs\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "queen") {
-                       fieldCards1 += "<img src=\"assets/images/queen_of_clubs.png\" alt=\"queen_of_clubs\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "king") {
-                       fieldCards1 += "<img src=\"assets/images/king_of_clubs.png\" alt=\"king_of_clubs\" class=\"play-card-field\" />\n";
-                  }
-                  else if(fieldCards[i][0] === "ace") {
-                       fieldCards1 += "<img src=\"assets/images/ace_of_clubs.png\" alt=\"ace_of_clubs\" class=\"play-card-field\" />\n";
-                  }
-                  else {
-                       fieldCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                  }
-                  fieldCards1 += "</button>\n";
-             }
-             else {
-                 console.log("FieldCardError");
-             }
-         }
-         for (let i = 0; i < handCards.length; i++) {
-              if (handCards[i][1] === "spade") {
-                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] === "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_spades.png\" alt=\"7_of_spades\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_spades.png\" alt=\"8_of_spades\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_spades.png\" alt=\"9_of_spades\" class=\"play-card-hand\" />\n";
-                  }
-                   else if(handCards[i][0] === "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_spades.png\" alt=\"10_of_spades\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_spades.png\" alt=\"jack_of_spades\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_spades.png\" alt=\"queen_of_spades\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_spades.png\" alt=\"king_of_spades\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_spades.png\" alt=\"ace_of_spades\" class=\"play-card-hand\" />\n";
-                   }
-                   else {
-                      handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                   }
-                   handCards1 += "</button>\n";
-              }
-              else if (handCards[i][1] === "heart") {
-                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] === "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_hearts.png\" alt=\"7_of_hearts\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_hearts.png\" alt=\"8_of_hearts\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_hearts.png\" alt=\"9_of_hearts\" class=\"play-card-hand\" />\n";
-                  }
-                   else if(handCards[i][0] === "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_hearts.png\" alt=\"10_of_hearts\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_hearts.png\" alt=\"jack_of_hearts\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_hearts.png\" alt=\"queen_of_hearts\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_hearts.png\" alt=\"king_of_hearts\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_hearts.png\" alt=\"ace_of_hearts\" class=\"play-card-hand\" />\n";
-                   }
-                   else {
-                        handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                   }
-                   handCards1 += "</button>\n";
-              }
-              else if (handCards[i][1] === "diamond") {
-                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] === "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_diamonds.png\" alt=\"7_of_diamonds\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_diamonds.png\" alt=\"8_of_diamonds\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_diamonds.png\" alt=\"9_of_diamonds\" class=\"play-card-hand\" />\n";
-                  }
-                   else if(handCards[i][0] === "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_diamonds.png\" alt=\"10_of_diamonds\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_diamonds.png\" alt=\"jack_of_diamonds\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_diamonds.png\" alt=\"queen_of_diamonds\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_diamonds.png\" alt=\"king_of_diamonds\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_diamonds.png\" alt=\"ace_of_diamonds\" class=\"play-card-hand\" />\n";
-                   }
-                   else {
-                        handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                   }
-                   handCards1 += "</button>\n";
-              }
-              else if (handCards[i][1] === "club") {
-                  handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-                  if (handCards[i][0] === "7") {
-                       handCards1 += "<img src=\"assets/images/7_of_clubs.png\" alt=\"7_of_clubs\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "8") {
-                        handCards1 += "<img src=\"assets/images/8_of_clubs.png\" alt=\"8_of_clubs\" class=\"play-card-hand\" />\n";
-                  }
-                  else if(handCards[i][0] === "9") {
-                        handCards1 += "<img src=\"assets/images/9_of_clubs.png\" alt=\"9_of_clubs\" class=\"play-card-hand\" />\n";
-                  }
-                   else if(handCards[i][0] === "10") {
-                        handCards1 += "<img src=\"assets/images/10_of_clubs.png\" alt=\"10_of_clubs\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "jack") {
-                        handCards1 += "<img src=\"assets/images/jack_of_clubs.png\" alt=\"jack_of_clubs\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "queen") {
-                        handCards1 += "<img src=\"assets/images/queen_of_clubs.png\" alt=\"queen_of_clubs\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "king") {
-                        handCards1 += "<img src=\"assets/images/king_of_clubs.png\" alt=\"king_of_clubs\" class=\"play-card-hand\" />\n";
-                   }
-                   else if(handCards[i][0] === "ace") {
-                        handCards1 += "<img src=\"assets/images/ace_of_clubs.png\" alt=\"ace_of_clubs\" class=\"play-card-hand\" />\n";
-                   }
-                   else {
-                        handCards1 += "<h2 class=\"h2\">img1 not Found</h2>\n";
-                   }
-                   handCards1 += "</button>\n";
-              }
-              else {
-                  console.log("HandCardError");
-              }
-          }
-         fieldCards1 += "       </div>\n" +
+        for (let i = 0; i < handCards.length; i++) {
+            handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
+            handCards1 += "<img src=\"assets/images/" + handCards[i][0] + "_of_" + handCards[i][1] + "s.png\" alt=\"" + handCards[i][0] + "_of_" + handCards[i][1] + "s\" class=\"play-card-hand\" />\n";
+            handCards1 += "</button>\n";
+        }
+
+        fieldCards1 += "       </div>\n" +
                      "                       </div>"
-         handCards1 += "       </div>\n" +
+        handCards1 += "       </div>\n" +
                               "                       </div>"
-         firstLabel.innerHTML = "";
+        firstLabel.innerHTML = "";
 
-         gameBody.innerHTML = gameBody.innerHTML + anotherPlayerName;
-         gameBody.innerHTML = gameBody.innerHTML + anotherCards;
-         gameBody.innerHTML = gameBody.innerHTML + fieldCards1;
-         gameBody.innerHTML = gameBody.innerHTML + handCards1;
-         gameBody.innerHTML = gameBody.innerHTML + playerNameLabel;
-         gameBody.innerHTML = gameBody.innerHTML + gameButtons;
+        gameBody.innerHTML = gameBody.innerHTML + anotherPlayerName;
+        gameBody.innerHTML = gameBody.innerHTML + anotherCards;
+        gameBody.innerHTML = gameBody.innerHTML + fieldCards1;
+        gameBody.innerHTML = gameBody.innerHTML + handCards1;
+        gameBody.innerHTML = gameBody.innerHTML + playerNameLabel;
+        gameBody.innerHTML = gameBody.innerHTML + gameButtons;
 
-
-    }
-    else if (game_stat.includes("start next round with(nr)")) {
-        let nextRound = `<h2 class="h2" id="nextRoundLabel">${data.getGameState}</h2>`;
+    } else if (game_states.includes("game_ended")) {
+        let nextRound = `<h2 class="h2" id="nextRoundLabel">Game Ended</h2>`;
         let nextRoundButton = "<div class=\"row\" id=\"nextRoundButtonDiv\">\n" +
                               "    <div class=\"col-4 col-sm-5\"></div>\n" +
                               "    <button type=\"button\" id=\"nextRound\" class=\"btn btn-primary buttonstyle col-4 col-sm-2\">Start next Round</button>\n" +
@@ -785,6 +546,5 @@ function updateInfoPanel(data) {
                               " </div>"
         gameBody.innerHTML = gameBody.innerHTML + nextRound;
         gameBody.innerHTML = gameBody.innerHTML + nextRoundButton;
-
     }
 }

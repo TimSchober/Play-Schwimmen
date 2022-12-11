@@ -7,7 +7,9 @@ import play.api.mvc._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.schwimmen.schwimmenModul
 import de.htwg.se.schwimmen.controller.controllerComponent.{CardSelected, ControllerInterface, NewGame, PlayerAdded, PlayerAmountChanged, PlayerChanged, YesSelected}
-import de.htwg.se.schwimmen.aUI.TUI
+import de.htwg.se.schwimmen.model.fieldComponent.PlayerInterface
+// import de.htwg.se.schwimmen.aUI.TUI
+import de.htwg.se.schwimmen.model.EasyStrategy
 import play.api.libs.json._
 import play.api.libs.streams.ActorFlow
 
@@ -31,7 +33,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
 
   private val injector: Injector = Guice.createInjector(new schwimmenModul)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
-  val tui = new TUI(controller)
+  // var tui = new TUI(controller)
+  val strat = new EasyStrategy
 
   def rulesPage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.rules())
@@ -141,15 +144,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     }
   }
 
-  case class PlayerAmount()
-  implicit val playeramountwrites: Writes[PlayerAmount] = new Writes[PlayerAmount] {
-    def writes(playerAmount: PlayerAmount): JsValue = Json.toJson(
-      Json.obj(
-        "player_Amount" -> controller.playerAmount
-      )
-    )
-  }
-
   case class PlayerName()
   implicit val playernamewrites: Writes[PlayerName] = new Writes[PlayerName] {
     def writes(playerName: PlayerName): JsValue = {
@@ -163,6 +157,50 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
         Json.toJson(
           Json.obj(
             "player_name" -> controller.players.head.name
+          )
+        )
+      }
+    }
+  }
+
+  case class GameState()
+  implicit val gamestatewrites: Writes[GameState] = new Writes[GameState] {
+    def writes(playerName: GameState): JsValue = {
+      if (controller.playerAmount == 0) {
+        Json.toJson(
+          Json.obj(
+            "game_state" -> "no_player_amount"
+          )
+        )
+      } else if (controller.playerAmount > controller.players.size) {
+        Json.toJson(
+          Json.obj(
+            "game_state" -> "not_enough_players"
+          )
+        )
+      } else if (controller.players.head.hasKnocked || strat.checkStop(controller.players.last)) {
+        val res = controller.players.sortBy(_.cardCount).reverse
+        var looseList: List[PlayerInterface] = Nil
+        for (pl <- res) if (pl.cardCount == res.last.cardCount) looseList = looseList.::(pl)
+        controller.players = res.dropRight(looseList.size)
+        for (pl <- looseList) {
+          if (pl.life - 1 == -1) {
+            controller.playerAmount = controller.playerAmount - 1
+          } else
+            controller.players = controller.players.::(pl.setLife(pl.life - 1))
+        }
+        if (controller.playerAmount == 1) {
+          System.exit(0)
+        }
+        Json.toJson(
+          Json.obj(
+            "game_state" -> "game_ended"
+          )
+        )
+      } else {
+        Json.toJson(
+          Json.obj(
+            "game_state" -> "game_running"
           )
         )
       }
@@ -184,8 +222,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
 
   private def get_json_obj_as_str(): String = {
     Json.obj(
-      "player_amount" -> PlayerAmount(),
-      "getGameState" -> tui.getGameState(),
+      "player_amount" -> controller.playerAmount,
+      "game_state" -> GameState(),
       "player_name" -> PlayerName(),
       "game_cards" -> Gamefield()
     ).toString()
@@ -213,10 +251,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     }
 
     reactions += {
-      case event: NewGame => {
-        sendJsonToClient
-        println("now...")
-      }
+      case event: NewGame => sendJsonToClient
       case event: PlayerAmountChanged => sendJsonToClient
       case event: PlayerAdded => sendJsonToClient
       case event: YesSelected => sendJsonToClient

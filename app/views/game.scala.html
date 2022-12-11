@@ -136,8 +136,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if(controller.controller.playerAmount > 1 &&
-                  !controller.tui.getGameState().contains("type your name:")) {
+                  @if(controller.controller.playerAmount > 1) {
                   @for(index <- 0 until controller.controller.playerAmount) {
                   <tr>
                     <th scope="row" class="namestartupper">
@@ -159,177 +158,25 @@
 
     <div class="board-body" id="help">
       <div class="game-state" id="boardBody">
-        @if(controller.tui.getGameState().contains("Possible player amount is 2-9.")) {
         <h2 class="h2" id="player-amoutn-label">
           <div class="row">
             <div class="col-1 col-sm-2"></div>
             <div class="form-group col-10 col-sm-8 classgamestate">
-              <label class="label1gamestat1" id="first-label"
-                >@controller.tui.getGameState().split("Possible player amount is 2-9.")</label
-              >
-              <label class="label2gamestat1" id="second-label"
-                >Player Number</label
-              >
-              <input
-                type="number"
-                id="players"
-                autofocus="autofocus"
-                class="form-control iputs"
-                min="2"
-                max="9"
-                aria-describedby="emailHelp"
-                placeholder="Enter player amount (for up to 2-9 Players)"
-              />
+              <label class="label1gamestat1" id="first-label"></label>
+              <label class="label2gamestat1" id="second-label"></label>
+              <div id="pl_am_name_textfield"></div>
             </div>
             <div class="col-1 col-sm-2"></div>
           </div>
           <div class="row">
             <div class="col-4 col-sm-4"></div>
             <div class="col-4 col-sm-4" id="amount-btn">
-              <button
-                type="button"
-                class="btn btn-primary col-4 col-sm-2"
-                id="btn-amount"
-                style="margin-top: 2rem; margin-left: 15em"
-              >
-                Ok
-              </button>
             </div>
             <div class="col-4 col-sm-4"></div>
           </div>
         </h2>
-        } @if(controller.tui.getGameState().contains("type your name:")) {
-        <h2 class="h2" id="player-name-label">
-          <div class="row">
-            <div class="col-1 col-sm-2"></div>
-            <div class="form-group col-10 col-sm-8 classgamestate">
-              <label class="label1gamestat1"
-                >@controller.tui.getGameState()</label
-              >
-              <input
-                type="text"
-                autofocus="autofocus"
-                class="form-control iputs"
-                id="playername"
-                aria-describedby="emailHelp"
-                placeholder="Enter Name"
-              />
-            </div>
-            <div class="col-1 col-sm-2"></div>
-          </div>
-          <div class="row">
-            <div class="col-4 col-sm-4"></div>
-            <div class="" id="name-button">
-              <button
-                type="button"
-                id="btn-name"
-                class="btn btn-primary col-4 col-sm-2"
-                style="margin-top: 2rem"
-              >
-                Ok
-              </button>
-            </div>
-            <div class="col-4 col-sm-4"></div>
-          </div>
-        </h2>
-        } @if(!controller.tui.getGameState().contains("its your turn") &
-        !controller.tui.getGameState().contains("Possible player amount is 2-9.")
-              & !controller.tui.getGameState().contains("type your name:") &
-        !controller.tui.getGameState().contains("start next round with(nr)")) {
-        <h2 class="h2">@controller.tui.getGameState()</h2>
-        } @if(controller.tui.getGameState().contains("its your turn")) {
-        <div class="row">
-          <div class="col-5"></div>
-          <div class="col-2 classcol">
-            <h1 class="playernamecenter">
-              @controller.controller.players.last.name
-            </h1>
-          </div>
-          <div class="col-5"></div>
-        </div>
-        <div class="row" style="margin-bottom: 1rem" id="anotherCards">
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-          <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
-            <div class="classcardcenter">
-              @for(row <- 0 to 2) {
-              <button class="cardbtn" type="button" id="cardbutton">
-                <img
-                  class="play-card"
-                  id="dragoncard"
-                  src="assets/images/dragon1.png"
-                  alt="card background"
-                />
-              </button>
-              }
-            </div>
-          </div>
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-        </div>
-
-        <!--
-            <h2>These are the Cards on the Field:</h2>
-            -->
-        <div class="row" id="f-test" style="margin-bottom: 1rem">
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-          <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
-            <div class="classcardcenter"></div>
-          </div>
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-        </div>
-        <!--
-            <h2>These are the Cards on your Hand:</h2>
-            -->
-        <div class="row" id="h-test">
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-          <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
-            <div class="classcardcenter"></div>
-          </div>
-          <div class="col-0 col-sm-2 col-md-2 col-lg-3 col-xl-4"></div>
-        </div>
-        <div class="row">
-          <div class="col-5"></div>
-          <div class="col-2 classcol">
-            <h1 style="margin: 0 auto; text-transform: capitalize">
-              @controller.controller.players.head.name
-            </h1>
-          </div>
-          <div class="col-5"></div>
-        </div>
-        <div class="row">
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-          <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
-            <div class="classcardcenter"></div>
-          </div>
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-        </div>
-        } @if(controller.tui.getGameState().contains("start next round with(nr)")) {
-          @for(index <- 0 until controller.controller.playerAmount) {
-        <div class="row">
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-          <h1 class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 playernamecenter" >
-            @controller.controller.players(index).name has:
-            @controller.controller.players(index).life lives and:
-            @controller.controller.players(index).cardCount points
-          </h1>
-          <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-        </div>
-        }
-        <div class="row">
-          <div class="col-4 col-sm-5"></div>
-          <button
-            type="button"
-            onclick="nextRound('nr')"
-            id="nextRound"
-            class="btn btn-primary buttonstyle col-4 col-sm-2"
-          >
-            Start next Round
-          </button>
-          <div class="col-4 col-sm-5"></div>
-        </div>
-        }
       </div>
     </div>
   </body>
 </body>
-
 } }
