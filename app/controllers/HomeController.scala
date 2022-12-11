@@ -1,20 +1,25 @@
 package controllers
 
+import akka.actor._
+import akka.stream.Materializer
 import com.google.inject.Inject
 import play.api.mvc._
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.schwimmen.schwimmenModul
-import de.htwg.se.schwimmen.controller.controllerComponent.ControllerInterface
+import de.htwg.se.schwimmen.controller.controllerComponent.{CardSelected, ControllerInterface, NewGame, PlayerAdded, PlayerAmountChanged, PlayerChanged, YesSelected}
 import de.htwg.se.schwimmen.aUI.TUI
-import play.api.libs.json.{JsObject, JsValue, Json, Writes}
+import play.api.libs.json._
+import play.api.libs.streams.ActorFlow
 
 import javax.inject._
+import scala.swing.Reactor
+
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends BaseController {
 
   /**
    * Create an Action to render an HTML page.
@@ -24,10 +29,9 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
 
-  val injector: Injector = Guice.createInjector(new schwimmenModul)
+  private val injector: Injector = Guice.createInjector(new schwimmenModul)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
-  controller.createNewGame()
 
   def rulesPage(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.rules())
@@ -36,6 +40,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def game(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.game(this))
+  }
+
+  private def createNewGame(): Unit = {
+    controller.createNewGame()
   }
 
   def setPlayerAmount(count: String): Unit = {
@@ -56,12 +64,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     controller.nextPlayer()
   }
 
-  def changeOneCard(cards: String) = {
-    var handCard = cards.split("G").head.toInt
-    var fieldCard = cards.split("G").last.toInt
+  def changeOneCard(cards: String): Unit = {
+    val handCard = cards.split("G").head.toInt
+    val fieldCard = cards.split("G").last.toInt
     if (handCard != -1 && fieldCard != -1) {
-      println(handCard)
-      print(fieldCard)
       controller.swapCards(handCard, fieldCard)
       controller.nextPlayer()
     }
@@ -87,26 +93,28 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     controller.loadFrom("loadJson")
   }
 
-  def gameProcessComand(comand: String,  data: String): String = {
-    if (comand.equals("\"all\"")) {
+  //---
+
+  private def gameProcessComand(command: String, data: String): String = {
+    if (command.equals("\"all\"")) {
       changeAllCards()
-    } else if (comand.equals("\"y\"")) {
+    } else if (command.equals("\"y\"")) {
       changeOneCard(data.replace("\"", ""))
-    } else if (comand.equals("\"amount\"")) {
+    } else if (command.equals("\"amount\"")) {
       setPlayerAmount(data.replace("\"", ""))
-    } else if (comand.equals("\"addplayer\"")) {
+    } else if (command.equals("\"addplayer\"")) {
       setPlayerName(data.replace("\"", ""))
-    } else if (comand.equals("\"k\"")) {
+    } else if (command.equals("\"k\"")) {
       knock()
-    } else if (comand.equals("\"nr\"")) {
+    } else if (command.equals("\"nr\"")) {
       setNextRound()
-    } else if (comand.equals("\"undo\"")) {
+    } else if (command.equals("\"undo\"")) {
       undo()
-    } else if (comand.equals("\"redo\"")) {
+    } else if (command.equals("\"redo\"")) {
       redo()
-    } else if (comand.equals("\"save\"")) {
+    } else if (command.equals("\"save\"")) {
       saveGame()
-    } else if (comand.equals("\"load\"")) {
+    } else if (command.equals("\"load\"")) {
       loadGame()
     }
     "Ok"
@@ -114,12 +122,23 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   case class Gamefield()
   implicit val gamefieldWrites: Writes[Gamefield] = new Writes[Gamefield] {
-    def writes(gamefield: Gamefield): JsValue = Json.toJson(
-      Json.obj(
-        "player_cards" -> controller.players.head.cardsOnHand,
-        "field_cards" -> controller.field.cardsOnField,
-      )
-    )
+    def writes(gamefield: Gamefield): JsValue = {
+      if (controller.players.isEmpty) {
+        Json.toJson(
+          Json.obj(
+            "player_cards" -> "None",
+            "field_cards" -> controller.field.cardsOnField,
+          )
+        )
+      } else {
+        Json.toJson(
+          Json.obj(
+            "player_cards" -> controller.players.head.cardsOnHand,
+            "field_cards" -> controller.field.cardsOnField,
+          )
+        )
+      }
+    }
   }
 
   case class PlayerAmount()
@@ -133,75 +152,83 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   case class PlayerName()
   implicit val playernamewrites: Writes[PlayerName] = new Writes[PlayerName] {
-    def writes(playerName: PlayerName): JsValue = Json.toJson(
-      Json.obj(
-        "player_name" -> controller.players.head.name
-      )
-    )
-  }
-
-  def status = Action {
-    if (tui.getGameState().equals("Player 1, type your name:")) {
-      Ok(Json.obj(
-        "player_amount" -> PlayerAmount(),
-        "getGameState" -> tui.getGameState(),
-        "player_name" -> PlayerName()
-      )
-      )
-    } else if (tui.getGameState().contains("its your turn")) {
-      Ok(Json.obj(
-        "player_amount" -> PlayerAmount(),
-        "getGameState" -> tui.getGameState(),
-        "player_name" -> PlayerName(),
-        "gamecards" -> Gamefield()
-      )
-      )
-    } else {
-      Ok(Json.obj(
-        "player_amount" -> PlayerAmount(),
-        "getGameState" -> tui.getGameState()
-        )
-      )
-    }
-  }
-
-  def gameRequest = Action {
-    implicit request => {
-      val req = request.body.asJson
-      gameProcessComand(req.get("cmd").toString(), req.get("data").toString())
-      if (tui.getGameState().equals("Player 1, type your name:")) {
-        Ok(Json.obj(
-          "player_amount" -> PlayerAmount(),
-          "getGameState" -> tui.getGameState(),
-          "player_name" -> PlayerName()
+    def writes(playerName: PlayerName): JsValue = {
+      if (controller.players.isEmpty) {
+        Json.toJson(
+          Json.obj(
+            "player_name" -> "None"
           )
         )
-
-      } else if (tui.getGameState().contains("its your turn")) {
-        println(tui.getGameState())
-        Ok(Json.obj(
-          "player_amount" -> PlayerAmount(),
-          "getGameState" -> tui.getGameState(),
-          "player_name" -> PlayerName(),
-          "gamecards" -> Gamefield()
-        )
-        )
-      }
-      else {
-        Ok(Json.obj(
-          "player_amount" -> PlayerAmount(),
-          "getGameState" -> tui.getGameState(),
-        )
+      } else {
+        Json.toJson(
+          Json.obj(
+            "player_name" -> controller.players.head.name
+          )
         )
       }
     }
   }
 
-  def allRoutes: String = {
-    """
-     GET  /
-     GET  /command
-    """
+  def socket: WebSocket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      SchwimmenWebSocketActorFactory.create(out)
+    }
   }
 
+  object SchwimmenWebSocketActorFactory {
+    def create(out: ActorRef): Props = {
+      Props(new SchwimmenActor(out))
+    }
+  }
+
+  private def get_json_obj_as_str(): String = {
+    Json.obj(
+      "player_amount" -> PlayerAmount(),
+      "getGameState" -> tui.getGameState(),
+      "player_name" -> PlayerName(),
+      "game_cards" -> Gamefield()
+    ).toString()
+  }
+
+  class SchwimmenActor(out: ActorRef) extends Actor with Reactor {
+
+    listenTo(controller)
+
+    def receive: Receive = {
+      case msg: String =>
+        // val json = Json.toJson(msg)
+        if (msg.isEmpty) {
+          println("empty message")
+        } else if (msg == "opening connection") {
+          createNewGame()
+          println("opening message")
+        } else {
+          val json: JsValue = Json.parse(msg)
+          println(msg)
+          gameProcessComand(json("cmd").toString(), json("data").toString())
+//          out ! msg
+//          println("Send something to Client " + msg)
+        }
+    }
+
+    reactions += {
+      case event: NewGame => {
+        sendJsonToClient
+        println("now...")
+      }
+      case event: PlayerAmountChanged => sendJsonToClient
+      case event: PlayerAdded => sendJsonToClient
+      case event: YesSelected => sendJsonToClient
+      case event: CardSelected => sendJsonToClient
+      case event: PlayerChanged => sendJsonToClient
+    }
+
+    def sendJsonToClient:Unit = {
+      println("Received event from Controller")
+      out ! get_json_obj_as_str()
+    }
+  }
 }
+
+

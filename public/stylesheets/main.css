@@ -6,12 +6,12 @@
 }
 
 .game-body {
-    padding: 0 0;
-    background: url("../images/hintergrund.jpg") no-repeat;
-    background-size: cover;
-    color: #ccd5d9;
-    overflow: hidden;
-    height: 92vh;
+  padding: 0 0;
+  background: url("../images/hintergrund.jpg") no-repeat;
+  background-size: cover;
+  color: #ccd5d9;
+  overflow: hidden;
+  height: 92vh;
 }
 
 .game-state {
@@ -19,119 +19,124 @@
 }
 
 .colour {
-    background-color: #1d2c3b;
-    height: 12em;
+  background-color: #1d2c3b;
+  height: 12em;
 }
 .topinhalt {
-    padding-left: 3em!important;
+  padding-left: 3em !important;
 }
 .body-inhalt {
-    padding-top: 3em;
+  padding-top: 3em;
 }
 .con {
-margin-top: 15em;
+  margin-top: 15em;
 }
 .end-of-page {
-margin-bottom: 20em;
+  margin-bottom: 20em;
 }
 p {
-    font-size: 1.1em;
+  font-size: 1.1em;
 }
 h1 {
-    font-size: 2.2em!important;
+  font-size: 2.2em !important;
 }
-h3, h4 {
-    font-size: 1.5em!important;
+h3,
+h4 {
+  font-size: 1.5em !important;
 }
 
 .listschriftgrosse {
-    margin-bottom: 2em!important;
-    font-size: 1em;
+  margin-bottom: 2em !important;
+  font-size: 1em;
 }
-.kaestchen{
-    background-color: #1d2c3b!important;
-    color: #ede9e2!important;
+.kaestchen {
+  background-color: #1d2c3b !important;
+  color: #ede9e2 !important;
 }
 .listitem {
-    color: #dbe2ea!important;
-    background-color: #515560!important;
+  color: #dbe2ea !important;
+  background-color: #515560 !important;
 }
 
 .navbuttonstyle {
-    background-color: #545b62!important;
-    border-color: #f8f9fa;
+  background-color: #545b62 !important;
+  border-color: #f8f9fa;
 }
 .buttonstyle {
-    width: 8em;
-    margin-top: 2rem;
-    background-color: #545b62!important;
-    border-color: #f8f9fa;
+  width: 8em;
+  margin-top: 2rem;
+  background-color: #545b62 !important;
+  border-color: #f8f9fa;
 }
 .navtable {
-    color: #17150f;
+  color: #17150f;
 }
 .namestartupper {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 .classcol {
-    width: 100%;
-    display: inherit;
+  width: 100%;
+  display: inherit;
 }
 .classcardcenter {
-    margin: 0 auto;
-    display: inherit;
+  margin: 0 auto;
+  display: inherit;
 }
 .playernamecenter {
-    margin: 0 auto;
-    text-transform: capitalize;
+  margin: 0 auto;
+  text-transform: capitalize;
 }
 
 .classgamestate {
-    width: 100%;
-    display: inline-table;
+  width: 100%;
+  display: inline-table;
 }
 
 .label1gamestat1 {
-    margin: 0 auto;
-    display: inherit;
-    margin-top: 2em;
+  margin: 0 auto;
+  display: inherit;
+  margin-top: 2em;
 }
 .label2gamestat1 {
-    margin: 0 auto;
-    display: inherit;
-    margin-top: 4em
+  margin: 0 auto;
+  display: inherit;
+  margin-top: 4em;
 }
 .iputs {
-    margin: 0 auto;
-    display: inherit;
-    margin-top: 2em;
-    width: 50%!important;
+  margin: 0 auto;
+  display: inherit;
+  margin-top: 2em;
+  width: 50% !important;
 }
 
-.play-card, .play-card-field, .play-card-hand {
-    width: 7em;
-    height: auto;
-    border: 1px black;
-    border-radius: 5px;
+.play-card,
+.play-card-field,
+.play-card-hand {
+  width: 7em;
+  height: auto;
+  border: 1px black;
+  border-radius: 5px;
 }
 
 .play-card {
-    border: 1px black;
-    border-radius: 5px;
+  border: 1px black;
+  border-radius: 5px;
 }
 
 .play-card-field:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .play-card-hand:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.cardbtn, .cardbtnfield, .cardbtnhand {
-    outline: 0!important;
-    color: transparent;
-    background-color: transparent;
-    border-color: transparent;
-    cursor: default;
+.cardbtn,
+.cardbtnfield,
+.cardbtnhand {
+  outline: 0 !important;
+  color: transparent;
+  background-color: transparent;
+  border-color: transparent;
+  cursor: default;
 }

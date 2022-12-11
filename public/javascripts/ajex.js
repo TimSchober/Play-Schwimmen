@@ -1,14 +1,35 @@
-
-var cardfieldindex = -1;
-var cardhandindex = -1;
+let websocket = new WebSocket("ws://localhost:9000/websocket")
 
 $(document).ready(function () {
-        getData().then(() => {
-            updateInfoPanel();
-            refreshOnClickEvents();
-        })
+        connectWebSocket();
     }
 )
+
+function connectWebSocket() {
+
+    websocket.onopen = function(event) {
+        console.log("opening connection to Websocket")
+        websocket.send("opening connection")
+    }
+
+    websocket.onclose = function () {
+        console.log("Closed connection to Websocket")
+    }
+
+    websocket.onerror = function (error) {
+        console.log("Websocket caused error: " + error)
+    }
+
+    websocket.onmessage = function (e) {
+        console.log("message received");
+        if (typeof e.data === "string") {
+            console.log(e.data)
+            let json = JSON.parse(e.data)
+            updateInfoPanel(json);
+            refreshOnClickEvents();
+        }
+    }
+}
 
 function resetGame() {
 
@@ -27,36 +48,23 @@ function resetGame() {
     anotherPlayerNameDiv.remove();
 }
 
-//Game dara from controller
-let data = {};
-
-function getData() {
-    return $.ajax({
-        method: "GET",
-        url: "/status",
-        dataType: "json",
-        success: function (response) {
-            console.log("Success")
-            console.log(data)
-            data = response;
-        }
-    });
-}
-
 function changeAllCards() {
     resetGame()
-    processCommand("all", "")
+    websocket.send("{ \"cmd\": \"all\", \"data\": \"\" }")
 }
+
+let cardfieldindex = -1;
+let cardhandindex = -1;
 
 function changeOneCard() {
 
     let handCardIndex = cardhandindex;
     let fieldCardIndex = cardfieldindex;
-    if (handCardIndex == -1 || fieldCardIndex == -1) return;
+    if (handCardIndex === -1 || fieldCardIndex === -1) return;
     let cardsToChange = handCardIndex.toString() + "G" +  fieldCardIndex.toString();
 
     resetGame()
-    processCommand("y", cardsToChange)
+    websocket.send("{ \"cmd\": \"y\", \"data\": \"" + cardsToChange + "\" }")
 
     cardhandindex = -1;
     cardfieldindex = -1;
@@ -64,7 +72,7 @@ function changeOneCard() {
 
 function knock() {
     resetGame()
-    processCommand("k", "")
+    websocket.send("{ \"cmd\": \"k\", \"data\": \"\" }")
 }
 
 function setNextRound() {
@@ -73,33 +81,33 @@ function setNextRound() {
 
     nextRoundLabel.remove();
     nextRoundButtonDiv.remove();
-    processCommand("nr", "")
+    websocket.send("{ \"cmd\": \"nr\", \"data\": \"\" }")
 }
 
 function undo() {
-    processCommand("u", "")
+    websocket.send("{ \"cmd\": \"u\", \"data\": \"\" }")
 }
 
 function redo() {
-    processCommand("z", "")
+    websocket.send("{ \"cmd\": \"z\", \"data\": \"\" }")
 }
 
 function saveGame() {
-    processCommand("saveJson", "")
+    websocket.send("{ \"cmd\": \"saveJson\", \"data\": \"\" }")
 }
 
 function loadGame(l) {
-    processCommand("loadJson", "")
+    websocket.send("{ \"cmd\": \"loadJson\", \"data\": \"\" }")
 }
 
 function setPlayerAmount() {
     const amount = $('#players').get(0).value;
-    processCommand("amount", amount)
+    websocket.send("{ \"cmd\": \"amount\", \"data\": " + amount + " }")
 }
 
 function setPlayerName() {
     const name = $('#playername').get(0).value;
-    processCommand("addplayer", name)
+    websocket.send("{ \"cmd\": \"addplayer\", \"data\": \"" + name + "\" }")
 }
 
 
@@ -139,9 +147,9 @@ function refreshOnClickEvents() {
     let fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
     let handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
 
-    var cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
-    var cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
-    var cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
+    let cardbtn1 = document.getElementsByClassName("cardbtn")[0]; // button 1
+    let cardbtn2 = document.getElementsByClassName("cardbtn")[1]; // button 2
+    let cardbtn3 = document.getElementsByClassName("cardbtn")[2]; // button 3
 
     let imag1 = document.getElementsByClassName("play-card")[0]; // image 1
     let imag2 = document.getElementsByClassName("play-card")[1]; // image 1
@@ -151,36 +159,30 @@ function refreshOnClickEvents() {
     cardbtn1.addEventListener("mouseover", function() {
         imag1.style.width = "9em";
         imag1.style.height = "auto";
-
     });
     cardbtn1.addEventListener("mouseout", function() {
         imag1.style.width = "7em";
         imag1.style.height = "auto";
-
     });
 
     // Zweiter Button
     cardbtn2.addEventListener("mouseover", function() {
         imag2.style.width = "9em";
         imag2.style.height = "auto";
-
     });
     cardbtn2.addEventListener("mouseout", function() {
         imag2.style.width = "7em";
         imag2.style.height = "auto";
-
     });
 
     // Dritter Button
     cardbtn3.addEventListener("mouseover", function() {
         imag3.style.width = "9em";
         imag3.style.height = "auto";
-
     });
     cardbtn3.addEventListener("mouseout", function() {
         imag3.style.width = "7em";
         imag3.style.height = "auto";
-
     });
 
     /*-----------------Fieldcards---------------------*/
@@ -416,39 +418,7 @@ function refreshOnClickEvents() {
             handCardKlicked3 = false;
         }
     });
-
 }
-
-function post(method, url, data) {
-    return $.ajax({
-        method: method,
-        url: url,
-        data: JSON.stringify(data),
-        dataType: "json",
-        contentType: "application/json",
-
-        success: function (response) {
-            console.log("Success");
-            data = response;
-            console.log(data);
-        },
-        error: function (response) {
-            console.log("Error")
-            console.error(response);
-            console.log(data)
-        }
-    });
-}
-
-function processCommand(cmd, data) {
-    post("POST", "/command", {"cmd": cmd, "data": data}).then(() => {
-        getData().then(() => {
-            updateInfoPanel();
-            refreshOnClickEvents();
-        })
-    })
-}
-
 
 let firstLabel = $('#first-label').get(0);
 let secondLabel = $('#second-label').get(0);
@@ -491,18 +461,17 @@ let gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
                   "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
                   "                 </div>"
 
-function updateInfoPanel() {
+function updateInfoPanel(data) {
 
     let game_stat = data.getGameState;
 
-    console.log(game_stat);
     console.log(data);
     console.log(gameBody);
-
+    console.log("I'm here ... ")
 
     if (game_stat.includes("type your name")) {
 
-        firstLabel.innerHTML = `<h2 class="h2">${data.getGameState}</h2>`;
+        firstLabel.innerHTML = `<h2 class="h2">${game_stat}</h2>`;
         secondLabel.innerHTML = "";
         playerAmountInput.outerHTML = nameIput;
         amountButton.innerHTML = userAddBtn;
@@ -530,11 +499,10 @@ function updateInfoPanel() {
             $("#name-button").remove();
             $("#help").remove();
         });
-        let fieldCards = data.gamecards.field_cards;
-        let handCards = data.gamecards.player_cards;
+        let fieldCards = data.game_cards.field_cards;
+        let handCards = data.game_cards.player_cards;
 
          for (let i = 0; i < fieldCards.length; i++) {
-
              if (fieldCards[i][1] === "spade") {
                  fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
                  if (fieldCards[i][0] === "7") {
@@ -665,7 +633,6 @@ function updateInfoPanel() {
              }
          }
          for (let i = 0; i < handCards.length; i++) {
-
               if (handCards[i][1] === "spade") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
                   if (handCards[i][0] === "7") {
@@ -728,7 +695,6 @@ function updateInfoPanel() {
                    }
                    handCards1 += "</button>\n";
               }
-
               else if (handCards[i][1] === "diamond") {
                   handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
                   if (handCards[i][0] === "7") {
@@ -822,18 +788,3 @@ function updateInfoPanel() {
 
     }
 }
-
-let socket = new WebSocket("ws://localhost:9000/socket");
-    socket.onopen = function(){
-
-    }
-    socket.onmessage = function(message){
-
-    }
-    socket.onerror = function(){
-
-    }
-    socket.onclose = function(){
-
-    }
-
