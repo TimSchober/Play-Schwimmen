@@ -40,7 +40,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     Ok(views.html.rules())
   }
 
-
   def game(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.game(this))
   }
@@ -54,7 +53,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
   }
 
   def setPlayerName(name: String): Unit = {
-    controller.addPlayer(name)
+    controller.addPlayer((controller.players.size + 1).toString + name)
   }
 
   def changeAllCards(): Unit = {
@@ -126,38 +125,36 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
   case class Gamefield()
   implicit val gamefieldWrites: Writes[Gamefield] = new Writes[Gamefield] {
     def writes(gamefield: Gamefield): JsValue = {
-      if (controller.players.isEmpty) {
-        Json.toJson(
-          Json.obj(
-            "player_cards" -> "None",
-            "field_cards" -> controller.field.cardsOnField,
-          )
+      Json.toJson(
+        Json.obj(
+          "field_cards" -> controller.field.cardsOnField,
         )
-      } else {
-        Json.toJson(
-          Json.obj(
-            "player_cards" -> controller.players.head.cardsOnHand,
-            "field_cards" -> controller.field.cardsOnField,
-          )
-        )
-      }
+      )
     }
   }
 
-  case class PlayerName()
-  implicit val playernamewrites: Writes[PlayerName] = new Writes[PlayerName] {
-    def writes(playerName: PlayerName): JsValue = {
+  case class Players()
+  implicit val playerwrites: Writes[Players] = new Writes[Players] {
+    def writes(players: Players): JsValue = {
       if (controller.players.isEmpty) {
         Json.toJson(
           Json.obj(
-            "player_name" -> "None"
+            "players" -> "None"
           )
         )
       } else {
-        Json.toJson(
-          Json.obj(
-            "player_name" -> controller.players.head.name
+        var json = Json.arr()
+        for (pl <- controller.players) {
+          json = json :+ Json.obj(
+            "player_name" -> pl.name,
+            "player_cards" -> pl.cardsOnHand,
+            "player_has_knocked" -> pl.hasKnocked,
+            "player_lives" -> pl.life,
+            "player_points" -> pl.cardCount
           )
+        }
+        Json.toJson(
+          json
         )
       }
     }
@@ -179,19 +176,22 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
           )
         )
       } else if (controller.players.head.hasKnocked || strat.checkStop(controller.players.last)) {
-        val res = controller.players.sortBy(_.cardCount).reverse
-        var looseList: List[PlayerInterface] = Nil
-        for (pl <- res) if (pl.cardCount == res.last.cardCount) looseList = looseList.::(pl)
-        controller.players = res.dropRight(looseList.size)
-        for (pl <- looseList) {
-          if (pl.life - 1 == -1) {
-            controller.playerAmount = controller.playerAmount - 1
-          } else
-            controller.players = controller.players.::(pl.setLife(pl.life - 1))
-        }
-        if (controller.playerAmount == 1) {
-          System.exit(0)
-        }
+//        val res = controller.players.sortBy(_.cardCount).reverse
+//        var looseList: List[PlayerInterface] = Nil
+//        for (pl <- res) if (pl.cardCount == res.last.cardCount) looseList = looseList.::(pl)
+//        controller.players = res.dropRight(looseList.size)
+//        println(looseList)
+//        for (pl <- looseList) {
+//          println(pl)
+//          if (pl.life - 1 == -1) {
+//            controller.playerAmount = controller.playerAmount - 1
+//          } else
+//            controller.players = controller.players.::(pl.setLife(pl.life - 1))
+//        }
+//        if (controller.playerAmount == 1) {
+//          println("im out")
+//          //System.exit(0)
+//        }
         Json.toJson(
           Json.obj(
             "game_state" -> "game_ended"
@@ -224,8 +224,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     Json.obj(
       "player_amount" -> controller.playerAmount,
       "game_state" -> GameState(),
-      "player_name" -> PlayerName(),
-      "game_cards" -> Gamefield()
+      "players" -> Players(),
+      "field_cards" -> Gamefield()
     ).toString()
   }
 
@@ -241,6 +241,9 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
         } else if (msg == "opening connection") {
           createNewGame()
           println("opening message")
+        } else if (msg == "player") {
+          sendJsonToClient
+          println("player joined")
         } else {
           val json: JsValue = Json.parse(msg)
           println(msg)

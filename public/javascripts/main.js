@@ -8,8 +8,13 @@ $(document).ready(function () {
 function connectWebSocket() {
 
     websocket.onopen = function(event) {
+        let playernumber = parseInt(window.location.href.at(-1))
         console.log("opening connection to Websocket")
-        websocket.send("opening connection")
+        if (isNaN(playernumber)) {
+            websocket.send("opening connection")
+        } else {
+            websocket.send("player")
+        }
     }
 
     websocket.onclose = function () {
@@ -468,83 +473,153 @@ function updateInfoPanel(data) {
 
     let game_states = data.game_state.game_state;
 
+    let playernumber = parseInt(window.location.href.at(-1))
+
     console.log(data);
-    console.log(gameBody);
-    console.log("I'm here ... ")
 
-    if (game_states.includes("no_player_amount")) {
+    if (isNaN(playernumber)) {
 
-        firstLabel.innerHTML = '<h2 class="h2">Welcome to Schwimmen! How many players want to play?</h2>';
-        secondLabel.innerHTML = '<label class="label2gamestat1" id="second-label">Possible player amount is 2-9</label>';
-        playerAmountInput.innerHTML = amountInput;
-        amountButton.innerHTML = userAmountBtn;
+        if (game_states.includes("no_player_amount")) {
 
-    } else if (game_states.includes("not_enough_players")) {
+            firstLabel.innerHTML = '<h2 class="h2">Welcome to Schwimmen! How many players want to play?</h2>';
+            secondLabel.innerHTML = '<label class="label2gamestat1" id="second-label">Possible player amount is 2-9</label>';
+            playerAmountInput.innerHTML = amountInput;
+            amountButton.innerHTML = userAmountBtn;
 
-        firstLabel.innerHTML = `<h2 class="h2">Type your Name:</h2>`;
-        secondLabel.innerHTML = "";
-        playerAmountInput.innerHTML = nameInput;
-        amountButton.innerHTML = userAddBtn;
+        } else if (game_states.includes("not_enough_players")) {
 
-    } else if (game_states.includes("game_running")) {
+            firstLabel.innerHTML = `<h2 class="h2">Type your Name:</h2>`;
+            secondLabel.innerHTML = "";
+            playerAmountInput.innerHTML = nameInput;
+            amountButton.innerHTML = userAddBtn;
 
-        let gameBody = $('#gameBody').get(0);
+        } else if (game_states.includes("game_running")) {
 
-        let fieldCards1 = "<div class=\"row\" id=\"f-cards\" style=\"margin-bottom: 1rem\">\n" +
-                          "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
-                          "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
-                          "                                   <div class=\"classcardcenter\">\n"
+            let gameBody = $('#player-href').get(0);
 
-        let handCards1 = "<div class=\"row\" id=\"h-cards\" style=\"margin-bottom: 1rem\">\n" +
-                          "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
-                          "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
-                          "                                   <div class=\"classcardcenter\">\n"
+            $(document).ready(function() {
+                $("#playername").remove();
+                $("#name-button").remove();
+                $("#help").remove();
+            });
 
-        let playerNameLabel =    `<div class="row" id="name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter">${data.player_name.player_name}</h1></div><div class="col-5"></div></div>`;
-        let anotherPlayerName =  `<div class="row" id="another-name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter" style="margin-bottom: 0.5em;">Another Player</h1></div><div class="col-5"></div></div>`;
+            let playerNameLabel = ''
 
+            for (let i = 0; i < data.player_amount; i++) {
+                let url = 'http://localhost:9000/player' + data.players[i].player_name.charAt(0)
+                console.log(url)
+                playerNameLabel += `<div class="row" id="name-label">
+                <div class="col-1"></div>
+                <div class="col-10 classcol">
+                <h1 class="playernamecenter">${data.players[i].player_name}</h1>
+                <button class="btn btn-success" onclick="window.open('${url}', '_blank')">Play</button>
+                </div>
+                <div class="col-1"></div>
+                </div>`;
+            }
+            gameBody.innerHTML = playerNameLabel;
 
-        $(document).ready(function() {
-            $("#playername").remove();
-            $("#name-button").remove();
-            $("#help").remove();
-        });
-        let fieldCards = data.game_cards.field_cards;
-        let handCards = data.game_cards.player_cards;
-
-        for (let i = 0; i < fieldCards.length; i++) {
-            fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
-            fieldCards1 += "<img src=\"assets/images/" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s.png\" alt=\"" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s\" class=\"play-card-field\" />\n";
-            fieldCards1 += "</button>\n";
         }
 
-        for (let i = 0; i < handCards.length; i++) {
-            handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
-            handCards1 += "<img src=\"assets/images/" + handCards[i][0] + "_of_" + handCards[i][1] + "s.png\" alt=\"" + handCards[i][0] + "_of_" + handCards[i][1] + "s\" class=\"play-card-hand\" />\n";
-            handCards1 += "</button>\n";
+    } else {
+
+        if (game_states.includes("game_running")) {
+            data.players.forEach((player) => {
+                if (parseInt(player.player_name.charAt(0)) === playernumber) {
+                    let turn = false;
+                    if (data.players[0].player_name === player.player_name) {
+                        turn = true;
+                    }
+                    let fieldCards1 = "<div class=\"row\" id=\"f-cards\" style=\"margin-bottom: 1rem\">\n" +
+                        "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                        "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
+                        "                                   <div class=\"classcardcenter\">\n"
+
+                    let handCards1 = "<div class=\"row\" id=\"h-cards\" style=\"margin-bottom: 1rem\">\n" +
+                        "                                <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                        "                               <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
+                        "                                   <div class=\"classcardcenter\">\n"
+
+                    let playerNameLabel =    `<div class="row" id="name-label"><div class="col-5"></div><div class="col-2 classcol"><h1 class="playernamecenter">${player.player_name}</h1></div><div class="col-5"></div></div>`;
+                    let anotherPlayerName =  `<div class="row" id="another-name-label"><div class="col-3"></div><div class="6 classcol"><h1 class="playernamecenter" style="margin-bottom: 0.5em;">I's the turn of ${data.players[0].player_name}</h1></div><div class="col-3"></div></div>`;
+
+                    let fieldCards = data.field_cards.field_cards;
+                    let handCards = player.player_cards;
+
+                    for (let i = 0; i < fieldCards.length; i++) {
+                        if (turn) {
+                            fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\">\n";
+                            fieldCards1 += "<img src=\"assets/images/" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s.png\" alt=\"" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s\" class=\"play-card-field\" />\n";
+                            fieldCards1 += "</button>\n";
+                        } else {
+                            fieldCards1 += "<button class=\"cardbtnfield\" type=\"button\" disabled>\n";
+                            fieldCards1 += "<img src=\"assets/images/" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s.png\" alt=\"" + fieldCards[i][0] + "_of_" + fieldCards[i][1] + "s\" class=\"play-card-field\" />\n";
+                            fieldCards1 += "</button>\n";
+                        }
+                    }
+
+                    for (let i = 0; i < handCards.length; i++) {
+                        if (turn) {
+                            handCards1 += "<button class=\"cardbtnhand\" type=\"button\">\n";
+                            handCards1 += "<img src=\"assets/images/" + handCards[i][0] + "_of_" + handCards[i][1] + "s.png\" alt=\"" + handCards[i][0] + "_of_" + handCards[i][1] + "s\" class=\"play-card-hand\" />\n";
+                            handCards1 += "</button>\n";
+                        } else {
+                            handCards1 += "<button class=\"cardbtnhand\" type=\"button\" disabled>\n";
+                            handCards1 += "<img src=\"assets/images/" + handCards[i][0] + "_of_" + handCards[i][1] + "s.png\" alt=\"" + handCards[i][0] + "_of_" + handCards[i][1] + "s\" class=\"play-card-hand\" />\n";
+                            handCards1 += "</button>\n";
+                        }
+                    }
+
+                    fieldCards1 +=  "</div></div><div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div></div>"
+                    handCards1 += "</div></div><div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div></div>"
+                    firstLabel.innerHTML = "";
+
+                    if (turn) {
+                        gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
+                            "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                            "                     <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
+                            "                         <div class=\"classcardcenter\">\n" +
+                            "                             <button type=\"button\"  id=\"changeoncard\" class=\"btn btn-primary buttonstyle btn-change-one\">Change Card</button>\n" +
+                            "                             <button type=\"button\"  id=\"tackall\" class=\"btn btn-primary buttonstyle btn-change-all\">Take All</button>\n" +
+                            "                             <button type=\"button\"  id=\"knock\" class=\"btn btn-primary buttonstyle btn-knock\">Knock</button>\n" +
+                            "                         </div>\n" +
+                            "                     </div>\n" +
+                            "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                            "                 </div>"
+                    } else {
+                        gameButtons = "<div class=\"row\" id=\"gameButtons\">\n" +
+                            "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                            "                     <div class=\"col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol\">\n" +
+                            "                         <div class=\"classcardcenter\">\n" +
+                            "                             <button type=\"button\"  id=\"changeoncard\" class=\"btn btn-primary buttonstyle btn-change-one\" disabled>Change Card</button>\n" +
+                            "                             <button type=\"button\"  id=\"tackall\" class=\"btn btn-primary buttonstyle btn-change-all\" disabled>Take All</button>\n" +
+                            "                             <button type=\"button\"  id=\"knock\" class=\"btn btn-primary buttonstyle btn-knock\" disabled>Knock</button>\n" +
+                            "                         </div>\n" +
+                            "                     </div>\n" +
+                            "                     <div class=\"col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4\"></div>\n" +
+                            "                 </div>"
+                    }
+
+                    let gameBody = $('#game-player-body').get(0);
+
+                    gameBody.innerHTML = anotherPlayerName + anotherCards +
+                        fieldCards1 + handCards1 + playerNameLabel + gameButtons;
+                }
+            })
+
+        } else if (game_states.includes("game_ended")) {
+            let gameBody = $('#game-player-body').get(0);
+            let title = '<div class=\"row\" id=\"finalstatstitle\"><div class=\"col-4 col-sm-3\"></div><h2 class=\"col-4 col-sm-6\ h2" id="titleLabel">Game Ended</h2><div class=\"col-4 col-sm-3\"></div></div>';
+            let stats = ""
+            data.players.forEach((player) => {
+                stats += "<div class=\"row\" id=\"finalstats\"><div class=\"col-4 col-sm-3\"></div><h2 class=\"col-4 col-sm-6 h2\" id=\"nextRoundLabel\">" + player.player_name + " has " + player.player_points + "</h2><div class=\"col-4 col-sm-3\"></div></div>";
+            })
+            let nextRoundButton = "<div class=\"row\" id=\"nextRoundButtonDiv\">\n" +
+                "    <div class=\"col-4 col-sm-5\"></div>\n" +
+                "    <button type=\"button\" id=\"nextRound\" class=\"btn btn-primary buttonstyle col-4 col-sm-2\">Start next Round</button>\n" +
+                "    <div class=\"col-4 col-sm-5\"></div>\n" +
+                " </div>"
+            gameBody.innerHTML = title + stats + nextRoundButton;
         }
-
-        fieldCards1 += "       </div>\n" +
-                     "                       </div>"
-        handCards1 += "       </div>\n" +
-                              "                       </div>"
-        firstLabel.innerHTML = "";
-
-        gameBody.innerHTML = gameBody.innerHTML + anotherPlayerName;
-        gameBody.innerHTML = gameBody.innerHTML + anotherCards;
-        gameBody.innerHTML = gameBody.innerHTML + fieldCards1;
-        gameBody.innerHTML = gameBody.innerHTML + handCards1;
-        gameBody.innerHTML = gameBody.innerHTML + playerNameLabel;
-        gameBody.innerHTML = gameBody.innerHTML + gameButtons;
-
-    } else if (game_states.includes("game_ended")) {
-        let nextRound = `<h2 class="h2" id="nextRoundLabel">Game Ended</h2>`;
-        let nextRoundButton = "<div class=\"row\" id=\"nextRoundButtonDiv\">\n" +
-                              "    <div class=\"col-4 col-sm-5\"></div>\n" +
-                              "    <button type=\"button\" id=\"nextRound\" class=\"btn btn-primary buttonstyle col-4 col-sm-2\">Start next Round</button>\n" +
-                              "    <div class=\"col-4 col-sm-5\"></div>\n" +
-                              " </div>"
-        gameBody.innerHTML = gameBody.innerHTML + nextRound;
-        gameBody.innerHTML = gameBody.innerHTML + nextRoundButton;
     }
 }

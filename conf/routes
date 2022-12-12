@@ -6,6 +6,15 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.rulesPage()
 GET     /game                       controllers.HomeController.game()
+GET     /player1                    controllers.HomeController.game()
+GET     /player2                    controllers.HomeController.game()
+GET     /player3                    controllers.HomeController.game()
+GET     /player4                    controllers.HomeController.game()
+GET     /player5                    controllers.HomeController.game()
+GET     /player6                    controllers.HomeController.game()
+GET     /player7                    controllers.HomeController.game()
+GET     /player8                    controllers.HomeController.game()
+GET     /player9                    controllers.HomeController.game()
 
 #JSON Command /command
 +nocsrf
