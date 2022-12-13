@@ -42,7 +42,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
 
 
   def game(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.game(this))
+    Ok(views.html.gameVue(this))
   }
 
   private def createNewGame(): Unit = {
