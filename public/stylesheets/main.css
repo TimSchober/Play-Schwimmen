@@ -63,8 +63,9 @@ h4 {
   border-color: #f8f9fa;
 }
 .buttonstyle {
+  display: inherit;
+  margin: 0 auto;
   width: 8em;
-  margin-top: 2rem;
   background-color: #545b62 !important;
   border-color: #f8f9fa;
 }

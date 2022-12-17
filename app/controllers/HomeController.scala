@@ -42,7 +42,17 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
 
 
   def game(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.gameVue(this))
+    Ok(views.html.game(this))
+  }
+
+  def status = Action {
+    Ok(Json.obj(
+      //"player_amount" -> controller.playerAmount,
+      "game_state" -> GameState()
+      //"player_name" -> PlayerName(),
+      //"game_cards" -> Gamefield()
+      )
+    )
   }
 
   private def createNewGame(): Unit = {

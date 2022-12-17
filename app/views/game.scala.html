@@ -1,9 +1,15 @@
 @(controller: HomeController) @main("Welcome to Play Schwimmen") {
 @defining(play.core.PlayVersion.current) { version =>
-<body class="game-body">
-  <body class="game-body" id="gameBody">
-  <schwimmen-nav></schwimmen-nav>
-  <board-body></board-body>
+  <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+  <body class="game-body">
+    <div class="game-body" id="gameBody">
+      <schwimmen-nav></schwimmen-nav>
+      <div class="board-body" id="help">
+        <div class="game-state" id="boardBody">
+          <info-panel></info-panel>
+        </div>
+      </div>
+    </div>
   </body>
-</body>
+  <script src='@routes.Assets.versioned("javascripts/schwimmenVue.js")'></script>
 } }
