@@ -45,16 +45,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     Ok(views.html.game(this))
   }
 
-  def status = Action {
-    Ok(Json.obj(
-      //"player_amount" -> controller.playerAmount,
-      "game_state" -> GameState()
-      //"player_name" -> PlayerName(),
-      //"game_cards" -> Gamefield()
-      )
-    )
-  }
-
   private def createNewGame(): Unit = {
     controller.createNewGame()
   }
@@ -69,6 +59,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
 
   def changeAllCards(): Unit = {
     controller.swapAllCards()
+    controller.nextPlayer()
+  }
+  def doNothing(): Unit = {
+    controller.doNothing()
     controller.nextPlayer()
   }
 
@@ -98,12 +92,20 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     controller.redo()
   }
 
-  def saveGame(): Unit = {
+  def saveGameAsJson(): Unit = {
     controller.saveTo("saveJson")
   }
 
-  def loadGame(): Unit = {
+  def saveGameAsXml(): Unit = {
+    controller.saveTo("saveXml")
+  }
+
+  def loadGameAsJson(): Unit = {
     controller.loadFrom("loadJson")
+  }
+
+  def loadGameAsXml(): Unit = {
+    controller.loadFrom("loadXml")
   }
 
   //---
@@ -119,16 +121,22 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
       setPlayerName(data.replace("\"", ""))
     } else if (command.equals("\"k\"")) {
       knock()
+    } else if (command.equals("\"n\"")) {
+      doNothing()
     } else if (command.equals("\"nr\"")) {
       setNextRound()
     } else if (command.equals("\"undo\"")) {
       undo()
     } else if (command.equals("\"redo\"")) {
       redo()
-    } else if (command.equals("\"save\"")) {
-      saveGame()
-    } else if (command.equals("\"load\"")) {
-      loadGame()
+    } else if (command.equals("\"saveJson\"")) {
+      saveGameAsJson()
+    } else if (command.equals("\"saveXml\"")) {
+      saveGameAsXml()
+    } else if (command.equals("\"loadJson\"")) {
+      loadGameAsJson()
+    } else if (command.equals("\"loadXml\"")) {
+      loadGameAsXml()
     }
     "Ok"
   }

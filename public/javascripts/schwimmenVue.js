@@ -1,10 +1,5 @@
 const app = Vue.createApp({})
 
-let cardfieldindex = -1;
-let cardhandindex = -1;
-let fieldCardKlicked1, fieldCardKlicked2, fieldCardKlicked3 = false;
-let handCardKlicked1, handCardKlicked2, handCardKlicked3 = false;
-
 app.component('info-panel', {
     data() {
         return {
@@ -14,6 +9,7 @@ app.component('info-panel', {
             player_name: '',
             fieldCards: '',
             handCards: '',
+            player_num: 1,
             cardfieldindex: -1,
             cardhandindex: -1,
             fieldCardKlicked1: false,
@@ -62,21 +58,54 @@ app.component('info-panel', {
             const player_name = $('#playername').get(0).value;
             console.log("Name Button");
             this.websocketVUE.send("{ \"cmd\": \"addplayer\", \"data\": " + JSON.stringify(player_name) + " }")
+            $('#playername').get(0).value = '';
+            this.player_num = this.player_num + 1;
         },
         changeAllCards() {
             this.websocketVUE.send("{ \"cmd\": \"all\", \"data\": \"\" }")
             console.log("changeAllCards Button");
         },
         chacgeOneCard() {
-            let handCardIndex = cardhandindex;
-            let fieldCardIndex = cardfieldindex;
+            let handCardIndex = this.cardhandindex;
+            let fieldCardIndex = this.cardfieldindex;
             if (handCardIndex === -1 || fieldCardIndex === -1) return;
             let cardsToChange = handCardIndex.toString() + "G" +  fieldCardIndex.toString();
 
             this.websocketVUE.send("{ \"cmd\": \"y\", \"data\": " + JSON.stringify(cardsToChange) + " }")
 
-            cardhandindex = -1;
-            cardfieldindex = -1;
+            let fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
+            let fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
+            let fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
+            let handimag1 = document.getElementsByClassName("play-card-hand")[0]; // handimage 1
+            let handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
+            let handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
+
+            fieldimag1.style.outline = "0";
+            fieldimag1.style.color = "transparent";
+
+            fieldimag2.style.outline = "0";
+            fieldimag2.style.color = "transparent";
+
+            fieldimag3.style.outline = "0";
+            fieldimag3.style.color = "transparent";
+
+            handimag1.style.outline = "0";
+            handimag1.style.color = "transparent";
+
+            handimag2.style.outline = "0";
+            handimag2.style.color = "transparent";
+
+            handimag3.style.outline = "0";
+            handimag3.style.color = "transparent";
+
+            this.cardhandindex = -1;
+            this.cardfieldindex = -1;
+            this.fieldCardKlicked1 = false;
+            this.fieldCardKlicked2 = false;
+            this.fieldCardKlicked3 = false;
+            this.handCardKlicked1 = false;
+            this.handCardKlicked2 = false;
+            this.handCardKlicked3 =  false;
 
             console.log("chacgeOneCard Button");
         },
@@ -84,25 +113,39 @@ app.component('info-panel', {
             console.log("knock Button");
             this.websocketVUE.send("{ \"cmd\": \"k\", \"data\": \"\" }")
         },
+        nothing() {
+            console.log("knock Button");
+            this.websocketVUE.send("{ \"cmd\": \"n\", \"data\": \"\" }")
+        },
         setNextRound() {
             console.log("setNextRound Button");
             this.websocketVUE.send("{ \"cmd\": \"nr\", \"data\": \"\" }")
         },
-        undo() {
+        undoGame() {
             console.log("undo Button");
             this.websocketVUE.send("{ \"cmd\": \"u\", \"data\": \"\" }")
         },
-        redo() {
+        redoGame() {
             console.log("redo Button");
             this.websocketVUE.send("{ \"cmd\": \"z\", \"data\": \"\" }")
         },
-        saveGame() {
+        saveGame(art) {
             console.log("saveGame Button");
-            websocket.send("{ \"cmd\": \"saveJson\", \"data\": \"\" }")
+            if (art === "xml") {
+                this.websocketVUE.send("{ \"cmd\": \"saveXml\", \"data\": " + JSON.stringify(art) + " }")
+            }
+            if (art === "json") {
+                this.websocketVUE.send("{ \"cmd\": \"saveJson\", \"data\": " + JSON.stringify(art) + " }")
+            }
         },
-        loadGame() {
+        loadGame(art) {
             console.log("loadGame Button");
-            this.websocketVUE.send("{ \"cmd\": \"loadJson\", \"data\": \"\" }")
+            if (art === "xml") {
+                this.websocketVUE.send("{ \"cmd\": \"loadXml\", \"data\": " + JSON.stringify(art) + " }")
+            }
+            if (art === "json") {
+                this.websocketVUE.send("{ \"cmd\": \"loadJson\", \"data\": " + JSON.stringify(art) + " }")
+            }
         },
         setNextRound() {
             console.log("setNextRound Button");
@@ -204,12 +247,12 @@ app.component('info-panel', {
             let fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
             let fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
             let fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
-            cardfieldindex = 0;
-            if(!fieldCardKlicked1) {
+            this.cardfieldindex = 0;
+            if(!this.fieldCardKlicked1) {
                 fieldimag1.style.outline = "auto";
                 fieldimag1.style.color = "#ed08e6";
                 fieldimag1.style.borderStyle = "solid";
-                fieldCardKlicked1 = true;
+                this.fieldCardKlicked1 = true;
 
                 fieldimag2.style.outline = "0";
                 fieldimag2.style.color = "transparent";
@@ -217,14 +260,14 @@ app.component('info-panel', {
                 fieldimag3.style.outline = "0";
                 fieldimag3.style.color = "transparent";
 
-                fieldCardKlicked2 = false;
-                fieldCardKlicked3 = false;
+                this.fieldCardKlicked2 = false;
+                this.fieldCardKlicked3 = false;
 
             }
             else {
                 fieldimag1.style.outline = "0";
                 fieldimag1.style.color = "transparent";
-                fieldCardKlicked1 = false;
+                this.fieldCardKlicked1 = false;
             }
         },
 
@@ -232,12 +275,12 @@ app.component('info-panel', {
             let fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
             let fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
             let fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
-            cardfieldindex = 1;
-            if(!fieldCardKlicked2) {
+            this.cardfieldindex = 1;
+            if(!this.fieldCardKlicked2) {
                     fieldimag2.style.outline = "auto";
                     fieldimag2.style.color = "#ed08e6";
                     fieldimag2.style.borderStyle = "solid";
-                    fieldCardKlicked2 = true;
+                    this.fieldCardKlicked2 = true;
 
                     fieldimag1.style.outline = "0";
                     fieldimag1.style.color = "transparent";
@@ -251,19 +294,19 @@ app.component('info-panel', {
                 else {
                     fieldimag2.style.outline = "0";
                     fieldimag2.style.color = "transparent";
-                    fieldCardKlicked2 = false;
+                    this.fieldCardKlicked2 = false;
                 }
         },
         selectFCard3() {
             let fieldimag1 = document.getElementsByClassName("play-card-field")[0]; // fieldimage 1
             let fieldimag2 = document.getElementsByClassName("play-card-field")[1]; // fieldimage 2
             let fieldimag3 = document.getElementsByClassName("play-card-field")[2]; // fieldimage 3
-            cardfieldindex = 2;
-            if(!fieldCardKlicked3) {
+            this.cardfieldindex = 2;
+            if(!this.fieldCardKlicked3) {
                 fieldimag3.style.outline = "auto";
                 fieldimag3.style.color = "#ed08e6";
                 fieldimag3.style.borderStyle = "solid";
-                fieldCardKlicked3 = true;
+                this.fieldCardKlicked3 = true;
 
                 fieldimag1.style.outline = "0";
                 fieldimag1.style.color = "transparent";
@@ -271,13 +314,13 @@ app.component('info-panel', {
                 fieldimag2.style.outline = "0";
                 fieldimag2.style.color = "transparent";
 
-                fieldCardKlicked1 = false;
-                fieldCardKlicked2 = false;
+                this.fieldCardKlicked1 = false;
+                this.fieldCardKlicked2 = false;
             }
             else {
                 fieldimag3.style.outline = "0";
                 fieldimag3.style.color = "transparent";
-                fieldCardKlicked3 = false;
+                this.fieldCardKlicked3 = false;
             }
         },
         selectHCard1() {
@@ -285,12 +328,12 @@ app.component('info-panel', {
             let handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
             let handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
 
-            cardhandindex = 0;
-            if(!handCardKlicked1) {
+            this.cardhandindex = 0;
+            if(!this.handCardKlicked1) {
                 handimag1.style.outline = "auto";
                 handimag1.style.color = "#ed08e6";
                 handimag1.style.borderStyle = "solid";
-                handCardKlicked1 = true;
+                this.handCardKlicked1 = true;
 
                 handimag2.style.outline = "0";
                 handimag2.style.color = "transparent";
@@ -298,13 +341,13 @@ app.component('info-panel', {
                 handimag3.style.outline = "0";
                 handimag3.style.color = "transparent";
 
-                handCardKlicked2 = false;
-                handCardKlicked3 = false;
+                this.handCardKlicked2 = false;
+                this.handCardKlicked3 = false;
             }
             else {
                 handimag1.style.outline = "0";
                 handimag1.style.color = "transparent";
-                handCardKlicked1 = false;
+                this.handCardKlicked1 = false;
             }
         },
         selectHCard2() {
@@ -312,12 +355,12 @@ app.component('info-panel', {
             let handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
             let handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
 
-            cardhandindex = 1;
-            if(!handCardKlicked2) {
+            this.cardhandindex = 1;
+            if(!this.handCardKlicked2) {
                 handimag2.style.outline = "auto";
                 handimag2.style.color = "#ed08e6";
                 handimag2.style.borderStyle = "solid";
-                handCardKlicked2 = true;
+                this.handCardKlicked2 = true;
 
                 handimag1.style.outline = "0";
                 handimag1.style.color = "transparent";
@@ -325,13 +368,13 @@ app.component('info-panel', {
                 handimag3.style.outline = "0";
                 handimag3.style.color = "transparent";
 
-                handCardKlicked1 = false;
-                handCardKlicked3 = false;
+                this.handCardKlicked1 = false;
+                this.handCardKlicked3 = false;
             }
             else {
                 handimag2.style.outline = "0";
                 handimag2.style.color = "transparent";
-                handCardKlicked2 = false;
+                this.handCardKlicked2 = false;
             }
         },
         selectHCard3() {
@@ -339,12 +382,12 @@ app.component('info-panel', {
             let handimag2 = document.getElementsByClassName("play-card-hand")[1]; // handimage 2
             let handimag3 = document.getElementsByClassName("play-card-hand")[2]; // handimage 3
 
-            cardhandindex = 2;
-            if(!handCardKlicked3) {
+            this.cardhandindex = 2;
+            if(!this.handCardKlicked3) {
                 handimag3.style.outline = "auto";
                 handimag3.style.color = "#ed08e6";
                 handimag3.style.borderStyle = "solid";
-                handCardKlicked3 = true;
+                this.handCardKlicked3 = true;
 
                 handimag1.style.outline = "0";
                 handimag1.style.color = "transparent";
@@ -352,13 +395,13 @@ app.component('info-panel', {
                 handimag2.style.outline = "0";
                 handimag2.style.color = "transparent";
 
-                handCardKlicked1 = false;
-                handCardKlicked2 = false;
+                this.handCardKlicked1 = false;
+                this.handCardKlicked2 = false;
             }
             else {
                 handimag3.style.outline = "0";
                 handimag3.style.color = "transparent";
-                handCardKlicked3 = false;
+                this.handCardKlicked3 = false;
             }
         },
      },
@@ -386,7 +429,7 @@ app.component('info-panel', {
             <div class="row">
                 <div class="col-1 col-sm-2"></div>
                 <div v-if="(game_state === 'not_enough_players')" class="form-group col-10 col-sm-8 classgamestate">
-                    <label  class="label1gamestat1" id="first-label">Player name</label>
+                    <label  class="label1gamestat1" id="first-label">Player {{this.player_num}} name</label>
                     <label class="label2gamestat1" id="second-label"></label>
                     <div id="pl_am_name_textfield">
                         <input type="text" autofocus="autofocus" class="form-control iputs" id="playername" aria-describedby="emailHelp" placeholder="Enter Name">
@@ -398,8 +441,8 @@ app.component('info-panel', {
 
         <div v-if="(game_state === 'game_running')" class="row" id="name-label">
             <div class="col-5"></div>
-            <div class="col-2 classcol">
-                <h1 class="playernamecenter"> {{ player_name }} </h1>
+            <div class="col-2 classcol" style="margin-bottom: 1em;">
+                <h1 class="playernamecenter"> Enemy </h1>
             </div>
             <div class="col-5"></div>
         </div>
@@ -456,18 +499,45 @@ app.component('info-panel', {
             </div>
         </div>
 
+        <div v-if="(game_state === 'game_running')" class="row" id="name-label">
+            <div class="col-5"></div>
+            <div class="col-2 classcol" style="margin-bottom: 1em;">
+                <h1 class="playernamecenter"> {{ player_name }} </h1>
+            </div>
+            <div class="col-5"></div>
+        </div>
+
         <div v-if="(game_state === 'game_running')" class="row" id="gameButtons">
             <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol>
-                <div class="classcardcenter>
-                    <div>
-                        <button v-on:click="chacgeOneCard" type="button"  id="changeoncard" class="btn btn-primary buttonstyle btn-change-one">Change Card</button>
-                        <button v-on:click="changeAllCards" type="button"  id="tackall" class="btn btn-primary buttonstyle btn-change-all">Take All</button>
-                        <button v-on:click="knock" type="button"  id="knock" class="btn btn-primary buttonstyle btn-knock">Knock</button>
-                    </div>
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
+                <div class="gameButtonsGroup1" style="margin: 0 auto; margin-right: 0;">
+                    <button v-on:click="chacgeOneCard" type="button"  id="changeoncard" class="btn btn-primary buttonstyle btn-change-one">Change Card</button>
+                    <button v-on:click="changeAllCards" type="button"  id="tackall" class="btn btn-primary buttonstyle btn-change-all">Take All</button>
+                </div>
+                <div class="gameButtonsGroup2" style="margin: 0 auto; margin-left: 0;">
+                    <button v-on:click="knock" type="button"  id="knock" class="btn btn-primary buttonstyle btn-knock">Knock</button>
+                    <button v-on:click="nothing" type="button"  id="nothing" class="btn btn-primary buttonstyle btn-nothing">Nothing</button>
                 </div>
             </div>
             <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
+        </div>
+
+        <div v-if="(game_state === 'game_ended')" class="row" id="finalstatstitle">
+            <div class="col-4 col-sm-3"></div>
+            <h2 class="col-4 col-sm-6 h2" id="titleLabel">Game Ended</h2>
+            <div class="col-4 col-sm-3"></div>
+        </div>
+
+        <div v-if="(game_state === 'game_ended')" class="row" id="finalstats">
+            <div class="col-4 col-sm-3"></div>
+            <h2 class="col-4 col-sm-6 h2" id="nextRoundLabel"> player.player_name + " has " + player.player_points </h2>
+            <div class="col-4 col-sm-3"></div>
+        </div>
+
+        <div v-if="(game_state === 'game_ended')" class="row" id="nextRoundButtonDiv">
+            <div class="col-4 col-sm-5"></div>
+            <button v-on:click="setNextRound()" type="button" id="nextRound" class="btn btn-primary buttonstyle col-4 col-sm-2">Start next Round</button>
+            <div class="col-4 col-sm-5"></div>
         </div>
     `
 })
@@ -499,17 +569,17 @@ app.component('schwimmen-nav', {
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                  <a class="dropdown-item btn-save" id="save-xml" onclick="savexml('saveXml')" href="#">Save Xml</a>
-                  <a class="dropdown-item btn-save" id="save-json" onclick="savejson('saveJson')" href="#" >Save Json</a>
-                  <a class="dropdown-item btn-load" id="load-xml" onclick="loadxml('loadXml')" href="#">Load Xml</a>
-                  <a class="dropdown-item btn-load" id="load-json" onclick="loadjson('loadJson')" href="#">Load Json</a>
+                  <a class="dropdown-item btn-save" id="save-xml" v-on:click="saveGame('saveXml')" href="#">Save Xml</a>
+                  <a class="dropdown-item btn-save" id="save-json" v-on:click="saveGame('saveJson')" href="#" >Save Json</a>
+                  <a class="dropdown-item btn-load" id="load-xml" v-on:click="loadGame('loadXml')" href="#">Load Xml</a>
+                  <a class="dropdown-item btn-load" id="load-json" v-on:click="loadGame('loadJson')" href="#">Load Json</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                  <a class="dropdown-item btn-undo" id="undo-click" onclick="undo('r')" href="#">Undo</a>
-                  <a class="dropdown-item btn-redo" id="redo-click" onclick="redo('z')" href="#">Redo</a>
+                  <a type="button" class="dropdown-item btn-undo" id="undo-click" @click="undoGame()" href="#">Undo</a>
+                  <a type="button" class="dropdown-item btn-redo" id="redo-click" @click="redoGame()" href="#">Redo</a>
                 </div>
               </li>
               <li>
