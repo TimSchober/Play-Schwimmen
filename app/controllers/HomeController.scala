@@ -141,6 +141,26 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
     "Ok"
   }
 
+  case class GameEndInfos()
+
+  implicit val gameEndinfoswrites: Writes[GameEndInfos] = new Writes[GameEndInfos] {
+    def writes(gameendinfos: GameEndInfos): JsValue = {
+      Json.toJson(
+        for {
+          player <- controller.players
+        } yield {
+
+          Json.obj(
+            "player_name" -> player.name,
+            "player_life" -> player.life,
+            "player_card_points" -> player.cardCount,
+            "player_has_knoked" -> player.hasKnocked
+          )
+        }
+      )
+    }
+  }
+
   case class Gamefield()
   implicit val gamefieldWrites: Writes[Gamefield] = new Writes[Gamefield] {
     def writes(gamefield: Gamefield): JsValue = {
@@ -243,7 +263,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
       "player_amount" -> controller.playerAmount,
       "game_state" -> GameState(),
       "player_name" -> PlayerName(),
-      "game_cards" -> Gamefield()
+      "game_cards" -> Gamefield(),
+      "game_end_infos" -> GameEndInfos()
     ).toString()
   }
 

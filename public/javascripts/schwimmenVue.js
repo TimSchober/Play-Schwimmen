@@ -9,6 +9,7 @@ app.component('info-panel', {
             player_name: '',
             fieldCards: '',
             handCards: '',
+            game_end_infos: '',
             player_num: 1,
             cardfieldindex: -1,
             cardhandindex: -1,
@@ -45,6 +46,9 @@ app.component('info-panel', {
                     this.player_name = this.data.player_name.player_name
                     this.fieldCards  = this.data.game_cards.field_cards
                     this.handCards = this.data.game_cards.player_cards
+                    this.game_end_infos = this.data.game_end_infos
+                    console.log(this.game_end_infos);
+                    console.log(this.fieldCards);
                     console.log(this.data);
                 }
             };
@@ -524,19 +528,19 @@ app.component('info-panel', {
 
         <div v-if="(game_state === 'game_ended')" class="row" id="finalstatstitle">
             <div class="col-4 col-sm-3"></div>
-            <h2 class="col-4 col-sm-6 h2" id="titleLabel">Game Ended</h2>
+            <h2 class="col-4 col-sm-6 h2" id="titleLabel" style="text-align: center;">Game Ended</h2>
             <div class="col-4 col-sm-3"></div>
         </div>
 
-        <div v-if="(game_state === 'game_ended')" class="row" id="finalstats">
+        <div v-if="(game_state === 'game_ended')" v-for="player in this.game_end_infos" class="row" id="finalstats">
             <div class="col-4 col-sm-3"></div>
-            <h2 class="col-4 col-sm-6 h2" id="nextRoundLabel"> player.player_name + " has " + player.player_points </h2>
+            <h2 class="col-4 col-sm-6" id="nextRoundLabel" style="text-align: center;"> {{player.player_name}} has, {{player.player_life}} lifes, {{player.player_card_points}} points </h2>
             <div class="col-4 col-sm-3"></div>
         </div>
 
-        <div v-if="(game_state === 'game_ended')" class="row" id="nextRoundButtonDiv">
+        <div v-if="(game_state === 'game_ended')" class="row" style="margin-top: 2em;" id="nextRoundButtonDiv">
             <div class="col-4 col-sm-5"></div>
-            <button v-on:click="setNextRound()" type="button" id="nextRound" class="btn btn-primary buttonstyle col-4 col-sm-2">Start next Round</button>
+            <button v-on:click="setNextRound()" type="button" id="nextRound" class="btn btn-primary buttonstyle col-4 col-sm-2" style="display: block;">Start next Round</button>
             <div class="col-4 col-sm-5"></div>
         </div>
     `
