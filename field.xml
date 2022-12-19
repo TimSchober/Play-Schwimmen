@@ -1,0 +1,28 @@
+<field>
+    <player name="Ayaz">
+        <cardsOnHandOneVal>8</cardsOnHandOneVal>
+        <cardsOnHandOneCol>spade</cardsOnHandOneCol>
+        <cardsOnHandTwoVal>7</cardsOnHandTwoVal>
+        <cardsOnHandTwoCol>heart</cardsOnHandTwoCol>
+        <cardsOnHandThreeVal>7</cardsOnHandThreeVal>
+        <cardsOnHandThreeCol>spade</cardsOnHandThreeCol>
+        <hasKnocked>false</hasKnocked>
+        <life>3</life>
+    </player>
+    <player name="Ayaz">
+        <cardsOnHandOneVal>ace</cardsOnHandOneVal>
+        <cardsOnHandOneCol>diamond</cardsOnHandOneCol>
+        <cardsOnHandTwoVal>7</cardsOnHandTwoVal>
+        <cardsOnHandTwoCol>heart</cardsOnHandTwoCol>
+        <cardsOnHandThreeVal>7</cardsOnHandThreeVal>
+        <cardsOnHandThreeCol>spade</cardsOnHandThreeCol>
+        <hasKnocked>false</hasKnocked>
+        <life>3</life>
+    </player>
+    <cardsOnFieldOneVal>ace</cardsOnFieldOneVal>
+    <cardsOnFieldOneCol>diamond</cardsOnFieldOneCol>
+    <cardsOnFieldTwoVal>8</cardsOnFieldTwoVal>
+    <cardsOnFieldTwoCol>diamond</cardsOnFieldTwoCol>
+    <cardsOnFieldThreeVal>queen</cardsOnFieldThreeVal>
+    <cardsOnFieldThreeCol>spade</cardsOnFieldThreeCol>
+</field>
