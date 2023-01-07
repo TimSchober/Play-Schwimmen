@@ -110,10 +110,6 @@ export default {
 </script>
 
 <style scoped>
-.classcardcenter {
-  margin: 0 auto;
-  display: inherit;
-}
 .playernamecenter {
   margin: 0 auto;
   text-transform: capitalize;
