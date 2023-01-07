@@ -44,5 +44,4 @@ export default {
   border-color: transparent;
   cursor: default;
 }
-
 </style>
