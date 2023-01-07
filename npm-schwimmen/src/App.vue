@@ -1,6 +1,7 @@
 <template>
   <RulePageComponent v-if="this.showRules" @switch="this.showRules = false"/>
   <body v-if="this.showRules === false" class="game-body">
+    <NavbarComponent @rules="this.showRules = true"/>
     <EnterPlayerAmountComponent v-if="this.game_state==='no_player_amount'" @amount="setPlayerAmount"/>
     <EnterPlayerNameComponent v-if="this.game_state==='not_enough_players'" @name="setPlayerName" :playernumber="this.player_num"/>
     <GameComponent
@@ -33,6 +34,7 @@
 
 <script>
 import RulePageComponent from './components/RulePageComponent.vue'
+import NavbarComponent from './components/NavbarComponent.vue'
 import EnterPlayerAmountComponent from './components/EnterPlayerAmountComponent.vue'
 import EnterPlayerNameComponent from './components/EnterPlayerNameComponent.vue'
 import GameComponent from './components/GameComponent.vue'
@@ -44,6 +46,7 @@ export default {
   name: 'App',
   components: {
     RulePageComponent,
+    NavbarComponent,
     EnterPlayerAmountComponent,
     EnterPlayerNameComponent,
     GameComponent,
