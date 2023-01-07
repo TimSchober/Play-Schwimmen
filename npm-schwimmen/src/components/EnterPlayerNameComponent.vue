@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-1 col-sm-2"></div>
       <div class="form-group col-10 col-sm-8 ">
-        <label class="label1gamestat1" id="first-label">Player {{ this.playernum }} name</label>
+        <label class="label1gamestat1" id="first-label">Player {{ this.playernumber }} name</label>
         <label class="label2gamestat1" id="second-label"></label>
         <div id="pl_am_name_textfield">
           <input type="text" v-model="name" autofocus="autofocus" class="form-control iputs" id="playername" aria-describedby="emailHelp" placeholder="Enter Name">
@@ -23,7 +23,9 @@ export default {
   methods: {
     setPlayerName() {
       if (this.name !== "") {
-        this.$emit('name', this.name)
+        let tempname = this.name
+        this.name = ""
+        this.$emit('name', tempname)
       }
     }
   },
