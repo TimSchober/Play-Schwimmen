@@ -624,6 +624,4 @@ app.component('schwimmen-nav', {
     `
 })
 
-// <img :src="'./assets/images/'+ { cardNumber } + '_of_' + { cardColor } + 's.png'" class="play-card" :class="{ active: isSelected }" />
-
 app.mount('#gameBody')
