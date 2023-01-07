@@ -1,5 +1,6 @@
 <template>
-  <body class="game-body">
+  <RulePageComponent v-if="this.showRules" @switch="this.showRules = false"/>
+  <body v-if="this.showRules === false" class="game-body">
     <EnterPlayerAmountComponent v-if="this.game_state==='no_player_amount'" @amount="setPlayerAmount"/>
     <EnterPlayerNameComponent v-if="this.game_state==='not_enough_players'" @name="setPlayerName" :playernumber="this.player_num"/>
     <GameComponent
@@ -17,6 +18,8 @@
         :handthirdCardColor="this.handCards[2][1]"
         :handthirdCardNumber="this.handCards[2][0]"
         :player_name="this.player_name"
+        :cardfieldindex="cardfieldindex"
+        :cardhandindex="cardhandindex"
         @fieldSelected="fieldSelected"
         @handSelected="handSelected"
         @nothing="nothing"
@@ -28,19 +31,24 @@
 </template>
 
 <script>
+import RulePageComponent from './components/RulePageComponent.vue'
 import EnterPlayerAmountComponent from './components/EnterPlayerAmountComponent.vue'
 import EnterPlayerNameComponent from './components/EnterPlayerNameComponent.vue'
 import GameComponent from './components/GameComponent.vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
   name: 'App',
   components: {
+    RulePageComponent,
     EnterPlayerAmountComponent,
     EnterPlayerNameComponent,
     GameComponent
   },
   data() {
     return {
+      showRules: true,
       websocketVUE: new WebSocket("ws://localhost:9000/websocket"),
       game_state: '',
       player_amount: '',
