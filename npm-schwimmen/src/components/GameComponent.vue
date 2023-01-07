@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-5"></div>
-      <div class="col-2">
+      <div class="col-2 cen">
         <h1 class="playernamecenter"> Enemy </h1>
       </div>
       <div class="col-5"></div>
@@ -10,7 +10,7 @@
 
     <div class="row">
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 cen">
         <ThreeNonPlayableCardsComponent />
       </div>
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
@@ -18,15 +18,15 @@
 
     <div class="row">
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 cen">
         <ThreeCardsComponent
-            :firstCardColor="firstCardColor"
-            :firstCardNumber="firstCardNumber"
-            :secondCardColor="secondCardColor"
-            :secondCardNumber="secondCardNumber"
-            :thirdCardColor="thirdCardColor"
-            :thirdCardNumber="thirdCardNumber"
-            @clicked="test"
+            :firstCardColor="fieldfirstCardColor"
+            :firstCardNumber="fieldfirstCardNumber"
+            :secondCardColor="fieldsecondCardColor"
+            :secondCardNumber="fieldsecondCardNumber"
+            :thirdCardColor="fieldthirdCardColor"
+            :thirdCardNumber="fieldthirdCardNumber"
+            @clicked="fieldSelected"
         />
       </div>
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
@@ -34,15 +34,15 @@
 
     <div class="row">
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 cen">
         <ThreeCardsComponent
-            :firstCardColor="firstCardColor"
-            :firstCardNumber="firstCardNumber"
-            :secondCardColor="secondCardColor"
-            :secondCardNumber="secondCardNumber"
-            :thirdCardColor="thirdCardColor"
-            :thirdCardNumber="thirdCardNumber"
-            @clicked="test"
+            :firstCardColor="handfirstCardColor"
+            :firstCardNumber="handfirstCardNumber"
+            :secondCardColor="handsecondCardColor"
+            :secondCardNumber="handsecondCardNumber"
+            :thirdCardColor="handthirdCardColor"
+            :thirdCardNumber="handthirdCardNumber"
+            @clicked="handSelected"
         />
       </div>
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
@@ -50,15 +50,15 @@
 
     <div class="row">
       <div class="col-5"></div>
-      <div class="col-2" >
-        <h1 class="playernamecenter">player_name</h1>
+      <div class="col-2 cen" >
+        <h1 class="playernamecenter">{{ player_name }}</h1>
       </div>
       <div class="col-5"></div>
     </div>
 
     <div class="row">
       <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 cen">
         <button @click="changeOneCard" type="button"  id="changeoncard" class="btn btn-primary buttonstyle btn-change-one">Change Card</button>
         <button @click="changeAllCards" type="button"  id="tackall" class="btn btn-primary buttonstyle btn-change-all">Take All</button>
         <button @click="knock" type="button"  id="knock" class="btn btn-primary buttonstyle btn-knock">Knock</button>
@@ -82,34 +82,49 @@ export default {
     ThreeNonPlayableCardsComponent
   },
   props: {
-    firstCardColor: String,
-    firstCardNumber: String,
-    secondCardColor: String,
-    secondCardNumber: String,
-    thirdCardColor: String,
-    thirdCardNumber: String,
+    fieldfirstCardColor: String,
+    fieldfirstCardNumber: String,
+    fieldsecondCardColor: String,
+    fieldsecondCardNumber: String,
+    fieldthirdCardColor: String,
+    fieldthirdCardNumber: String,
+    handfirstCardColor: String,
+    handfirstCardNumber: String,
+    handsecondCardColor: String,
+    handsecondCardNumber: String,
+    handthirdCardColor: String,
+    handthirdCardNumber: String,
+    player_name: String,
   },
   methods: {
-    test(val) {
-      console.log(val)
+    fieldSelected(selectedVal) {
+      this.$emit('fieldSelected', selectedVal)
+    },
+    handSelected(selectedVal) {
+      this.$emit('handSelected', selectedVal)
     },
     nothing() {
-      console.log("nothing")
+      this.$emit('nothing')
     },
     knock() {
-      console.log("knock")
+      this.$emit('knock')
     },
     changeAllCards() {
-      console.log("changeAllCards")
+      this.$emit('changeAllCards')
     },
     changeOneCard() {
-      console.log("changeOneCard")
-    }
+      this.$emit('changeOneCard')
+    },
   },
 }
 </script>
 
 <style scoped>
+.cen {
+  display: inline-flex;
+  align-content: center;
+  justify-content: center;
+}
 .playernamecenter {
   margin: 0 auto;
   text-transform: capitalize;
