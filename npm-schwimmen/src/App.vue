@@ -27,6 +27,7 @@
         @changeAllCards="changeAllCards"
         @changeOneCard="changeOneCard"
     />
+    <ScoreBoardComponent v-if="this.game_state==='game_ended'" @nextround="setNextRound" :game_end_infos="this.game_end_infos"/>
   </body>
 </template>
 
@@ -35,6 +36,7 @@ import RulePageComponent from './components/RulePageComponent.vue'
 import EnterPlayerAmountComponent from './components/EnterPlayerAmountComponent.vue'
 import EnterPlayerNameComponent from './components/EnterPlayerNameComponent.vue'
 import GameComponent from './components/GameComponent.vue'
+import ScoreBoardComponent from './components/ScoreBoardComponent.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -44,7 +46,8 @@ export default {
     RulePageComponent,
     EnterPlayerAmountComponent,
     EnterPlayerNameComponent,
-    GameComponent
+    GameComponent,
+    ScoreBoardComponent
   },
   data() {
     return {
@@ -90,9 +93,9 @@ export default {
           this.fieldCards = this.data.game_cards.field_cards
           this.handCards = this.data.game_cards.player_cards
           this.game_end_infos = this.data.game_end_infos
-          console.log(this.game_end_infos);
-          console.log(this.fieldCards);
-          console.log(this.data);
+          // console.log(this.game_end_infos);
+          // console.log(this.fieldCards);
+          // console.log(this.data);
         }
       };
     },
