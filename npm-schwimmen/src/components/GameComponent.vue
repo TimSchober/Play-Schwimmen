@@ -26,6 +26,7 @@
             :secondCardNumber="fieldsecondCardNumber"
             :thirdCardColor="fieldthirdCardColor"
             :thirdCardNumber="fieldthirdCardNumber"
+            :counter="cardfieldindex"
             @clicked="fieldSelected"
         />
       </div>
@@ -42,6 +43,7 @@
             :secondCardNumber="handsecondCardNumber"
             :thirdCardColor="handthirdCardColor"
             :thirdCardNumber="handthirdCardNumber"
+            :counter="cardhandindex"
             @clicked="handSelected"
         />
       </div>
@@ -72,8 +74,6 @@
 <script>
 import ThreeCardsComponent from "./ThreeCardsComponent.vue";
 import ThreeNonPlayableCardsComponent from "./ThreeNonPlayableCardsComponent.vue";
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
   name: "GameComponent",
@@ -94,6 +94,8 @@ export default {
     handsecondCardNumber: String,
     handthirdCardColor: String,
     handthirdCardNumber: String,
+    cardfieldindex: Number,
+    cardhandindex: Number,
     player_name: String,
   },
   methods: {

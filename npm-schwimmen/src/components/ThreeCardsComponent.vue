@@ -18,21 +18,16 @@ export default {
     secondCardNumber: String,
     thirdCardColor: String,
     thirdCardNumber: String,
+    counter: Number
   },
   components: {
     GamecardComponent
   },
   methods: {
     clickHandler(cardnumber) {
-      this.counter = cardnumber;
-      this.$emit('clicked', this.counter)
+      this.$emit('clicked', cardnumber)
     }
   },
-  data() {
-    return {
-      counter: -1,
-    }
-  }
 }
 </script>
 
