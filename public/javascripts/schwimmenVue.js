@@ -511,6 +511,8 @@ app.component('info-panel', {
             <div class="col-5"></div>
         </div>
 
+
+
         <div v-if="(game_state === 'game_running')" class="row" id="gameButtons">
             <div class="col-0 col-sm-1 col-md-2 col-lg-3 col-xl-4"></div>
             <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 classcol">
@@ -621,5 +623,7 @@ app.component('schwimmen-nav', {
         </div>
     `
 })
+
+// <img :src="'./assets/images/'+ { cardNumber } + '_of_' + { cardColor } + 's.png'" class="play-card" :class="{ active: isSelected }" />
 
 app.mount('#gameBody')

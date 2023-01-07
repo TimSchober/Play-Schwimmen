@@ -1,16 +1,22 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <GameComponent
+    firstCardColor="spade"
+    firstCardNumber="7"
+    secondCardColor="heart"
+    secondCardNumber="7"
+    thirdCardColor="diamond"
+    thirdCardNumber="king"
+  />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GameComponent from './components/GameComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    GameComponent
+  },
 }
 </script>
 
