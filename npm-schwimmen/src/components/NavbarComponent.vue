@@ -14,21 +14,23 @@
           <a class="nav-link active" @click="rules">Rules
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" >Game</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-            <a class="dropdown-item btn-save" id="save-xml" @click="saveGameXml" >Save Xml</a>
-            <a class="dropdown-item btn-save" id="save-json" @click="saveGameJson" >Save Json</a>
-            <a class="dropdown-item btn-load" id="load-xml" @click="loadGameXml" >Load Xml</a>
-            <a class="dropdown-item btn-load" id="load-json" @click="loadGameJson" >Load Json</a>
-          </div>
+<!--        <li class="nav-item hoverevent">-->
+<!--          <a class="nav-link active" id="save-xml" @click="saveGameXml" >Save Xml</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item hoverevent">-->
+<!--          <a class="nav-link active" id="save-json" @click="saveGameJson" >Save Json</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item hoverevent">-->
+<!--          <a class="nav-link active" id="load-xml" @click="loadGameXml" >Load Xml</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item hoverevent">-->
+<!--          <a class="nav-link active" id="load-json" @click="loadGameJson" >Load Json</a>-->
+<!--        </li>-->
+        <li class="nav-item hoverevent">
+          <a type="button" class="nav-link active" id="undo-click" @click="undoGame" >Undo</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown2" role="button" >Edit</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-            <a type="button" class="dropdown-item btn-undo" id="undo-click" @click="undoGame" >Undo</a>
-            <a type="button" class="dropdown-item btn-redo" id="redo-click" @click="redoGame" >Redo</a>
-          </div>
+        <li class="nav-item hoverevent">
+          <a type="button" class="nav-link active" id="redo-click" @click="redoGame" >Redo</a>
         </li>
         <li>
           <button @click="showStats" class="btn btn-primary navbuttonstyle" type="button" >
@@ -38,32 +40,24 @@
       </ul>
     </div>
   </nav>
-  <div style="margin-top: 5em; margin-left: 2em">
-    <div class="row">
-      <div class="col-12 col-sm-6">
-        <div class="collapse multi-collapse" id="multiCollapseExample1">
-          <div class="card card-body">
-            <table class="table navtable">
-              <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">HasKnocked</th>
-                <th scope="col">Lives</th>
-              </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <StatsComponent class="abstand" v-if="this.show" :game_end_infos="game_end_infos"/>
 </template>
 
 <script>
+import StatsComponent from "./StatsComponent.vue"
 export default {
   name: "NavbarComponent",
+  components: {
+    StatsComponent
+  },
+  props: {
+    game_end_infos: JSON
+  },
+  data() {
+    return {
+      show: false,
+    }
+  },
   methods: {
     saveGameXml() {
       this.$emit('saveXml')
@@ -87,13 +81,16 @@ export default {
       this.$emit('rules')
     },
     showStats() {
-      this.$emit('showStats')
+      this.show = this.show !== true;
     }
   }
 }
 </script>
 
 <style scoped>
+.abstand {
+  margin-top: 3rem;
+}
 .navbuttonstyle {
   background-color: #545b62 !important;
   border-color: #f8f9fa;

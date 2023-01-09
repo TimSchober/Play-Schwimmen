@@ -1,7 +1,11 @@
 <template>
   <RulePageComponent v-if="this.showRules" @switch="this.showRules = false"/>
   <body v-if="this.showRules === false" class="game-body">
-    <NavbarComponent @rules="this.showRules = true"/>
+    <NavbarComponent @rules="this.showRules = true"
+                     :game_end_infos="this.game_end_infos"
+                     @undoGame="undoGame"
+                     @redoGame="redoGame"/>
+    <div class="abstand"></div>
     <EnterPlayerAmountComponent v-if="this.game_state==='no_player_amount'" @amount="setPlayerAmount"/>
     <EnterPlayerNameComponent v-if="this.game_state==='not_enough_players'" @name="setPlayerName" :playernumber="this.player_num"/>
     <GameComponent
@@ -145,11 +149,11 @@ export default {
     },
     undoGame() {
       console.log("undo Button");
-      this.websocketVUE.send("{ \"cmd\": \"u\", \"data\": \"\" }")
+      this.websocketVUE.send("{ \"cmd\": \"undo\", \"data\": \"\" }")
     },
     redoGame() {
       console.log("redo Button");
-      this.websocketVUE.send("{ \"cmd\": \"z\", \"data\": \"\" }")
+      this.websocketVUE.send("{ \"cmd\": \"redo\", \"data\": \"\" }")
     },
     saveGame(art) {
       console.log("saveGame Button");
@@ -174,13 +178,9 @@ export default {
 </script>
 
 <style>
-.rule-body {
-  padding: 0 0;
-  background: url("@/assets/images/hintergrund.jpg") no-repeat;
-  background-size: cover;
-  color: #ccd5d9;
+.abstand {
+  margin-top: 3rem;
 }
-
 .game-body {
   background: url("@/assets/images/hintergrund.jpg") no-repeat;
   background-size: cover;
