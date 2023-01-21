@@ -127,27 +127,27 @@ app.component('info-panel', {
         },
         undoGame() {
             console.log("undo Button");
-            this.websocketVUE.send("{ \"cmd\": \"u\", \"data\": \"\" }")
+            this.websocketVUE.send("{ \"cmd\": \"undo\", \"data\": \"\" }")
         },
         redoGame() {
             console.log("redo Button");
-            this.websocketVUE.send("{ \"cmd\": \"z\", \"data\": \"\" }")
+            this.websocketVUE.send("{ \"cmd\": \"redo\", \"data\": \"\" }")
         },
         saveGame(art) {
             console.log("saveGame Button");
-            if (art === "xml") {
+            if (art === "saveXml") {
                 this.websocketVUE.send("{ \"cmd\": \"saveXml\", \"data\": " + JSON.stringify(art) + " }")
             }
-            if (art === "json") {
+            if (art === "saveJson") {
                 this.websocketVUE.send("{ \"cmd\": \"saveJson\", \"data\": " + JSON.stringify(art) + " }")
             }
         },
         loadGame(art) {
             console.log("loadGame Button");
-            if (art === "xml") {
+            if (art === "loadXml") {
                 this.websocketVUE.send("{ \"cmd\": \"loadXml\", \"data\": " + JSON.stringify(art) + " }")
             }
-            if (art === "json") {
+            if (art === "loadJson") {
                 this.websocketVUE.send("{ \"cmd\": \"loadJson\", \"data\": " + JSON.stringify(art) + " }")
             }
         },
@@ -415,6 +415,80 @@ app.component('info-panel', {
      },
 
     template: `
+
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" id="navBar">
+          <span class="navbar-brand mb-0 h1">
+            <img src="assets/images/top-bild.png" width="30" height="30" class="d-inline-block align-top" alt=""/>
+            Schwimmen
+          </span>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link active" href="/">Rules
+                    <span class="sr-only">(current)</span>
+                 </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                  <a class="dropdown-item btn-save" id="save-xml" v-on:click="saveGame('saveXml')">Save Xml</a>
+                  <a class="dropdown-item btn-save" id="save-json" v-on:click="saveGame('saveJson')">Save Json</a>
+                  <a class="dropdown-item btn-load" id="load-xml" v-on:click="loadGame('loadXml')">Load Xml</a>
+                  <a class="dropdown-item btn-load" id="load-json" v-on:click="loadGame('loadJson')">Load Json</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                  <a type="button" class="dropdown-item btn-undo" id="undo-click" @click="undoGame()">Undo</a>
+                  <a type="button" class="dropdown-item btn-redo" id="redo-click" @click="redoGame()">Redo</a>
+                </div>
+              </li>
+              <li>
+                <button class="btn btn-primary navbuttonstyle" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
+                  Stats
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div style="margin-top: 5em; margin-left: 2em">
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                  <div class="card card-body">
+                    <table class="table navtable">
+                      <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">HasKnocked</th>
+                          <th scope="col">Lives</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="player in this.game_end_infos">
+                            <th scope="row" class="namestartupper">
+                              {{player.player_name}}
+                            </th>
+                            <td class="namestartupper">
+                              {{player.player_has_knoked}}
+                            </td>
+                            <td>
+                                {{player.player_life}}
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
         <h2 class="h2" id="player-amoutn-label">
             <div class="row">
                 <div class="col-1 col-sm-2"></div>
@@ -543,83 +617,7 @@ app.component('info-panel', {
             <button v-on:click="setNextRound()" type="button" id="nextRound" class="btn btn-primary buttonstyle col-4 col-sm-2" style="display: block;">Start next Round</button>
             <div class="col-4 col-sm-5"></div>
         </div>
+
     `
 })
-
-app.component('schwimmen-nav', {
-    data() {
-        return {
-            homeLink: "/",
-            aboutLink: "/about"
-        }
-    },
-    template: `
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" id="navBar">
-          <span class="navbar-brand mb-0 h1">
-            <img src="assets/images/top-bild.png" width="30" height="30" class="d-inline-block align-top" alt=""/>
-            Schwimmen
-          </span>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link active" href="/">Rules
-                    <span class="sr-only">(current)</span>
-                 </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                  <a class="dropdown-item btn-save" id="save-xml" v-on:click="saveGame('saveXml')" href="#">Save Xml</a>
-                  <a class="dropdown-item btn-save" id="save-json" v-on:click="saveGame('saveJson')" href="#" >Save Json</a>
-                  <a class="dropdown-item btn-load" id="load-xml" v-on:click="loadGame('loadXml')" href="#">Load Xml</a>
-                  <a class="dropdown-item btn-load" id="load-json" v-on:click="loadGame('loadJson')" href="#">Load Json</a>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                  <a type="button" class="dropdown-item btn-undo" id="undo-click" @click="undoGame()" href="#">Undo</a>
-                  <a type="button" class="dropdown-item btn-redo" id="redo-click" @click="redoGame()" href="#">Redo</a>
-                </div>
-              </li>
-              <li>
-                <button class="btn btn-primary navbuttonstyle" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
-                  Stats
-                </button>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <div style="margin-top: 5em; margin-left: 2em">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <div class="card card-body">
-                    <table class="table navtable">
-                      <thead>
-                        <tr>
-                          <th scope="col">Name</th>
-                          <th scope="col">HasKnocked</th>
-                          <th scope="col">Lives</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-
-
-
-
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-    `
-})
-
 app.mount('#gameBody')
